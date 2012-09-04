@@ -1,0 +1,1 @@
+Script pomáhá číst z Fio účtu
