@@ -1,1 +1,3 @@
-Script pomáhá číst z Fio účtu
+fio
+=====
+Read email or gpc file from Fio bank
