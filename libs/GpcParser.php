@@ -27,7 +27,7 @@ class GpcParser extends Object implements \Iterator {
             $this->data = new \SplFileObject($source);
             $this->data->setFlags(6); //bug konstanta \SplFileObject::SKIP_EMPTY vraci 4 uz to bylo reportovane
         } else {
-            $this->data = new \Utility\TextIterator($source);
+            $this->data = new \h4kuna\TextIterator($source);
         }
     }
 

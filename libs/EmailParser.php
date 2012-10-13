@@ -10,7 +10,7 @@ class EmailParser extends TextIterator {
         $new = array('dueDate' => new \DateTime(), 'checkSum' => NULL);
 
         $sum = NULL;
-        foreach ($this->text2Array(\Utility\FileTools::autoUTF(imap_qprint($text))) as $v) {
+        foreach ($this->text2Array(\h4kuna\FileTools::autoUTF(imap_qprint($text))) as $v) {
             $key = strstr($v, ':', TRUE);
             if (isset($transform[$key])) {
                 $v = trim(str_replace($key . ':', '', $v));
