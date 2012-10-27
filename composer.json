@@ -18,6 +18,6 @@
         "h4kuna/static": "1.0.*"
     },
     "autoload": {
-        "psr-0": { "": "h4kuna/" }
+        "files": ["Fio.php", "libs/EmailParser.php"]
     }
 }

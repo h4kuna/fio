@@ -4,6 +4,8 @@ namespace h4kuna;
 
 use Nette;
 
+require_once 'libs/GpcParser.php';
+
 class Fio extends Nette\Object {
 
     private $account;
