@@ -17,7 +17,7 @@
         "h4kuna/curl": "1.0.*",
         "h4kuna/static": "1.0.*"
     },
-    "config": {
-        "vendor-dir": "../../"
+    "autoload": {
+        "psr-0": { "": "h4kuna/" }
     }
 }
