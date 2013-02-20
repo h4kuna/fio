@@ -1,32 +1,37 @@
 <?php
 
-namespace h4kuna;
+namespace h4kuna\fio;
 
 use Nette;
+use h4kuna\fio\reader\IFile;
 
-require_once 'libs/GpcParser.php';
+require_once 'reader/File.php';
 
 class Fio extends Nette\Object {
 
-    private $account;
-    private $userName;
-    private $password;
-    private $userAgent = 'PHP Script';
-    private $filter = GpcParser::BOTH;
+    const FIO_API_VERSION = '1.0.5';
 
-    public function __construct($account, $password, $userName) {
-        $this->account = urlencode($account);
-        $this->password = urlencode($password);
-        $this->userName = urlencode($userName);
+    private $token;
+    private $reader;
+
+    public function __construct($token, $reader = IFile::GPC) {
+        $this->token = $token;
+        $this->loadReader($reader);
     }
 
-    public function setFilter($v) {
-        $this->filter = $v;
-        return $this;
-    }
-
-    public function setUserAgent($v) {
-        $this->userAgent = $v;
+    private function loadReader($reader) {
+        if ($reader instanceof IFile) {
+            $this->reader = $reader;
+        } else {
+            $class = ucfirst($reader);
+            $file = __DIR__ . '/reader/' . $class . '.php';
+            if (file_exists($file)) {
+                require_once $file;
+                $this->reader = new $class;
+            } else {
+                throw new \RuntimeException('File no found: ' . $file);
+            }
+        }
         return $this;
     }
 
@@ -37,6 +42,11 @@ class Fio extends Nette\Object {
      */
     public function import($from = '-1 month', $to = 'now') {
         $format = 'd.m.Y';
+
+        dump($fio);
+        vsprintf('https://www.fio.cz/ib_api/rest/periods/%s/%s/%s/transactions.%s');
+
+
         $from = Nette\DateTime::from($from);
         $to = Nette\DateTime::from($to);
 
