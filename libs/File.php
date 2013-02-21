@@ -1,6 +1,6 @@
 <?php
 
-namespace h4kuna\fio\reader;
+namespace h4kuna\fio\libs;
 
 use \Nette\Object;
 

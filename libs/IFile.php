@@ -1,6 +1,6 @@
 <?php
 
-namespace h4kuna\fio\reader;
+namespace h4kuna\fio\libs;
 
 /**
  *
@@ -20,5 +20,12 @@ interface IFile {
      * @return string file extension
      */
     function getExtension();
+
+    /**
+     *
+     * @param string $data
+     * @return \h4kuna\fio\libs\Data Description
+     */
+    function parse($data);
 }
 

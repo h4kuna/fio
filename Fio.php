@@ -3,67 +3,76 @@
 namespace h4kuna\fio;
 
 use Nette;
-use h4kuna\fio\reader\IFile;
+use h4kuna\fio\libs;
 
-require_once 'reader/File.php';
+require_once 'FioException.php';
+require_once 'libs/File.php';
 
 class Fio extends Nette\Object {
 
     const FIO_API_VERSION = '1.0.5';
+    const REST_URL = 'https://www.fio.cz/ib_api/rest/';
 
+    /**
+     * secure token
+     * @var string
+     */
     private $token;
-    private $reader;
 
-    public function __construct($token, $reader = IFile::GPC) {
+    /**
+     * @var IFile
+     */
+    private $parser;
+
+    /** @var libs\Data */
+    private $lastResponse;
+
+    /**
+     *
+     * @param type $token
+     * @param string|libs\IFile $parser
+     */
+    public function __construct($token, $parser = libs\IFile::GPC) {
         $this->token = $token;
-        $this->loadReader($reader);
-    }
-
-    private function loadReader($reader) {
-        if ($reader instanceof IFile) {
-            $this->reader = $reader;
-        } else {
-            $class = ucfirst($reader);
-            $file = __DIR__ . '/reader/' . $class . '.php';
-            if (file_exists($file)) {
-                require_once $file;
-                $this->reader = new $class;
-            } else {
-                throw new \RuntimeException('File no found: ' . $file);
-            }
-        }
-        return $this;
+        $this->loadParser($parser);
     }
 
     /**
-     * @param string|int|\Datetime $from
-     * @param string|int|\Datetime $to
-     * @return \Fio\GpcParser
+     *
+     * @param mixed $from
+     * @param mixed $to
+     * @return libs\Data
      */
-    public function import($from = '-1 month', $to = 'now') {
-        $format = 'd.m.Y';
+    public function movements($from = '-1 month', $to = 'now') {
+        $url = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, \Nette\DateTime::from($from)->format('Y-m-d'), \Nette\DateTime::from($to)->format('Y-m-d'), $this->parser->getExtension());
+        return $this->lastResponse = $this->parser->parse(\h4kuna\CUrl::download($url));
+    }
 
-        dump($fio);
-        vsprintf('https://www.fio.cz/ib_api/rest/periods/%s/%s/%s/transactions.%s');
+    /** @return libs\Data */
+    public function getLastResponse() {
+        return $this->lastResponse;
+    }
 
-
-        $from = Nette\DateTime::from($from);
-        $to = Nette\DateTime::from($to);
-
-        $requestURL = "https://www.fio.cz/scgi-bin/hermes/dz-pohyby.cgi?ID_ucet={$this->account}" .
-                "&LOGIN_USERNAME={$this->userName}&SUBMIT=Odeslat&LOGIN_TIME=" . time() .
-                "&LOGIN_PASSWORD={$this->password}&pohyby_DAT_od={$from->format($format)}" .
-                "&pohyby_DAT_do={$to->format($format)}&export_gpc=1";
-        $curl = new CUrl($requestURL, array(
-                    CURLOPT_USERAGENT => $this->userAgent,
-                    CURLOPT_RETURNTRANSFER => TRUE,
-                    CURLOPT_HEADER => FALSE,
-                    CURLOPT_SSL_VERIFYPEER => FALSE,
-                    CURLOPT_HTTPGET => TRUE,
-                    CURLOPT_HTTPHEADER => array('Content-Type: text/plain', 'Connection: Close')
-                ));
-
-        return new GpcParser($curl->exec(), $this->filter);
+    /**
+     * prepare object for parse data
+     * @param \h4kuna\fio\libs\IFile $parser
+     * @throws \RuntimeException
+     */
+    private function loadParser($parser) {
+        if ($parser instanceof libs\IFile) {
+            $this->parser = $parser;
+        } elseif (is_string($parser)) {
+            $class = '\libs\files\\' . ucfirst($parser);
+            $file = __DIR__ . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+            if (file_exists($file)) {
+                require_once $file;
+                $class = __NAMESPACE__ . $class;
+                $this->parser = new $class;
+                return $this;
+            }
+            throw new FioException('File not found: ' . $file);
+        }
+        throw new FioException('Parser is\'t supported. Must be Instance of IFile or string as constant from IFile.');
     }
 
 }
