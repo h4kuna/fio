@@ -8,12 +8,15 @@ namespace h4kuna\fio\libs;
  */
 interface IFile {
 
-    const XML = 'xml';
-    const OFX = 'ofx';
+    /** supported */
     const GPC = 'gpc';
     const CSV = 'csv';
-    const HTML = 'html';
     const JSON = 'json';
+
+    /** not supported */
+    const XML = 'xml';
+    const OFX = 'ofx';
+    const HTML = 'html';
     const STA = 'sta';
 
     /**
@@ -24,8 +27,13 @@ interface IFile {
     /**
      *
      * @param string $data
-     * @return \h4kuna\fio\libs\Data Description
+     * @return self
      */
     function parse($data);
+
+    /**
+     * @return string
+     */
+    function getDateFormat();
 }
 

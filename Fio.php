@@ -20,19 +20,16 @@ class Fio extends Nette\Object {
     private $token;
 
     /**
-     * @var IFile
+     * @var libs\IFile
      */
     private $parser;
-
-    /** @var libs\Data */
-    private $lastResponse;
 
     /**
      *
      * @param type $token
      * @param string|libs\IFile $parser
      */
-    public function __construct($token, $parser = libs\IFile::GPC) {
+    public function __construct($token, $parser = libs\IFile::CSV) {
         $this->token = $token;
         $this->loadParser($parser);
     }
@@ -41,21 +38,44 @@ class Fio extends Nette\Object {
      *
      * @param mixed $from
      * @param mixed $to
-     * @return libs\Data
+     * @return libs\IFile
      */
     public function movements($from = '-1 month', $to = 'now') {
         $url = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, \Nette\DateTime::from($from)->format('Y-m-d'), \Nette\DateTime::from($to)->format('Y-m-d'), $this->parser->getExtension());
-        return $this->lastResponse = $this->parser->parse(\h4kuna\CUrl::download($url));
+        return $this->parser->parse(\h4kuna\CUrl::download($url));
+    }
+
+    public function movementId($id, $year = NULL) {
+        if ($year === NULL) {
+            $year = date('Y');
+        }
+        $url = self::REST_URL . sprintf('by-id/%s/%s/%s/transactions.%s', $this->token, $year, $id, $this->parser->getExtension());
+        return $this->parser->parse(\h4kuna\CUrl::download($url));
+    }
+
+    public function lastDownload() {
+        $url = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->parser->getExtension());
+        return $this->parser->parse(\h4kuna\CUrl::download($url));
+    }
+
+    public function setLastId($moveId) {
+        $url = self::REST_URL . sprintf('set-last-id/%s/%s/', $this->token, $moveId);
+        return \h4kuna\CUrl::download($url);
+    }
+
+    public function setLastDate($date) {
+        $url = self::REST_URL . sprintf('set-last-date/%s/%s/', $this->token, \Nette\DateTime::from($date)->format('Y-m-d'));
+        return \h4kuna\CUrl::download($url);
     }
 
     /** @return libs\Data */
     public function getLastResponse() {
-        return $this->lastResponse;
+        return $this->parser;
     }
 
     /**
      * prepare object for parse data
-     * @param \h4kuna\fio\libs\IFile $parser
+     * @param string|libs\IFile $parser
      * @throws \RuntimeException
      */
     private function loadParser($parser) {
