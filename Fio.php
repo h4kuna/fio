@@ -35,7 +35,7 @@ class Fio extends Nette\Object {
     }
 
     /**
-     *
+     * download variable range
      * @param mixed $from
      * @param mixed $to
      * @return libs\IFile
@@ -45,6 +45,12 @@ class Fio extends Nette\Object {
         return $this->parser->parse(\h4kuna\CUrl::download($url));
     }
 
+    /**
+     * ???
+     * @param int $id
+     * @param int|string $year format YYYY
+     * @return libs\IFile
+     */
     public function movementId($id, $year = NULL) {
         if ($year === NULL) {
             $year = date('Y');
@@ -53,16 +59,30 @@ class Fio extends Nette\Object {
         return $this->parser->parse(\h4kuna\CUrl::download($url));
     }
 
+    /**
+     * this method download a new movements and create breakpoint
+     * @return type
+     */
     public function lastDownload() {
         $url = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->parser->getExtension());
         return $this->parser->parse(\h4kuna\CUrl::download($url));
     }
 
+    /**
+     * set brakepoint to know moveId
+     * @param int $moveId
+     * @return string
+     */
     public function setLastId($moveId) {
         $url = self::REST_URL . sprintf('set-last-id/%s/%s/', $this->token, $moveId);
         return \h4kuna\CUrl::download($url);
     }
 
+    /**
+     * set breakpoint to date
+     * @param mixed $date
+     * @return string
+     */
     public function setLastDate($date) {
         $url = self::REST_URL . sprintf('set-last-date/%s/%s/', $this->token, \Nette\DateTime::from($date)->format('Y-m-d'));
         return \h4kuna\CUrl::download($url);
