@@ -25,12 +25,14 @@ abstract class File extends Object implements IFile, \Iterator {
     private $dataKeyMap = array();
 
     public function __construct($headerKeyMap = array(), $dataKeyMap = array()) {
-        self::$dataKeys = $this->getDataKeys();
-        self::$headerKeys = $this->getHeaderKeys();
+        if (!isset(self::$dataKeys[$this->getExtension()])) {
+            self::$dataKeys[$this->getExtension()] = $this->dataKeys();
+            self::$headerKeys[$this->getExtension()] = $this->headerKeys();
+        }
 
         if ($headerKeyMap) {
             if (key($headerKeyMap) === 0) {
-                $this->headerKeyMap = array_combine(self::$headerKeys, $headerKeyMap);
+                $this->headerKeyMap = array_combine($this->getHeaderKeys(), $headerKeyMap);
             } else {
                 $this->headerKeyMap = $headerKeyMap;
             }
@@ -38,18 +40,23 @@ abstract class File extends Object implements IFile, \Iterator {
 
         if ($dataKeyMap) {
             if (key($dataKeyMap) === 0) {
-                $this->dataKeyMap = array_combine(self::$dataKeys, $dataKeyMap);
+                $this->dataKeyMap = array_combine($this->getDataKeys(), $dataKeyMap);
             } else {
                 $this->dataKeyMap = $dataKeyMap;
             }
         }
     }
 
+    /**
+     *
+     * @param array $data
+     * @return \h4kuna\fio\libs\File
+     */
     protected function setHeader(array $data) {
         if ($this->headerKeyMap) {
             $map = $this->headerKeyMap;
         } else {
-            $map = array_combine(self::$headerKeys, self::$headerKeys);
+            $map = array_combine($this->getHeaderKeys(), $this->getHeaderKeys());
         }
 
         foreach ($data as $k => $v) {
@@ -62,6 +69,12 @@ abstract class File extends Object implements IFile, \Iterator {
         return $this;
     }
 
+    /**
+     * same format for all files
+     * @param string|int $key
+     * @param mixed $value
+     * @return mixed
+     */
     protected function prepareHeader($key, $value) {
         switch ($key) {
             case 'openingBalance':
@@ -76,8 +89,17 @@ abstract class File extends Object implements IFile, \Iterator {
         return $value;
     }
 
+    /**
+     * same format for all files
+     * @param string|int $key
+     * @param mixed $value
+     * @return mixed
+     */
     protected function prepareData($key, $value) {
         switch ($key) {
+            case 'amount':
+                $value = new \h4kuna\Float($value);
+                break;
             case 'comment':
             case 'userNote':
                 $value = trim($value);
@@ -104,6 +126,12 @@ abstract class File extends Object implements IFile, \Iterator {
         return $this->data;
     }
 
+    /**
+     * convert string to \DateTime
+     * @param string $value
+     * @param bool $midnight
+     * @return \DateTime
+     */
     final protected function createDateTime($value, $midnight = TRUE) {
         $dt = date_create_from_format($this->getDateFormat(), $value);
         if ($midnight) {
@@ -112,11 +140,16 @@ abstract class File extends Object implements IFile, \Iterator {
         return $dt;
     }
 
+    /**
+     * fill data
+     * @param array $data
+     * @return \h4kuna\fio\libs\File
+     */
     final protected function append(array $data) {
         if ($this->dataKeyMap) {
             $map = $this->dataKeyMap;
         } else {
-            $map = array_combine(self::$dataKeys, self::$dataKeys);
+            $map = array_combine($this->getDataKeys(), $this->getDataKeys());
         }
 
         $append = array();
@@ -130,6 +163,28 @@ abstract class File extends Object implements IFile, \Iterator {
         $this->data[] = $append;
 
         return $this;
+    }
+
+    protected function dataKeys() {
+        return array('moveId', 'moveDate', 'amount', 'currency',
+            'toAccount', 'toAccountName', 'bankCode', 'bankName', 'constantSymbol',
+            'variableSymbol', 'specificSymbol', 'userNote', 'message', 'type',
+            'performed', 'specification', 'comment', 'bic', 'instructionId',
+        );
+    }
+
+    protected function headerKeys() {
+        return array('accountId', 'bankId', 'currency',
+            'iban', 'bic', 'openingBalance', 'closingBalance', 'dateStart',
+            'dateEnd', 'idFrom', 'idTo');
+    }
+
+    protected function getHeaderKeys() {
+        return self::$headerKeys[$this->getExtension()];
+    }
+
+    protected function getDataKeys() {
+        return self::$dataKeys[$this->getExtension()];
     }
 
 //----------------- implements iterator ----------------------------------------
@@ -154,16 +209,6 @@ abstract class File extends Object implements IFile, \Iterator {
         return $this;
     }
 
-// Pohyby na účtu za určené období
-// https://www.fio.cz/ib_api/rest/periods/aGEMQB9Idh35fh1g51h3ekkQwyGlQ/2012-08-25/2012-08-31/transactions.xml
-// Oficiální výpisy pohybů z účtu
-// https://www.fio.cz/ib_api/rest/by-id/aGEMtmwcsg5EbfIjqIhunibjhuvfdtsersxexdtgMR9Idh6u3/2012/1/transactions.xml
-// Pohyby na účtu od posledního stažení
-// https://www.fio.cz/ib_api/rest/last/aGEMtmwcsWAjPzhg3bPH3j7Iu15g56d66AdEbfIjqIgMR9Idh6u3/transactions.xml
-// Na ID posledního úspěšně staženého pohybu
-// https://www.fio.cz/ib_api/rest/set-last-id/Pu5CMBu5nYBtWAk4gsj0FaUlY7JIjUnYBthKaquSWf1eUl/1147608196/
-// Na datum posledního neúspěšně staženého pohybu
-// https://www.fio.cz/ib_api/rest/set-last-date/Pu5CMBu5nYBthKaqM0FaUlY7JIjUnY0FaUlY7JIjU1eUl/2012-07-27/
     public function __toString() {
         return $this->getExtension();
     }

@@ -20,30 +20,22 @@ interface IFile {
     const STA = 'sta';
 
     /**
-     * @return string file extension
+     * file extension
+     * @return string
      */
     function getExtension();
 
     /**
-     *
+     * prepare downloaded data before append
      * @param string $data
      * @return self
      */
     function parse($data);
 
     /**
+     * Date format
      * @return string
      */
     function getDateFormat();
-
-    /**
-     * @return array
-     */
-    function getDataKeys();
-
-    /**
-     * @return array
-     */
-    function getHeaderKeys();
 }
 

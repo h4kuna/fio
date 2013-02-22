@@ -27,7 +27,7 @@ class Csv extends File {
             if (!$line || $headerComplete === 1) {
                 ++$headerComplete;
             } elseif ($headerComplete) {
-                $this->append(array_combine(parent::$dataKeys, $line));
+                $this->append(array_combine($this->getDataKeys(), $line));
             } else {
                 $header[$line[0]] = $line[1];
             }
@@ -35,20 +35,6 @@ class Csv extends File {
 
         $this->setHeader($header);
         return $this;
-    }
-
-    public function getDataKeys() {
-        return array('moveId', 'moveDate', 'amount', 'currency',
-            'toAccount', 'toAccountName', 'bankCode', 'bankName', 'constantSymbol',
-            'variableSymbol', 'specificSymbol', 'userNote', 'message', 'type',
-            'performed', 'specification', 'comment', 'bic', 'instructionId',
-        );
-    }
-
-    public function getHeaderKeys() {
-        return array('accountId', 'bankId', 'currency',
-            'iban', 'bic', 'openingBalance', 'closingBalance', 'dateStart',
-            'dateEnd', 'idFrom', 'idTo');
     }
 
 }

@@ -51,7 +51,7 @@ class Gpc extends File {
             mb_substr($data, 118, 4),
             mb_substr($data, 122, 6),
         );
-        return array_combine(self::$dataKeys, $values);
+        return array_combine($this->getDataKeys(), $values);
     }
 
     private function report($data) {
@@ -67,7 +67,7 @@ class Gpc extends File {
             mb_substr($data, 108, 6),
             trim(substr($data, 116, 12))
         );
-        return array_combine(self::$headerKeys, $values);
+        return array_combine($this->getHeaderKeys(), $values);
     }
 
     private function floatVal($num, $mark = '+') {
@@ -82,14 +82,14 @@ class Gpc extends File {
         return ltrim($s, '0');
     }
 
-    public function getDataKeys() {
+    protected function getDataKeys() {
         return array('fromAccount', 'toAccount', 'moveId', 'amount', 'code',
             'variableSymbol', 'bankCode', 'constantSymbol', 'specificSymbol',
             'moveDate', 'toAccountName', 'currencyCode', 'dueDate'
         );
     }
 
-    public function getHeaderKeys() {
+    protected function getHeaderKeys() {
         return array('accountId', 'accountName', 'dateStart', 'openingBalance',
             'closingBalance', 'debitValue', 'creditValue', 'sequenceNumber',
             'dateEnd', 'note');
