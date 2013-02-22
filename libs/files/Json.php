@@ -37,7 +37,7 @@ class Json extends File {
         return 'Y-m-dO';
     }
 
-    public function getHeaderKeys() {
+    public function headerKeys() {
         return array_merge(parent::headerKeys(), array('yearList', 'idList', 'idLastDownload'));
     }
 
