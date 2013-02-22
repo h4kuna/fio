@@ -9,15 +9,10 @@ require_once 'IFile.php';
 abstract class File extends Object implements IFile, \Iterator {
 
     /** @var array */
-    protected static $dataKeys = array('moveId', 'moveDate', 'amount', 'currency',
-        'toAccount', 'toAccountName', 'bankCode', 'bankName', 'constantSymbol',
-        'variableSymbol', 'specificSymbol', 'userNote', 'message', 'type',
-        'performed', 'specification', 'comment', 'bic', 'instructionId');
+    protected static $dataKeys;
 
     /** @var array */
-    protected static $headerKeys = array('accountId', 'bankId', 'currency',
-        'iban', 'bic', 'openingBalance', 'closingBalance', 'dateStart',
-        'dateEnd', 'idFrom', 'idTo');
+    protected static $headerKeys;
 
     /** @var array */
     private $header = array();
@@ -30,6 +25,9 @@ abstract class File extends Object implements IFile, \Iterator {
     private $dataKeyMap = array();
 
     public function __construct($headerKeyMap = array(), $dataKeyMap = array()) {
+        self::$dataKeys = $this->getDataKeys();
+        self::$headerKeys = $this->getHeaderKeys();
+
         if ($headerKeyMap) {
             if (key($headerKeyMap) === 0) {
                 $this->headerKeyMap = array_combine(self::$headerKeys, $headerKeyMap);
@@ -56,7 +54,8 @@ abstract class File extends Object implements IFile, \Iterator {
 
         foreach ($data as $k => $v) {
             if (isset($map[$k])) {
-                $this->header[$map[$k]] = $this->prepareHeader($k, $v);
+                $value = $this->prepareHeader($k, $v);
+                $this->header[$map[$k]] = $value;
             }
         }
 
@@ -77,11 +76,18 @@ abstract class File extends Object implements IFile, \Iterator {
         return $value;
     }
 
-    protected function prepareData(array & $data) {
-        $data['moveDate'] = $this->createDateTime($data['moveDate']);
-        $data['amount'] = new \h4kuna\Float($data['amount']);
-        $data['comment'] = trim($data['comment']);
-        $data['userNote'] = trim($data['userNote']);
+    protected function prepareData($key, $value) {
+        switch ($key) {
+            case 'comment':
+            case 'userNote':
+                $value = trim($value);
+                break;
+            case 'moveDate':
+            case 'dueDate':
+                $value = $this->createDateTime($value);
+                break;
+        }
+        return $value;
     }
 
     /**
@@ -107,8 +113,22 @@ abstract class File extends Object implements IFile, \Iterator {
     }
 
     final protected function append(array $data) {
-        $this->prepareData($data);
-        $this->data[] = $data;
+        if ($this->dataKeyMap) {
+            $map = $this->dataKeyMap;
+        } else {
+            $map = array_combine(self::$dataKeys, self::$dataKeys);
+        }
+
+        $append = array();
+        foreach ($data as $k => $v) {
+            if (isset($map[$k])) {
+                $value = $this->prepareData($k, $v);
+                $append[$map[$k]] = $value;
+            }
+        }
+
+        $this->data[] = $append;
+
         return $this;
     }
 

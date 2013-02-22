@@ -19,59 +19,55 @@ class Gpc extends File {
     }
 
     public function parse($data) {
-        foreach (new \h4kuna\TextIterator($data) as $line) {
-            pd($this->parseLine($line));
-
-            pd($line);
+        foreach (new \h4kuna\TextIterator(iconv('windows-1250', 'UTF-8', $data)) as $line) {
+            $type = mb_substr($line, 0, 3);
+            if ($type == self::REPORT) {
+                $this->setHeader($this->report($line));
+            } else {
+                $this->append($this->item($line));
+            }
         }
-        exit;
+        return $this;
     }
 
     public function getDateFormat() {
         return 'dmy';
     }
 
-    private function parseLine($data) {
-        $type = mb_substr($data, 0, 3);
-        if ($type == self::REPORT) {
-            pd($this->report($data));
-            return $this->setHeader($this->report($data));
-        }
-        return $this->item($data);
+    private function item($data) {
+        $values = array(
+            $this->ltrim(mb_substr($data, 3, 16)),
+            $this->ltrim(rtrim(mb_substr($data, 19, 16))),
+            $this->ltrim(mb_substr($data, 35, 13)),
+            $this->floatVal(mb_substr($data, 48, 12)),
+            mb_substr($data, 60, 1),
+            $this->ltrim(mb_substr($data, 61, 10)),
+            mb_substr($data, 73, 4), //zkontrolovat
+            mb_substr($data, 77, 4),
+            $this->ltrim(mb_substr($data, 81, 10)),
+            mb_substr($data, 91, 6),
+            rtrim(mb_substr($data, 97, 20)),
+            //'zero' => mb_substr($data, 117, 1),
+            mb_substr($data, 118, 4),
+            mb_substr($data, 122, 6),
+        );
+        return array_combine(self::$dataKeys, $values);
     }
 
     private function report($data) {
-        return array(
-            'accountNumber' => $this->ltrim(mb_substr($data, 3, 16)),
-            'accountName' => rtrim(mb_substr($data, 19, 20)),
-            'oldBalanceDate' => $this->createDateTime(mb_substr($data, 39, 6)),
-            'oldBalanceValue' => $this->floatVal(mb_substr($data, 45, 14), mb_substr($data, 59, 1)),
-            'newBalanceValue' => $this->floatVal(mb_substr($data, 60, 14), mb_substr($data, 74, 1)),
-            'debitValue' => $this->floatVal(mb_substr($data, 75, 14), mb_substr($data, 89, 1)),
-            'creditValue' => $this->floatVal(mb_substr($data, 90, 14), mb_substr($data, 104, 1)),
-            'sequenceNumber' => intval(mb_substr($data, 105, 3)),
-            'date' => $this->createDateTime(mb_substr($data, 108, 6)),
-            'note' => substr($data, 116, 12)
+        $values = array(
+            $this->ltrim(mb_substr($data, 3, 16)),
+            rtrim(mb_substr($data, 19, 20)),
+            mb_substr($data, 39, 6),
+            $this->floatVal(mb_substr($data, 45, 14), mb_substr($data, 59, 1)),
+            $this->floatVal(mb_substr($data, 60, 14), mb_substr($data, 74, 1)),
+            $this->floatVal(mb_substr($data, 75, 14), mb_substr($data, 89, 1)),
+            $this->floatVal(mb_substr($data, 90, 14), mb_substr($data, 104, 1)),
+            intval(mb_substr($data, 105, 3)),
+            mb_substr($data, 108, 6),
+            trim(substr($data, 116, 12))
         );
-    }
-
-    private function item($data) {
-        return array(
-            'accountNumber' => $this->ltrim(mb_substr($data, 3, 16)),
-            'offsetAccount' => $this->ltrim(rtrim(mb_substr($data, 19, 16))),
-            'recordNumber' => $this->ltrim(mb_substr($data, 35, 13)),
-            'value' => $this->floatVal(mb_substr($data, 48, 12)),
-            'code' => mb_substr($data, 60, 1),
-            'variableSymbol' => intval((mb_substr($data, 61, 10))),
-            'bankCode' => mb_substr($data, 73, 4), //zkontrolovat
-            'constantSymbol' => $this->ltrim(mb_substr($data, 77, 4)),
-            'specificSymbol' => intval(mb_substr($data, 81, 10)),
-            'valut' => mb_substr($data, 91, 6),
-            'clientName' => rtrim(mb_substr($data, 97, 20)),
-            //'zero' => mb_substr($data, 117, 1),
-            'currencyCode' => mb_substr($data, 118, 4),
-            'dueDate' => $this->createDateTime(mb_substr($data, 122, 6)),
-        );
+        return array_combine(self::$headerKeys, $values);
     }
 
     private function floatVal($num, $mark = '+') {
@@ -84,6 +80,19 @@ class Gpc extends File {
 
     private function ltrim($s) {
         return ltrim($s, '0');
+    }
+
+    public function getDataKeys() {
+        return array('fromAccount', 'toAccount', 'moveId', 'amount', 'code',
+            'variableSymbol', 'bankCode', 'constantSymbol', 'specificSymbol',
+            'moveDate', 'toAccountName', 'currencyCode', 'dueDate'
+        );
+    }
+
+    public function getHeaderKeys() {
+        return array('accountId', 'accountName', 'dateStart', 'openingBalance',
+            'closingBalance', 'debitValue', 'creditValue', 'sequenceNumber',
+            'dateEnd', 'note');
     }
 
 }

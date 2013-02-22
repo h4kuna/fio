@@ -7,8 +7,8 @@ namespace h4kuna\fio\libs;
  * @author Milan Matějček
  */
 interface IFile {
-
     /** supported */
+
     const GPC = 'gpc';
     const CSV = 'csv';
     const JSON = 'json';
@@ -35,5 +35,15 @@ interface IFile {
      * @return string
      */
     function getDateFormat();
+
+    /**
+     * @return array
+     */
+    function getDataKeys();
+
+    /**
+     * @return array
+     */
+    function getHeaderKeys();
 }
 

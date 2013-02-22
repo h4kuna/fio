@@ -19,17 +19,14 @@ class Fio extends Nette\Object {
      */
     private $token;
 
-    /**
-     * @var libs\IFile
-     */
+    /** @var libs\IFile */
     private $parser;
 
     /**
-     *
      * @param type $token
      * @param string|libs\IFile $parser
      */
-    public function __construct($token, $parser = libs\IFile::CSV) {
+    public function __construct($token, $parser = libs\IFile::JSON) {
         $this->token = $token;
         $this->loadParser($parser);
     }
@@ -61,7 +58,7 @@ class Fio extends Nette\Object {
 
     /**
      * this method download a new movements and create breakpoint
-     * @return type
+     * @return libs\IFile
      */
     public function lastDownload() {
         $url = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->parser->getExtension());
@@ -88,7 +85,7 @@ class Fio extends Nette\Object {
         return \h4kuna\CUrl::download($url);
     }
 
-    /** @return libs\Data */
+    /** @return libs\IFile */
     public function getLastResponse() {
         return $this->parser;
     }

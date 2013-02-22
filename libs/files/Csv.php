@@ -37,5 +37,19 @@ class Csv extends File {
         return $this;
     }
 
+    public function getDataKeys() {
+        return array('moveId', 'moveDate', 'amount', 'currency',
+            'toAccount', 'toAccountName', 'bankCode', 'bankName', 'constantSymbol',
+            'variableSymbol', 'specificSymbol', 'userNote', 'message', 'type',
+            'performed', 'specification', 'comment', 'bic', 'instructionId',
+        );
+    }
+
+    public function getHeaderKeys() {
+        return array('accountId', 'bankId', 'currency',
+            'iban', 'bic', 'openingBalance', 'closingBalance', 'dateStart',
+            'dateEnd', 'idFrom', 'idTo');
+    }
+
 }
 
