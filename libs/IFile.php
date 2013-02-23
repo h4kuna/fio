@@ -31,11 +31,5 @@ interface IFile {
      * @return self
      */
     function parse($data);
-
-    /**
-     * Date format
-     * @return string
-     */
-    function getDateFormat();
 }
 

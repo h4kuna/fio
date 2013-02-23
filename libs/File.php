@@ -179,6 +179,8 @@ abstract class File extends Object implements IFile, \Iterator {
             'dateEnd', 'idFrom', 'idTo');
     }
 
+    abstract protected function getDateFormat();
+
     protected function getHeaderKeys() {
         return self::$headerKeys[$this->getExtension()];
     }
