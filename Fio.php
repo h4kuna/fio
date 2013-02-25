@@ -1,59 +1,115 @@
 <?php
 
-namespace h4kuna;
+namespace h4kuna\fio;
 
 use Nette;
+use h4kuna\fio\libs;
 
-require_once 'libs/GpcParser.php';
+require_once 'FioException.php';
+require_once 'libs/File.php';
 
 class Fio extends Nette\Object {
 
-    private $account;
-    private $userName;
-    private $password;
-    private $userAgent = 'PHP Script';
-    private $filter = GpcParser::BOTH;
+    const FIO_API_VERSION = '1.0.5';
+    const REST_URL = 'https://www.fio.cz/ib_api/rest/';
 
-    public function __construct($account, $password, $userName) {
-        $this->account = urlencode($account);
-        $this->password = urlencode($password);
-        $this->userName = urlencode($userName);
-    }
+    /**
+     * secure token
+     * @var string
+     */
+    private $token;
 
-    public function setFilter($v) {
-        $this->filter = $v;
-        return $this;
-    }
+    /** @var libs\IFile */
+    private $parser;
 
-    public function setUserAgent($v) {
-        $this->userAgent = $v;
-        return $this;
+    /**
+     * @param type $token
+     * @param string|libs\IFile $parser
+     */
+    public function __construct($token, $parser = libs\IFile::JSON) {
+        $this->token = $token;
+        $this->loadParser($parser);
     }
 
     /**
-     * @param string|int|\Datetime $from
-     * @param string|int|\Datetime $to
-     * @return \Fio\GpcParser
+     * download variable range
+     * @param mixed $from
+     * @param mixed $to
+     * @return libs\IFile
      */
-    public function import($from = '-1 month', $to = 'now') {
-        $format = 'd.m.Y';
-        $from = Nette\DateTime::from($from);
-        $to = Nette\DateTime::from($to);
+    public function movements($from = '-1 month', $to = 'now') {
+        $url = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, \Nette\DateTime::from($from)->format('Y-m-d'), \Nette\DateTime::from($to)->format('Y-m-d'), $this->parser->getExtension());
+        return $this->parser->parse(\h4kuna\CUrl::download($url));
+    }
 
-        $requestURL = "https://www.fio.cz/scgi-bin/hermes/dz-pohyby.cgi?ID_ucet={$this->account}" .
-                "&LOGIN_USERNAME={$this->userName}&SUBMIT=Odeslat&LOGIN_TIME=" . time() .
-                "&LOGIN_PASSWORD={$this->password}&pohyby_DAT_od={$from->format($format)}" .
-                "&pohyby_DAT_do={$to->format($format)}&export_gpc=1";
-        $curl = new CUrl($requestURL, array(
-                    CURLOPT_USERAGENT => $this->userAgent,
-                    CURLOPT_RETURNTRANSFER => TRUE,
-                    CURLOPT_HEADER => FALSE,
-                    CURLOPT_SSL_VERIFYPEER => FALSE,
-                    CURLOPT_HTTPGET => TRUE,
-                    CURLOPT_HTTPHEADER => array('Content-Type: text/plain', 'Connection: Close')
-                ));
+    /**
+     * ???
+     * @param int $id
+     * @param int|string $year format YYYY
+     * @return libs\IFile
+     */
+    public function movementId($id, $year = NULL) {
+        if ($year === NULL) {
+            $year = date('Y');
+        }
+        $url = self::REST_URL . sprintf('by-id/%s/%s/%s/transactions.%s', $this->token, $year, $id, $this->parser->getExtension());
+        return $this->parser->parse(\h4kuna\CUrl::download($url));
+    }
 
-        return new GpcParser($curl->exec(), $this->filter);
+    /**
+     * this method download a new movements and create breakpoint
+     * @return libs\IFile
+     */
+    public function lastDownload() {
+        $url = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->parser->getExtension());
+        return $this->parser->parse(\h4kuna\CUrl::download($url));
+    }
+
+    /**
+     * set brakepoint to know moveId
+     * @param int $moveId
+     * @return string
+     */
+    public function setLastId($moveId) {
+        $url = self::REST_URL . sprintf('set-last-id/%s/%s/', $this->token, $moveId);
+        return \h4kuna\CUrl::download($url);
+    }
+
+    /**
+     * set breakpoint to date
+     * @param mixed $date
+     * @return string
+     */
+    public function setLastDate($date) {
+        $url = self::REST_URL . sprintf('set-last-date/%s/%s/', $this->token, \Nette\DateTime::from($date)->format('Y-m-d'));
+        return \h4kuna\CUrl::download($url);
+    }
+
+    /** @return libs\IFile */
+    public function getLastResponse() {
+        return $this->parser;
+    }
+
+    /**
+     * prepare object for parse data
+     * @param string|libs\IFile $parser
+     * @throws \RuntimeException
+     */
+    private function loadParser($parser) {
+        if ($parser instanceof libs\IFile) {
+            $this->parser = $parser;
+        } elseif (is_string($parser)) {
+            $class = '\libs\files\\' . ucfirst($parser);
+            $file = __DIR__ . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+            if (file_exists($file)) {
+                require_once $file;
+                $class = __NAMESPACE__ . $class;
+                $this->parser = new $class;
+                return $this;
+            }
+            throw new FioException('File not found: ' . $file);
+        }
+        throw new FioException('Parser is\'t supported. Must be Instance of IFile or string as constant from IFile.');
     }
 
 }
