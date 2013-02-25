@@ -1,6 +1,6 @@
 Fio
 =====
-Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Default read via csv file.
+Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Default read via json file.
 
 For dependency look at to composer.json
 - h4kuna/curl
