@@ -1,6 +1,6 @@
 <?php
 
-namespace h4kuna\fio\libs;
+namespace h4kuna\fio;
 
 /**
  *
@@ -38,4 +38,3 @@ interface IFile {
      */
     function getDateFormat();
 }
-

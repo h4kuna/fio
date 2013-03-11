@@ -1,6 +1,6 @@
 <?php
 
-namespace h4kuna\fio\libs;
+namespace h4kuna\fio;
 
 use \Nette\Object;
 
@@ -50,7 +50,7 @@ abstract class File extends Object implements IFile, \Iterator {
     /**
      *
      * @param array $data
-     * @return \h4kuna\fio\libs\File
+     * @return \h4kuna\fio\File
      */
     protected function setHeader(array $data) {
         if ($this->headerKeyMap) {
@@ -143,7 +143,7 @@ abstract class File extends Object implements IFile, \Iterator {
     /**
      * fill data
      * @param array $data
-     * @return \h4kuna\fio\libs\File
+     * @return \h4kuna\fio\File
      */
     final protected function append(array $data) {
         if ($this->dataKeyMap) {

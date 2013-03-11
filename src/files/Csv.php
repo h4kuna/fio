@@ -1,8 +1,8 @@
 <?php
 
-namespace h4kuna\fio\libs\files;
+namespace h4kuna\fio\files;
 
-use h4kuna\fio\libs\File;
+use h4kuna\fio\File;
 
 /**
  * @author h4kuna

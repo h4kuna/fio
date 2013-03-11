@@ -1,12 +1,11 @@
 <?php
 
-namespace h4kuna\fio;
+namespace h4kuna;
 
 use Nette;
-use h4kuna\fio\libs;
 
 require_once 'FioException.php';
-require_once 'libs/File.php';
+require_once 'src/File.php';
 
 class Fio extends Nette\Object {
 
@@ -19,14 +18,14 @@ class Fio extends Nette\Object {
      */
     private $token;
 
-    /** @var libs\IFile */
+    /** @var fio\IFile */
     private $parser;
 
     /**
      * @param type $token
-     * @param string|libs\IFile $parser
+     * @param string|fio\IFile $parser
      */
-    public function __construct($token, $parser = libs\IFile::JSON) {
+    public function __construct($token, $parser = fio\IFile::JSON) {
         $this->token = $token;
         $this->loadParser($parser);
     }
@@ -35,7 +34,7 @@ class Fio extends Nette\Object {
      * download variable range
      * @param mixed $from
      * @param mixed $to
-     * @return libs\IFile
+     * @return fio\IFile
      */
     public function movements($from = '-1 month', $to = 'now') {
         $url = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, \Nette\DateTime::from($from)->format('Y-m-d'), \Nette\DateTime::from($to)->format('Y-m-d'), $this->parser->getExtension());
@@ -46,7 +45,7 @@ class Fio extends Nette\Object {
      * ???
      * @param int $id
      * @param int|string $year format YYYY
-     * @return libs\IFile
+     * @return fio\IFile
      */
     public function movementId($id, $year = NULL) {
         if ($year === NULL) {
@@ -58,7 +57,7 @@ class Fio extends Nette\Object {
 
     /**
      * this method download a new movements and create breakpoint
-     * @return libs\IFile
+     * @return fio\IFile
      */
     public function lastDownload() {
         $url = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->parser->getExtension());
@@ -85,25 +84,25 @@ class Fio extends Nette\Object {
         return \h4kuna\CUrl::download($url);
     }
 
-    /** @return libs\IFile */
+    /** @return fio\IFile */
     public function getLastResponse() {
         return $this->parser;
     }
 
     /**
      * prepare object for parse data
-     * @param string|libs\IFile $parser
+     * @param string|fio\IFile $parser
      * @throws \RuntimeException
      */
     private function loadParser($parser) {
-        if ($parser instanceof libs\IFile) {
+        if ($parser instanceof fio\IFile) {
             $this->parser = $parser;
         } elseif (is_string($parser)) {
-            $class = '\libs\files\\' . ucfirst($parser);
-            $file = __DIR__ . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+            $class = '\files\\' . ucfirst($parser);
+            $file = __DIR__ . str_replace('\\', DIRECTORY_SEPARATOR, '\src' . $class) . '.php';
             if (file_exists($file)) {
                 require_once $file;
-                $class = __NAMESPACE__ . $class;
+                $class = __NAMESPACE__ . '\fio' . $class;
                 $this->parser = new $class;
                 return $this;
             }

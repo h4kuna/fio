@@ -8,7 +8,7 @@ For dependency look at to composer.json
 - h4kuna/data-type
 
 ```php
-$fio = new Fio($token);
+$fio = new \h4kuna\Fio($token);
 
 foreach($fio->movements() as $data) {
     var_dump($data);// save to db
