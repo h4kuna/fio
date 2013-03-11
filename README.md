@@ -14,4 +14,4 @@ foreach($fio->movements() as $data) {
     var_dump($data);// save to db
 }
 ```
-Look at to public method of class **\h4kuna\fio\Fio**.
+Look at to public method of class **\h4kuna\Fio**.
