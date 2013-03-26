@@ -21,6 +21,11 @@ class Json extends File {
         static $mapper = array(22, 0, 1, 14, 2, 10, 3, 12, 4, 5, 6, 7, 16, 8, 9, 18, 25, 26, 17);
         $combine = array_combine($mapper, $this->getDataKeys());
 
+        if(!$json->accountStatement->transactionList) {
+            // There are no transactions
+            return $this;
+        }
+
         foreach ($json->accountStatement->transactionList->transaction as $row) {
             $out = array();
             foreach ($row as $column) {
