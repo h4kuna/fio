@@ -4,9 +4,6 @@ namespace h4kuna;
 
 use Nette;
 
-require_once 'FioException.php';
-require_once 'src/File.php';
-
 class Fio extends Nette\Object {
 
     const FIO_API_VERSION = '1.0.5';
@@ -18,14 +15,14 @@ class Fio extends Nette\Object {
      */
     private $token;
 
-    /** @var fio\IFile */
+    /** @var Fio\IFile */
     private $parser;
 
     /**
      * @param type $token
-     * @param string|fio\IFile $parser
+     * @param string|Fio\IFile $parser
      */
-    public function __construct($token, $parser = fio\IFile::JSON) {
+    public function __construct($token, $parser = Fio\IFile::JSON) {
         $this->token = $token;
         $this->loadParser($parser);
     }
@@ -34,18 +31,18 @@ class Fio extends Nette\Object {
      * download variable range
      * @param mixed $from
      * @param mixed $to
-     * @return fio\IFile
+     * @return Fio\IFile
      */
     public function movements($from = '-1 month', $to = 'now') {
-        $url = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, \Nette\DateTime::from($from)->format('Y-m-d'), \Nette\DateTime::from($to)->format('Y-m-d'), $this->parser->getExtension());
-        return $this->parser->parse(\h4kuna\CUrl::download($url));
+        $url = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, Nette\DateTime::from($from)->format('Y-m-d'), Nette\DateTime::from($to)->format('Y-m-d'), $this->parser->getExtension());
+        return $this->parser->parse(CUrl::download($url));
     }
 
     /**
      * ???
      * @param int $id
      * @param int|string $year format YYYY
-     * @return fio\IFile
+     * @return Fio\IFile
      */
     public function movementId($id, $year = NULL) {
         if ($year === NULL) {
@@ -57,7 +54,7 @@ class Fio extends Nette\Object {
 
     /**
      * this method download a new movements and create breakpoint
-     * @return fio\IFile
+     * @return Fio\IFile
      */
     public function lastDownload() {
         $url = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->parser->getExtension());
@@ -71,7 +68,7 @@ class Fio extends Nette\Object {
      */
     public function setLastId($moveId) {
         $url = self::REST_URL . sprintf('set-last-id/%s/%s/', $this->token, $moveId);
-        return \h4kuna\CUrl::download($url);
+        return CUrl::download($url);
     }
 
     /**
@@ -80,35 +77,35 @@ class Fio extends Nette\Object {
      * @return string
      */
     public function setLastDate($date) {
-        $url = self::REST_URL . sprintf('set-last-date/%s/%s/', $this->token, \Nette\DateTime::from($date)->format('Y-m-d'));
-        return \h4kuna\CUrl::download($url);
+        $url = self::REST_URL . sprintf('set-last-date/%s/%s/', $this->token, Nette\DateTime::from($date)->format('Y-m-d'));
+        return CUrl::download($url);
     }
 
-    /** @return fio\IFile */
+    /** @return Fio\IFile */
     public function getLastResponse() {
         return $this->parser;
     }
 
     /**
      * prepare object for parse data
-     * @param string|fio\IFile $parser
-     * @throws \RuntimeException
+     * @param string|Fio\IFile $parser
+     * @throws Fio\FioException
      */
     private function loadParser($parser) {
-        if ($parser instanceof fio\IFile) {
+        if ($parser instanceof Fio\IFile) {
             $this->parser = $parser;
         } elseif (is_string($parser)) {
-            $class = '\files\\' . ucfirst($parser);
-            $file = __DIR__ . str_replace('\\', DIRECTORY_SEPARATOR, '\src' . $class) . '.php';
+            $class = '\Files\\' . ucfirst($parser);
+            $file = __DIR__ . str_replace('\\', DIRECTORY_SEPARATOR, '\Fio' . $class) . '.php';
             if (file_exists($file)) {
                 require_once $file;
-                $class = __NAMESPACE__ . '\fio' . $class;
+                $class = __NAMESPACE__ . '\Fio' . $class;
                 $this->parser = new $class;
                 return $this;
             }
-            throw new FioException('File not found: ' . $file);
+            throw new Fio\FioException('File not found: ' . $file);
         }
-        throw new FioException('Parser is\'t supported. Must be Instance of IFile or string as constant from IFile.');
+        throw new Fio\FioException('Parser is\'t supported. Must be Instance of IFile or string as constant from IFile.');
     }
 
 }

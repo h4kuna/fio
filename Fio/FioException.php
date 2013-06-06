@@ -1,6 +1,6 @@
 <?php
 
-namespace h4kuna;
+namespace h4kuna\Fio;
 
 /**
  * Description of FioException

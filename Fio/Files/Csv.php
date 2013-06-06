@@ -1,13 +1,11 @@
 <?php
 
-namespace h4kuna\fio\files;
-
-use h4kuna\fio\File;
+namespace h4kuna\Fio\Files;
 
 /**
  * @author h4kuna
  */
-class Csv extends File {
+class Csv extends \h4kuna\Fio\File {
 
     public function getExtension() {
         return self::CSV;

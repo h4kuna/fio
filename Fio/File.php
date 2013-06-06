@@ -1,10 +1,8 @@
 <?php
 
-namespace h4kuna\fio;
+namespace h4kuna\Fio;
 
 use \Nette\Object;
-
-require_once 'IFile.php';
 
 abstract class File extends Object implements IFile, \Iterator {
 

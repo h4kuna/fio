@@ -2,14 +2,12 @@
 
 namespace h4kuna\fio\files;
 
-use h4kuna\fio\File;
-
 /**
  * Description of Csv
  *
  * @author h4kuna
  */
-class Gpc extends File {
+class Gpc extends \h4kuna\Fio\File {
 
     const REPORT = '074';
     const ITEM = '075';
