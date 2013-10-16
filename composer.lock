@@ -1,0 +1,217 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "e996a8648354ecdb7b0c3eba5e00c71b",
+    "packages": [
+        {
+            "name": "h4kuna/data-type",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h4kuna/data-type.git",
+                "reference": "52fc30501f8372c8ba651a81cdbeef95a7c07ce4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h4kuna/data-type/zipball/52fc30501f8372c8ba651a81cdbeef95a7c07ce4",
+                "reference": "52fc30501f8372c8ba651a81cdbeef95a7c07ce4",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": ">=2.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Matějček",
+                    "email": "milan.matejcek@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Basic data type, int, float, string, set, gps",
+            "homepage": "https://github.com/h4kuna/data-type",
+            "time": "2013-06-03 07:28:10"
+        },
+        {
+            "name": "h4kuna/iterators",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h4kuna/iterators.git",
+                "reference": "a40286fb8dd88d282545efbe3c59a5b7caf634dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h4kuna/iterators/zipball/a40286fb8dd88d282545efbe3c59a5b7caf634dd",
+                "reference": "a40286fb8dd88d282545efbe3c59a5b7caf634dd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Matějček",
+                    "email": "milan.matejcek@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "tools ala iterators",
+            "homepage": "https://github.com/h4kuna/iterators",
+            "time": "2013-04-03 11:11:33"
+        },
+        {
+            "name": "h4kuna/object-wrapper",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/h4kuna/object-wrapper.git",
+                "reference": "2263d386613e6a452c5c95eac4fc72d431db4260"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/h4kuna/object-wrapper/zipball/2263d386613e6a452c5c95eac4fc72d431db4260",
+                "reference": "2263d386613e6a452c5c95eac4fc72d431db4260",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Matějček",
+                    "email": "milan.matejcek@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Helper whose create object above php function, forexample: curl, fsocket, file...",
+            "homepage": "https://github.com/h4kuna/object-wrapper",
+            "keywords": [
+                "Object-oriented programming php"
+            ],
+            "time": "2013-06-05 06:12:32"
+        },
+        {
+            "name": "nette/nette",
+            "version": "v2.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nette/nette.git",
+                "reference": "80a7e460badc3d71b1469bb23810ebf235b06b11"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nette/nette/zipball/80a7e460badc3d71b1469bb23810ebf235b06b11",
+                "reference": "80a7e460badc3d71b1469bb23810ebf235b06b11",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "ext-tokenizer": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "nette/tester": "0.9.*"
+            },
+            "suggest": {
+                "ext-fileinfo": "*",
+                "ext-gd": "*",
+                "ext-mbstring": "*",
+                "ext-memcache": "*",
+                "ext-pdo": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "Nette/loader.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "http://davidgrudl.com"
+                },
+                {
+                    "name": "Nette Community",
+                    "homepage": "http://nette.org/contributors"
+                }
+            ],
+            "description": "Nette Framework - innovative framework for fast and easy development of secured web applications in PHP. Write less, have cleaner code and your work will bring you joy.",
+            "homepage": "http://nette.org",
+            "keywords": [
+                "Forms",
+                "database",
+                "dbal",
+                "debugging",
+                "framework",
+                "images",
+                "latte",
+                "mailing",
+                "micro",
+                "mvc",
+                "neon",
+                "templating"
+            ],
+            "time": "2013-08-07 23:14:19"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": [
+
+    ],
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}

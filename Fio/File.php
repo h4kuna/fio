@@ -48,7 +48,7 @@ abstract class File extends Object implements IFile, \Iterator {
     /**
      *
      * @param array $data
-     * @return \h4kuna\fio\File
+     * @return File
      */
     protected function setHeader(array $data) {
         if ($this->headerKeyMap) {
@@ -68,7 +68,8 @@ abstract class File extends Object implements IFile, \Iterator {
     }
 
     /**
-     * same format for all files
+     * Same format for all files
+     *
      * @param string|int $key
      * @param mixed $value
      * @return mixed
@@ -88,7 +89,8 @@ abstract class File extends Object implements IFile, \Iterator {
     }
 
     /**
-     * same format for all files
+     * Same format for all files
+     *
      * @param string|int $key
      * @param mixed $value
      * @return mixed
@@ -125,7 +127,8 @@ abstract class File extends Object implements IFile, \Iterator {
     }
 
     /**
-     * convert string to \DateTime
+     * Convert string to \DateTime
+     *
      * @param string $value
      * @param bool $midnight
      * @return \DateTime
@@ -207,8 +210,12 @@ abstract class File extends Object implements IFile, \Iterator {
         return $this;
     }
 
+    /**
+     *
+     * @return string
+     */
     public function __toString() {
-        return $this->getExtension();
+        return (string) $this->getExtension();
     }
 
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace h4kuna\fio\files;
+namespace h4kuna\Fio\Files;
+
+use h4kuna\Fio\File;
 
 /**
- * Description of Csv
- *
- * @author h4kuna
+ * @author Milan Matejcek
  */
-class Json extends \h4kuna\Fio\File {
+class Json extends File {
 
     public function getExtension() {
         return self::JSON;

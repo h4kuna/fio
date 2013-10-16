@@ -2,10 +2,12 @@
 
 namespace h4kuna\Fio\Files;
 
+use h4kuna\Fio\File;
+
 /**
- * @author h4kuna
+ * @author Milan Matejcek
  */
-class Csv extends \h4kuna\Fio\File {
+class Csv extends File {
 
     public function getExtension() {
         return self::CSV;
@@ -36,4 +38,3 @@ class Csv extends \h4kuna\Fio\File {
     }
 
 }
-
