@@ -9,6 +9,10 @@ use h4kuna\Fio\File;
  */
 class Json extends File {
 
+    /**
+     *
+     * @return string
+     */
     public function getExtension() {
         return self::JSON;
     }
@@ -42,10 +46,18 @@ class Json extends File {
         return $this;
     }
 
+    /**
+     *
+     * @return string
+     */
     public function getDateFormat() {
         return 'Y-m-dO';
     }
 
+    /**
+     *
+     * @return array
+     */
     public function headerKeys() {
         return array_merge(parent::headerKeys(), array('yearList', 'idList', 'idLastDownload'));
     }

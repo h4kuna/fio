@@ -2,15 +2,22 @@ Fio
 =====
 Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Default read via json file.
 
-For dependency look at to composer.json
-- h4kuna/iterators
-- h4kuna/data-type
-
-```php
-$fio = new \h4kuna\Fio($token);
-
-foreach($fio->movements() as $data) {
-    var_dump($data);// save to db
-}
+Installation to project
+-----------------------
+The best way to install h4kuna/fio is using Composer:
+```sh
+$ composer require h4kuna/fio:@dev
 ```
-Look at to public method of class **\h4kuna\Fio**.
+
+Run simple example
+------------------
+```sh
+$ cd to/your/web/document/root
+$ git clone git@github.com:h4kuna/fio.git
+$ cd fio
+$ chmod 777 tests/tmp
+$ composer install
+$ echo '<?php return "YOUR SECURE TOKEN"' > tests/tmp/secureToken.php
+```
+
+Look at to example.php and read it, after you can open in browser and you can see how it is work.

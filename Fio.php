@@ -13,6 +13,7 @@ use h4kuna\Fio\XMLResponse;
  * Začne li se sestavovat tělo požadavku je potřeba uzamknout extension a pokud se nastaví cesta k souboru tak zamknout přidávání do těla
  *
  * Read FIO account
+ * @todo No tested for file ABO
  */
 class Fio extends Object {
 
@@ -29,7 +30,10 @@ class Fio extends Object {
     private $uploadExtension;
 
     /** @var string */
-    private $language = 'en';
+    private $language = 'cs';
+
+    /** @var string */
+    private $requestUrl;
 
     /**
      * Secure token
@@ -61,8 +65,8 @@ class Fio extends Object {
      * @return IFile
      */
     public function movements($from = '-1 month', $to = 'now') {
-        $url = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, DateTime::from($from)->format('Y-m-d'), DateTime::from($to)->format('Y-m-d'), $this->parser->getExtension());
-        return $this->parser->parse(CUrl::download($url));
+        $this->requestUrl = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, DateTime::from($from)->format('Y-m-d'), DateTime::from($to)->format('Y-m-d'), $this->parser->getExtension());
+        return $this->parser->parse(CUrl::download($this->requestUrl));
     }
 
     /**
@@ -76,8 +80,8 @@ class Fio extends Object {
         if ($year === NULL) {
             $year = date('Y');
         }
-        $url = self::REST_URL . sprintf('by-id/%s/%s/%s/transactions.%s', $this->token, $year, $id, $this->parser->getExtension());
-        return $this->parser->parse(Curl::download($url));
+        $this->requestUrl = self::REST_URL . sprintf('by-id/%s/%s/%s/transactions.%s', $this->token, $year, $id, $this->parser->getExtension());
+        return $this->parser->parse(Curl::download($this->requestUrl));
     }
 
     /**
@@ -86,8 +90,8 @@ class Fio extends Object {
      * @return IFile
      */
     public function lastDownload() {
-        $url = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->parser->getExtension());
-        return $this->parser->parse(Curl::download($url));
+        $this->requestUrl = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->parser->getExtension());
+        return $this->parser->parse(Curl::download($this->requestUrl));
     }
 
 // <editor-fold defaultstate="collapsed" desc="Breakpoints">
@@ -98,8 +102,8 @@ class Fio extends Object {
      * @return string
      */
     public function setLastId($moveId) {
-        $url = self::REST_URL . sprintf('set-last-id/%s/%s/', $this->token, $moveId);
-        return CUrl::download($url);
+        $this->requestUrl = self::REST_URL . sprintf('set-last-id/%s/%s/', $this->token, $moveId);
+        return CUrl::download($this->requestUrl);
     }
 
     /**
@@ -109,11 +113,19 @@ class Fio extends Object {
      * @return string
      */
     public function setLastDate($date) {
-        $url = self::REST_URL . sprintf('set-last-date/%s/%s/', $this->token, DateTime::from($date)->format('Y-m-d'));
-        return CUrl::download($url);
+        $this->requestUrl = self::REST_URL . sprintf('set-last-date/%s/%s/', $this->token, DateTime::from($date)->format('Y-m-d'));
+        return CUrl::download($this->requestUrl);
     }
 
 // </editor-fold>
+    /**
+     * Last Request url for read
+     *
+     * @return string
+     */
+    public function getRequestUrl() {
+        return $this->requestUrl;
+    }
 
     /** @return IFile */
     public function getLastResponse() {

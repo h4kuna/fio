@@ -46,6 +46,7 @@ abstract class File extends Object implements IFile, \Iterator {
     }
 
     /**
+     * Setup heades
      *
      * @param array $data
      * @return File
@@ -142,7 +143,8 @@ abstract class File extends Object implements IFile, \Iterator {
     }
 
     /**
-     * fill data
+     * Fill data
+     * 
      * @param array $data
      * @return \h4kuna\fio\File
      */
