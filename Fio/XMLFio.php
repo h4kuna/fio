@@ -55,11 +55,24 @@ class XMLFio {
     /** @var string */
     private $content;
 
+    /** @var string */
+    private $temp;
+
     /**
      *
      * @param string $account
      */
-    public function __construct($account) {
+    public function __construct($account, $temp = NULL) {
+        if ($temp === NULL) {
+            $temp = ini_get('upload_tmp_dir');
+        }
+
+        $temp = @realpath($temp);
+        if (!$temp || !is_writable($temp)) {
+            throw new FioException('Temporary directory must exists and writeable.');
+        }
+
+        $this->temp = $temp;
         $this->account = preg_replace('~(/\d+)$~', '', $account);
         $this->createEmptyXml();
     }
@@ -111,7 +124,7 @@ class XMLFio {
      * @throws FioException
      */
     public function setPaymentType($type) {
-        if (in_array($type, self::$paymentTypes) || isset(self::$paymentTypes[$type])) {
+        if (isset(self::$paymentTypes[$type]) || in_array($type, self::$paymentTypes)) {
             $this->paymentType = isset(self::$paymentTypes[$type]) ? self::$paymentTypes[$type] : $type;
         } else {
             throw new FioException('Unsupported payment type: ' . $type);
@@ -234,7 +247,7 @@ class XMLFio {
      *
      * @return string
      */
-    public function render() {
+    public function getXml() {
         if ($this->content) {
             return $this->content;
         }
@@ -244,12 +257,25 @@ class XMLFio {
     }
 
     /**
+     *
+     * @return string
+     */
+    public function getPathname() {
+        $filename = $this->temp . DIRECTORY_SEPARATOR . md5(microtime(TRUE)) . '.xml';
+        file_put_contents($filename, $this->getXml());
+        register_shutdown_function(function() use ($filename) {
+            @unlink($filename);
+        });
+        return $filename;
+    }
+
+    /**
      * Render XML
      *
      * @return string
      */
     public function __toString() {
-        return (string) $this->render();
+        return (string) $this->getPathname();
     }
 
     /**

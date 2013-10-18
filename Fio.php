@@ -199,17 +199,7 @@ class Fio extends Object {
      */
     public function uploadFile($filename) {
         $this->setUploadExtenstion(pathinfo($filename, PATHINFO_EXTENSION));
-        return $this->uploadFileContent(file_get_contents($filename));
-    }
-
-    /**
-     *
-     * @param string $str
-     * @return XMLResponse
-     */
-    public function uploadFileContent($str) {
-        $this->setUploadExtenstion(preg_match('~^\<\?xml~', $str) ? 'xml' : 'abo');
-        return $this->send($str);
+        return $this->send($filename);
     }
 
     /**
@@ -218,7 +208,8 @@ class Fio extends Object {
      * @return XMLResponse
      */
     public function uploadXmlFio(Fio\XMLFio $xml) {
-        return $this->uploadFileContent((string) $xml);
+        $this->setUploadExtenstion('xml');
+        return $this->send($xml->getPathname());
     }
 
     /** @return XMLResponse */
@@ -230,19 +221,34 @@ class Fio extends Object {
 
     /**
      *
-     * @param string $content
+     * @param string $filename
      * @return XMLResponse
+     * @throws FioException
      */
-    protected function send($content) {
-        $data = array(
-            'type' => $this->uploadExtension,
-            'token' => $this->token,
-            'lng' => $this->language,
-            'file' => array('content' => $content, 'name' => 'generated', 'type' => 'text/plain')
+    private function send($filename) {
+        $curl = new CUrl(self::REST_URL_WRITE, array(
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_SSL_VERIFYHOST => 1,
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_HEADER => 0,
+            CURLOPT_POST => 1,
+            CURLOPT_VERBOSE => 0,
+            CURLOPT_TIMEOUT => 60,
+            CURLOPT_HTTPHEADER => array('Content-Type: multipart/form-data; charset=utf-8;'),
+            CURLOPT_POSTFIELDS => array(
+                'type' => $this->uploadExtension,
+                'token' => $this->token,
+                'lng' => $this->language,
+                'file' => '@' . $filename
+            ))
         );
 
-        $curl = Curl::postUploadFile(self::REST_URL_WRITE, $data);
-        return $this->response = new XMLResponse($curl->exec());
+        $xml = trim($curl->exec());
+        if (!$xml) {
+            throw new FioException('FIO server is not responding.', 500);
+        }
+
+        return $this->response = new XMLResponse($xml);
     }
 
 }

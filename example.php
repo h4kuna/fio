@@ -45,7 +45,7 @@ foreach ($fio->lastDownload() as $data) {
  */
 # $fio->setLanguage('en'); // change request language default is czech
 
-$fioXml = new h4kuna\Fio\XMLFio('2600267402'); // your FIO account, accept 2600267402/2010
+$fioXml = new h4kuna\Fio\XMLFio('2600267402', $tmp); // your FIO account, accept 2600267402/2010
 $fioXml
         ->setVariableSymbol('789456123') // optional, look at to all setters
         ->setConstantSymbol('0308') // optional
@@ -59,23 +59,10 @@ $fioXml
 $response = $fio->uploadXmlFio($fioXml); // response is h4kuna\Fio\XMLResponse
 # $fio->getUploadResponse(); // is same object as in variable $response
 // $fio->uploadFile($path) // file path
-// $fio->uploadFileContent('<?xml ...'); // file content
 
-
-if ($response->isOk()) {
+if ($response && $response->isOk()) {
     dump('good');
 } else {
     dump($response->getXml(), $response->getStatus(), $response->getError());
 }
-
-
-// test ************************************************************************
-
-
-dump($response);
-
-/**
- * @todo Curl update
- * @todo README
- */
 
