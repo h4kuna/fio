@@ -192,6 +192,7 @@ class XMLFio {
             throw new FioException('Payment reason must contain 3 digits.');
         }
         $this->paymentReason = $code;
+        return $this;
     }
 
 // </editor-fold>
@@ -251,7 +252,6 @@ class XMLFio {
         if ($this->content) {
             return $this->content;
         }
-        $this->xml->endElement();
         $this->xml->endDocument();
         return $this->content = $this->xml->outputMemory();
     }
