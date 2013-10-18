@@ -220,7 +220,7 @@ class Fio extends Object {
 // </editor-fold>
 
     /**
-     *
+     * @todo check filesize ??? 2MB in documentation
      * @param string $filename
      * @return XMLResponse
      * @throws FioException
