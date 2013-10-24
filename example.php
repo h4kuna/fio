@@ -16,15 +16,16 @@ $fio = new h4kuna\Fio(require __DIR__ . '/tests/tmp/secureToken.php');
  * *****************************************************************************
  */
 // from last download
-foreach ($fio->lastDownload() as $data) {
+# foreach ($fio->lastDownload() as $data) {
+#    dump($data); // save to db
+# }
+# $fio->getRequestUrl(); // request url
+// date range - default is one month ago
+foreach ($fio->movements() as $data) {
     dump($data); // save to db
 }
 
-# $fio->getRequestUrl(); // request url
-// date range - default is one month ago
-# foreach ($fio->movements() as $data) {
-#     dump($data); // save to db
-# }
+# dump($fio->getRequestUrl());
 // from move id
 # foreach ($fio->movementId('int moveId like 3540372617') as $data) {
 #    dump($data); // save to db
@@ -51,7 +52,7 @@ $fioXml
         ->setConstantSymbol('0308') // optional
         ->addPayment(300, '2000242017/2010'); // mandatory
 // ->addPayment(300, '2000242017', '2010'); // is same as line above
-// file_put_contents($tmp . '/generated.xml', (string) $fioXml); // request xml
+file_put_contents($tmp . '/generated.xml', (string) $fioXml->getXml()); // request xml
 
 /**
  * SEND REQUEST ****************************************************************
