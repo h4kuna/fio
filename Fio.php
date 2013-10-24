@@ -20,6 +20,9 @@ class Fio extends Object {
     /** @var string */
     const FIO_API_VERSION = '1.2.6';
 
+    /** @var int [s] */
+    const API_INTERVAL = 30;
+
     /** @var string */
     const REST_URL = 'https://www.fio.cz/ib_api/rest/';
 
@@ -48,6 +51,9 @@ class Fio extends Object {
     /** @var XMLResponse */
     private $response;
 
+    /** @var \DateTime */
+    private $lastRequest;
+
     /**
      * @param string $token
      * @param string|IFile $parser
@@ -64,8 +70,9 @@ class Fio extends Object {
      * @param string|int|DateTime $to
      * @return IFile
      */
-    public function movements($from = '-1 month', $to = 'now') {
+    public function movements($from = '-1 day', $to = 'now') {
         $this->requestUrl = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, DateTime::from($from)->format('Y-m-d'), DateTime::from($to)->format('Y-m-d'), $this->parser->getExtension());
+        $this->availableAnotherRequest();
         return $this->parser->parse(CUrl::download($this->requestUrl));
     }
 
@@ -81,6 +88,7 @@ class Fio extends Object {
             $year = date('Y');
         }
         $this->requestUrl = self::REST_URL . sprintf('by-id/%s/%s/%s/transactions.%s', $this->token, $year, $id, $this->parser->getExtension());
+        $this->availableAnotherRequest();
         return $this->parser->parse(Curl::download($this->requestUrl));
     }
 
@@ -91,6 +99,7 @@ class Fio extends Object {
      */
     public function lastDownload() {
         $this->requestUrl = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->parser->getExtension());
+        $this->availableAnotherRequest();
         return $this->parser->parse(Curl::download($this->requestUrl));
     }
 
@@ -103,6 +112,7 @@ class Fio extends Object {
      */
     public function setLastId($moveId) {
         $this->requestUrl = self::REST_URL . sprintf('set-last-id/%s/%s/', $this->token, $moveId);
+        $this->availableAnotherRequest();
         return CUrl::download($this->requestUrl);
     }
 
@@ -114,6 +124,7 @@ class Fio extends Object {
      */
     public function setLastDate($date) {
         $this->requestUrl = self::REST_URL . sprintf('set-last-date/%s/%s/', $this->token, DateTime::from($date)->format('Y-m-d'));
+        $this->availableAnotherRequest();
         return CUrl::download($this->requestUrl);
     }
 
@@ -148,6 +159,17 @@ class Fio extends Object {
             return $this;
         }
         throw new FioException('Parser is\'t supported. Must be Instance of IFile or string as constant from IFile.');
+    }
+
+    /**
+     * Interval between requests is 30s, import / read
+     */
+    private function availableAnotherRequest() {
+        if ($this->lastRequest && ($diff = $this->lastRequest->getTimestamp() - time()) > 0) {
+            // auto sleep between requests
+            sleep($diff);
+        }
+        $this->lastRequest = new \DateTime('+' . self::API_INTERVAL . ' seconds'); // 30s in API
     }
 
     /**
@@ -242,7 +264,7 @@ class Fio extends Object {
                 'file' => '@' . $filename
             ))
         );
-
+        $this->availableAnotherRequest();
         $xml = trim($curl->exec());
         if (!$xml) {
             throw new FioException('FIO server is not responding.', 500);
