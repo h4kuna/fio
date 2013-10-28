@@ -9,6 +9,17 @@ The best way to install h4kuna/fio is using Composer:
 $ composer require h4kuna/fio:@dev
 ```
 
+Example NEON config
+-------------------
+<pre>
+extensions:
+    fioExtension: h4kuna\Fio\DI\FioExtension
+
+fioExtension:
+    account: 2600267402/2010
+    token: 5asd64as5d46ad5a6
+</pre>
+
 Run simple example
 ------------------
 ```sh
