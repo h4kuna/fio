@@ -63,17 +63,8 @@ class XMLFio {
      * @param string $account
      */
     public function __construct($account, $temp = NULL) {
-        if ($temp === NULL) {
-            $temp = ini_get('upload_tmp_dir');
-        }
-
-        $temp = @realpath($temp);
-        if (!$temp || !is_writable($temp)) {
-            throw new FioException('Temporary directory must exists and writeable.');
-        }
-
-        $this->temp = $temp;
         $this->account = preg_replace('~(/\d+)$~', '', $account);
+        $this->setTemp($temp);
         $this->createEmptyXml();
     }
 
@@ -193,6 +184,25 @@ class XMLFio {
         }
         $this->paymentReason = $code;
         return $this;
+    }
+
+    /**
+     * Writeable temporary dir
+     *
+     * @param string $temp
+     * @throws FioException
+     */
+    public function setTemp($temp) {
+        if ($temp === NULL) {
+            $temp = ini_get('upload_tmp_dir');
+        }
+
+        $temp = @realpath($temp);
+        if (!$temp || !is_writable($temp)) {
+            throw new FioException('Temporary directory must exists and writeable.');
+        }
+
+        $this->temp = $temp;
     }
 
 // </editor-fold>
