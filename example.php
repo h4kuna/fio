@@ -37,7 +37,6 @@ $fio = Nette\Framework::VERSION == '2.1-dev' ?
 foreach ($fio->movements() as $data) {
     dump($data); // save to db
 }
-
 # dump($fio->getRequestUrl());
 // from move id
 # foreach ($fio->movementId('int moveId like 3540372617') as $data) {
@@ -59,12 +58,14 @@ foreach ($fio->movements() as $data) {
  */
 # $fio->setLanguage('en'); // change request language default is czech
 
-$fioXml = new h4kuna\Fio\XMLFio('2600267402', $tmp); // your FIO account, accept 2600267402/2010
+$fioXml = $fio->createXmlFio();
 $fioXml
         ->setVariableSymbol('789456123') // optional, look at to all setters
         ->setConstantSymbol('0308') // optional
         ->addPayment(300, '2000242017/2010'); // mandatory
 // ->addPayment(300, '2000242017', '2010'); // is same as line above
+// $fioXml->setCurrency('eur')->addPaymentForeing(300, 'CZ0820100000002600267402', 'FIOBCZPPXXX', 'Milan Matějček', 'CZ'); // foreing pament to another country
+
 file_put_contents($tmp . '/generated.xml', (string) $fioXml->getXml()); // request xml
 
 /**
@@ -78,5 +79,5 @@ if ($response && $response->isOk()) {
     dump('good');
 } else {
     dump($response->getXml(), $response->getStatus(), $response->getError());
+    $response->saveXML($tmp . '/response.xml');
 }
-

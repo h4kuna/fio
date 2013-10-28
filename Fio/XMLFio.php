@@ -11,6 +11,14 @@ use Nette\DateTime;
 class XMLFio {
 
     const PAYMENT_STANDARD = 431001;
+    const PAYMENT_STANDARD_EURO = 431008;
+
+    /**
+     * Payment types
+     *
+     * @var array
+     */
+    private static $euroPaymentTypes = array('euro_standard' => self::PAYMENT_STANDARD_EURO, 'euro_priority' => 431009);
 
     /**
      * Payment types
@@ -58,6 +66,24 @@ class XMLFio {
     /** @var string */
     private $temp;
 
+    /** @var string */
+    private $benefStreet;
+
+    /** @var string */
+    private $benefCity;
+
+    /** @var string */
+    private $remittanceInfo1;
+
+    /** @var string */
+    private $remittanceInfo2;
+
+    /** @var string */
+    private $remittanceInfo3;
+
+    /** @var int */
+    private $paymentTypeEuro = self::PAYMENT_STANDARD_EURO;
+
     /**
      *
      * @param string $account
@@ -90,7 +116,7 @@ class XMLFio {
      * @return XMLFio
      */
     public function setCurrency($code) {
-        if (preg_match('~[a-z]{3}~i', $code)) {
+        if (!preg_match('~[a-z]{3}~i', $code)) {
             throw new FioException('Currency code must match ISO 4217.');
         }
         $this->currency = strtoupper($code);
@@ -143,7 +169,7 @@ class XMLFio {
      * @return XMLFio
      */
     public function setMessage($str) {
-        $this->message = $str ? mb_substr($str, 0, 140) : NULL; // max length from API
+        $this->message = $this->substr($str, 140);
         return $this;
     }
 
@@ -152,7 +178,7 @@ class XMLFio {
      * @return XMLFio
      */
     public function setComment($str) {
-        $this->comment = $str ? mb_substr($str, 0, 255) : NULL; // max length from API
+        $this->comment = $this->substr($str, 255);
         return $this;
     }
 
@@ -203,6 +229,81 @@ class XMLFio {
         }
 
         $this->temp = $temp;
+        return $this;
+    }
+
+    /**
+     * @param int|string $type
+     * @return XMLFio
+     * @throws FioException
+     */
+    public function setPaymentTypeEuro($type) {
+        if (isset(self::$euroPaymentTypes[$type]) || in_array($type, self::$euroPaymentTypes)) {
+            $this->paymentType = isset(self::$euroPaymentTypes[$type]) ? self::$euroPaymentTypes[$type] : $type;
+        } else {
+            throw new FioException('Unsupported payment type: ' . $type);
+        }
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $str
+     * @return XMLFio
+     */
+    public function setBenefStreet($str) {
+        $this->benefStreet = $this->substr($str, 50);
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $str
+     * @return XMLFio
+     */
+    public function setBenefCity($str) {
+        $this->benefCity = $this->substr($str, 50);
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $str
+     * @return XMLFio
+     */
+    public function setBemittanceInfo1($str) {
+        $this->benefCity = $this->substr($str, 35);
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $str
+     * @return XMLFio
+     */
+    public function setBemittanceInfo2($str) {
+        $this->benefCity = $this->substr($str, 35);
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $str
+     * @return XMLFio
+     */
+    public function setBemittanceInfo3($str) {
+        $this->benefCity = $this->substr($str, 35);
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $val
+     * @param int $limit
+     * @return string
+     */
+    private function substr($str, $limit) {
+        return $str ? mb_substr($str, 0, $limit) : NULL; // max length from API
     }
 
 // </editor-fold>
@@ -219,6 +320,65 @@ class XMLFio {
             $this->createEmptyXml();
         }
 
+        $this->xml->startElement('DomesticTransaction');
+        $this->xmlContent($amount, $accountTo, $bankCode);
+        $this->addXmlNode('date', DateTime::from($this->date)->format('Y-m-d'));
+        $this->addXmlNode('messageForRecipient', $this->message);
+        $this->addXmlNode('comment', $this->comment);
+        $this->addXmlNode('paymentReason', $this->paymentReason, FALSE);
+        $this->addXmlNode('paymentType', $this->paymentType, self::PAYMENT_STANDARD);
+        $this->xml->endElement();
+    }
+
+    /**
+     *
+     * @param float $amount
+     * @param string $iban
+     * @param string $bic
+     * @param string $benefName
+     * @param string $benefCountry
+     * @throws FioException
+     */
+    public function addPaymentForeing($amount, $iban, $bic, $benefName, $benefCountry) {
+        if ($this->content) {
+            $this->createEmptyXml();
+        }
+
+        if (strlen($bic) != 11) {
+            throw new FioException('BIC must lenght 11. Is ISO 9362.');
+        }
+
+        if (strlen($benefCountry) != 2 && $benefCountry != 'TCH') {
+            throw new FioException('Country code consists of two letters.');
+        }
+
+        $this->xml->startElement('T2Transaction');
+        $this->xmlContent($amount, $iban);
+        $this->addXmlNode('bic', $bic, TRUE);
+        $this->addXmlNode('date', DateTime::from($this->date)->format('Y-m-d'));
+        $this->addXmlNode('comment', $this->comment);
+        $this->addXmlNode('benefName', $benefName, TRUE);
+        $this->addXmlNode('benefStreet', $this->benefStreet);
+        $this->addXmlNode('benefCity', $this->benefCity);
+        $this->addXmlNode('benefCountry', strtoupper($benefCountry), TRUE);
+        $this->addXmlNode('remittanceInfo1', $this->remittanceInfo1);
+        $this->addXmlNode('remittanceInfo2', $this->remittanceInfo2);
+        $this->addXmlNode('remittanceInfo3', $this->remittanceInfo3);
+        $this->addXmlNode('paymentReason', $this->paymentReason, FALSE);
+        $this->addXmlNode('paymentType', $this->paymentTypeEuro, self::PAYMENT_STANDARD_EURO);
+
+        $this->xml->endElement();
+    }
+
+    /**
+     * Common content for national payment and foreing payment
+     *
+     * @param float $amount
+     * @param string $accountTo
+     * @param string|NULL $bankCode
+     * @throws FioException
+     */
+    private function xmlContent($amount, $accountTo, $bankCode = 'foreing') {
         if (!$amount || !is_numeric($amount)) {
             throw new FioException('Amount can\'t be zero and must be a number.');
         }
@@ -234,23 +394,16 @@ class XMLFio {
             throw new FioException('Let\'s fill bank code in account or in parameter.');
         }
 
-        $this->xml->startElement('DomesticTransaction');
-
         $this->addXmlNode('accountFrom', $this->account, TRUE);
         $this->addXmlNode('currency', $this->currency);
         $this->addXmlNode('amount', $amount, TRUE);
         $this->addXmlNode('accountTo', $accountTo, TRUE);
-        $this->addXmlNode('bankCode', $bankCode, TRUE);
+        if ($bankCode !== 'foreing') {
+            $this->addXmlNode('bankCode', $bankCode, TRUE);
+        }
         $this->addXmlNode('ks', $this->constatnSymbol);
         $this->addXmlNode('vs', $this->variableSymbol);
         $this->addXmlNode('ss', $this->specificSymbol);
-        $this->addXmlNode('date', DateTime::from($this->date)->format('Y-m-d'));
-        $this->addXmlNode('messageForRecipient', $this->message);
-        $this->addXmlNode('comment', $this->comment);
-        $this->addXmlNode('paymentType', $this->paymentType, self::PAYMENT_STANDARD);
-        $this->addXmlNode('paymentReason', $this->paymentReason, FALSE);
-
-        $this->xml->endElement();
     }
 
     /**

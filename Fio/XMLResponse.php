@@ -42,9 +42,22 @@ class XMLResponse {
         return $this->getValue('result/status');
     }
 
+    /**
+     *
+     * @param string $path
+     * @return string
+     */
     private function getValue($path) {
         $val = $this->xml->xpath($path . '/text()');
         return (string) $val[0];
+    }
+
+    /**
+     *
+     * @param string $fileName
+     */
+    public function saveXML($fileName) {
+        $this->xml->saveXML($fileName);
     }
 
 }
