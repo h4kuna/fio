@@ -4,12 +4,25 @@ include __DIR__ . "/vendor/autoload.php";
 
 $configurator = new Nette\Config\Configurator;
 $tmp = __DIR__ . '/tests/tmp';
+$token = require $tmp . '/secureToken.php';
 $configurator->enableDebugger($tmp);
 $configurator->setTempDirectory($tmp);
+
+$configurator->onCompile[] = function ($configurator, $compiler) use ($token) {
+    $ext = new h4kuna\Fio\DI\FioExtension();
+    $ext->defaults['token'] = $token;
+    $ext->defaults['account'] = '2600267402/2010';
+    $compiler->addExtension('fioExtension', $ext);
+};
+
 $container = $configurator->createContainer();
 
+$fio = Nette\Framework::VERSION == '2.1-dev' ?
+        $container->createServiceFioExtension__fio() :
+        $container->fioExtension->fio;
+
 // init Fio, param is token
-$fio = new h4kuna\Fio(require __DIR__ . '/tests/tmp/secureToken.php');
+
 
 /**
  * READ MOVEMENTS **************************************************************
