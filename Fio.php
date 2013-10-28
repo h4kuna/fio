@@ -51,16 +51,25 @@ class Fio extends Object {
     /** @var XMLResponse */
     private $response;
 
-    /** @var \DateTime */
-    private $lastRequest;
+    /** @var string */
+    private $account;
+
+    /** @var string */
+    private $temp;
+
+    /** @var string */
+    private $tempFile;
 
     /**
      * @param string $token
-     * @param string|IFile $parser
+     * @param string $account
      */
-    public function __construct($token, $parser = IFile::JSON) {
+    public function __construct($token, $account, $temp) {
         $this->token = $token;
-        $this->loadParser($parser);
+        $this->account = $account;
+        @mkdir($temp, 0777, TRUE);
+        $this->temp = realpath($temp);
+        $this->tempFile = $this->temp . DIRECTORY_SEPARATOR . preg_replace('~[^0-9]~', '', $account);
     }
 
     /**
@@ -70,10 +79,10 @@ class Fio extends Object {
      * @param string|int|DateTime $to
      * @return IFile
      */
-    public function movements($from = '-1 day', $to = 'now') {
-        $this->requestUrl = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, DateTime::from($from)->format('Y-m-d'), DateTime::from($to)->format('Y-m-d'), $this->parser->getExtension());
+    public function movements($from = '-1 week', $to = 'now') {
+        $this->requestUrl = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, DateTime::from($from)->format('Y-m-d'), DateTime::from($to)->format('Y-m-d'), $this->getParser()->getExtension());
         $this->availableAnotherRequest();
-        return $this->parser->parse(CUrl::download($this->requestUrl));
+        return $this->getParser()->parse(CUrl::download($this->requestUrl));
     }
 
     /**
@@ -87,9 +96,9 @@ class Fio extends Object {
         if ($year === NULL) {
             $year = date('Y');
         }
-        $this->requestUrl = self::REST_URL . sprintf('by-id/%s/%s/%s/transactions.%s', $this->token, $year, $id, $this->parser->getExtension());
+        $this->requestUrl = self::REST_URL . sprintf('by-id/%s/%s/%s/transactions.%s', $this->token, $year, $id, $this->getParser()->getExtension());
         $this->availableAnotherRequest();
-        return $this->parser->parse(Curl::download($this->requestUrl));
+        return $this->getParser()->parse(Curl::download($this->requestUrl));
     }
 
     /**
@@ -98,9 +107,9 @@ class Fio extends Object {
      * @return IFile
      */
     public function lastDownload() {
-        $this->requestUrl = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->parser->getExtension());
+        $this->requestUrl = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->getParser()->getExtension());
         $this->availableAnotherRequest();
-        return $this->parser->parse(Curl::download($this->requestUrl));
+        return $this->getParser()->parse(Curl::download($this->requestUrl));
     }
 
 // <editor-fold defaultstate="collapsed" desc="Breakpoints">
@@ -139,8 +148,26 @@ class Fio extends Object {
     }
 
     /** @return IFile */
+    public function getParser() {
+        return $this->getLastResponse();
+    }
+
+    /** @return IFile */
     public function getLastResponse() {
+        if ($this->parser === NULL) {
+            $this->loadParser(IFile::JSON);
+        }
         return $this->parser;
+    }
+
+    /**
+     *
+     * @param string $file
+     */
+    public function setDownloadFile($file) {
+        $this->parser = NULL;
+        $this->loadParser($file);
+        return $this;
     }
 
     /**
@@ -165,17 +192,33 @@ class Fio extends Object {
      * Interval between requests is 30s, import / read
      */
     private function availableAnotherRequest() {
-        if ($this->lastRequest && ($diff = $this->lastRequest->getTimestamp() - time()) > 0) {
-            // auto sleep between requests
-            sleep($diff);
+        if (file_exists($this->tempFile)) {
+            $diff = (file_get_contents($this->tempFile) + self::API_INTERVAL) - time();
+            if ($diff > 0) {
+                sleep($diff);
+            }
         }
-        $this->lastRequest = new \DateTime('+' . self::API_INTERVAL . ' seconds'); // 30s in API
+        file_put_contents($this->tempFile, time());
+    }
+
+    /** @return string */
+    public function getAccount() {
+        return $this->account;
     }
 
     /**
      * WRITE *******************************************************************
      * *************************************************************************
      */
+
+    /**
+     * Factory for Fio\XMLFio
+     *
+     * @return Fio\XMLFio
+     */
+    public function createXmlFio() {
+        return new Fio\XMLFio($this->account, $this->temp);
+    }
 
     /**
      * Set upload file extension
@@ -248,9 +291,15 @@ class Fio extends Object {
      * @throws FioException
      */
     private function send($filename) {
+        if (PHP_VERSION_ID >= 50500) {
+            $file = new \CURLFile($filename);
+        } else {
+            $file = '@' . $filename;
+        }
+
         $curl = new CUrl(self::REST_URL_WRITE, array(
             CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_SSL_VERIFYHOST => 1,
+            CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_HEADER => 0,
             CURLOPT_POST => 1,
@@ -261,7 +310,7 @@ class Fio extends Object {
                 'type' => $this->uploadExtension,
                 'token' => $this->token,
                 'lng' => $this->language,
-                'file' => '@' . $filename
+                'file' => $file
             ))
         );
         $this->availableAnotherRequest();
