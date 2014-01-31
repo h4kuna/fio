@@ -292,12 +292,6 @@ class Fio extends Object {
      * @throws FioException
      */
     private function send($filename) {
-        if (PHP_VERSION_ID >= 50500) {
-            $file = new \CURLFile($filename);
-        } else {
-            $file = '@' . $filename;
-        }
-
         $curl = new CUrl(self::REST_URL_WRITE);
         $curl->setOptions(array(
             CURLOPT_SSL_VERIFYPEER => 0,
@@ -312,7 +306,7 @@ class Fio extends Object {
                 'type' => $this->uploadExtension,
                 'token' => $this->token,
                 'lng' => $this->language,
-                'file' => $file
+                'file' => $curl->fileCreate($filename)
             ))
         );
         $this->availableAnotherRequest();
