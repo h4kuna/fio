@@ -6,7 +6,7 @@ Installation to project
 -----------------------
 The best way to install h4kuna/fio is using Composer:
 ```sh
-$ composer require h4kuna/fio:@dev
+$ composer require h4kuna/fio:1.1.4
 ```
 
 Example NEON config
