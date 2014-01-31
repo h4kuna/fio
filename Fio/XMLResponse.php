@@ -2,6 +2,8 @@
 
 namespace h4kuna\Fio;
 
+use SimpleXMLElement;
+
 /**
  * Description of XMLResponse
  *
@@ -9,7 +11,7 @@ namespace h4kuna\Fio;
  */
 class XMLResponse {
 
-    /** @var \SimpleXMLElement */
+    /** @var SimpleXMLElement */
     private $xml;
 
     /**
@@ -17,7 +19,7 @@ class XMLResponse {
      * @param string $xml
      */
     public function __construct($xml) {
-        $this->xml = new \SimpleXMLElement($xml);
+        $this->xml = new SimpleXMLElement($xml);
     }
 
     public function isOk() {

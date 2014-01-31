@@ -4,7 +4,8 @@ namespace h4kuna;
 
 use Nette\Object;
 use Nette\DateTime;
-use h4kuna\CUrl;
+use h4kuna\CUrl\CurlBuilder;
+use h4kuna\CUrl\CUrl;
 use h4kuna\Fio\FioException;
 use h4kuna\Fio\IFile;
 use h4kuna\Fio\XMLResponse;
@@ -18,7 +19,7 @@ use h4kuna\Fio\XMLResponse;
 class Fio extends Object {
 
     /** @var string */
-    const FIO_API_VERSION = '1.2.6';
+    const FIO_API_VERSION = '1.2.8';
 
     /** @var int [s] */
     const API_INTERVAL = 30;
@@ -82,7 +83,7 @@ class Fio extends Object {
     public function movements($from = '-1 week', $to = 'now') {
         $this->requestUrl = self::REST_URL . sprintf('periods/%s/%s/%s/transactions.%s', $this->token, DateTime::from($from)->format('Y-m-d'), DateTime::from($to)->format('Y-m-d'), $this->getParser()->getExtension());
         $this->availableAnotherRequest();
-        return $this->getParser()->parse(CUrl::download($this->requestUrl));
+        return $this->getParser()->parse(CurlBuilder::download($this->requestUrl));
     }
 
     /**
@@ -122,7 +123,7 @@ class Fio extends Object {
     public function setLastId($moveId) {
         $this->requestUrl = self::REST_URL . sprintf('set-last-id/%s/%s/', $this->token, $moveId);
         $this->availableAnotherRequest();
-        return CUrl::download($this->requestUrl);
+        return CurlBuilder::download($this->requestUrl);
     }
 
     /**
@@ -134,7 +135,7 @@ class Fio extends Object {
     public function setLastDate($date) {
         $this->requestUrl = self::REST_URL . sprintf('set-last-date/%s/%s/', $this->token, DateTime::from($date)->format('Y-m-d'));
         $this->availableAnotherRequest();
-        return CUrl::download($this->requestUrl);
+        return CurlBuilder::download($this->requestUrl);
     }
 
 // </editor-fold>
@@ -297,7 +298,8 @@ class Fio extends Object {
             $file = '@' . $filename;
         }
 
-        $curl = new CUrl(self::REST_URL_WRITE, array(
+        $curl = new CUrl(self::REST_URL_WRITE);
+        $curl->setOptions(array(
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_RETURNTRANSFER => 1,

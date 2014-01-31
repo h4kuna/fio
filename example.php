@@ -17,8 +17,8 @@ $configurator->onCompile[] = function ($configurator, $compiler) use ($token) {
 
 $container = $configurator->createContainer();
 
-$fio = Nette\Framework::VERSION == '2.1-dev' ?
-        $container->createServiceFioExtension__fio() :
+$fio = Nette\Framework::VERSION == '2.1.0' ?
+        $container->createService('fioExtension.fio') :
         $container->fioExtension->fio;
 
 // init Fio, param is token

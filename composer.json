@@ -14,7 +14,7 @@
     "require": {
         "nette/nette": ">=2.0.6",
         "h4kuna/iterators": "1.0.*",
-        "h4kuna/object-wrapper": "1.0.*",
+        "h4kuna/object-wrapper": "~1.0.7",
         "h4kuna/data-type": "1.0.*"
     },
     "autoload": {
