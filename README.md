@@ -26,7 +26,7 @@ Run simple example
 $ cd to/your/web/document/root
 $ git clone git@github.com:h4kuna/fio.git
 $ cd fio
-$ chmod 777 tests/tmp
+$ chmod 777 tests/temp
 $ composer install
 $ echo '<?php return "YOUR SECURE TOKEN"' > tests/tmp/secureToken.php
 ```
