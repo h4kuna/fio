@@ -3,7 +3,7 @@
 include __DIR__ . "/vendor/autoload.php";
 
 $configurator = new Nette\Config\Configurator;
-$tmp = __DIR__ . '/tests/tmp';
+$tmp = __DIR__ . '/tests/temp';
 $token = require $tmp . '/secureToken.php';
 $configurator->enableDebugger($tmp);
 $configurator->setTempDirectory($tmp);
