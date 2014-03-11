@@ -99,7 +99,7 @@ class Fio extends Object {
         }
         $this->requestUrl = self::REST_URL . sprintf('by-id/%s/%s/%s/transactions.%s', $this->token, $year, $id, $this->getParser()->getExtension());
         $this->availableAnotherRequest();
-        return $this->getParser()->parse(Curl::download($this->requestUrl));
+        return $this->getParser()->parse(CurlBuilder::download($this->requestUrl));
     }
 
     /**
@@ -110,7 +110,7 @@ class Fio extends Object {
     public function lastDownload() {
         $this->requestUrl = self::REST_URL . sprintf('last/%s/transactions.%s', $this->token, $this->getParser()->getExtension());
         $this->availableAnotherRequest();
-        return $this->getParser()->parse(Curl::download($this->requestUrl));
+        return $this->getParser()->parse(CurlBuilder::download($this->requestUrl));
     }
 
 // <editor-fold defaultstate="collapsed" desc="Breakpoints">
