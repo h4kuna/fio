@@ -1,46 +1,49 @@
 <?php
 
-namespace h4kuna\Fio;
+namespace h4kuna\Fio\Response\Pay;
 
 use SimpleXMLElement;
 
 /**
- * Description of XMLResponse
- *
  * @author Milan Matějček
  */
-class XMLResponse {
+class XMLResponse implements IResponse
+{
 
     /** @var SimpleXMLElement */
     private $xml;
 
-    /**
-     *
-     * @param string $xml
-     */
-    public function __construct($xml) {
+    /** @param string $xml */
+    public function __construct($xml)
+    {
         $this->xml = new SimpleXMLElement($xml);
     }
 
-    public function isOk() {
-        return $this->getStatus() == 'ok' && $this->getError() == 0;
+    public function isOk()
+    {
+        return $this->getError() == 'ok' && $this->getErrorCode() == 0;
     }
 
     /**
      * READ XML ****************************************************************
      * *************************************************************************
      */
-    public function getXml() {
+
+    /** @return SimpleXMLElement */
+    public function getXml()
+    {
         return $this->xml;
     }
 
     /** @return int */
-    public function getError() {
+    public function getErrorCode()
+    {
         return $this->getValue('result/errorCode');
     }
 
     /** @return string */
-    public function getStatus() {
+    public function getError()
+    {
         return $this->getValue('result/status');
     }
 
@@ -49,7 +52,8 @@ class XMLResponse {
      * @param string $path
      * @return string
      */
-    private function getValue($path) {
+    private function getValue($path)
+    {
         $val = $this->xml->xpath($path . '/text()');
         return (string) $val[0];
     }
@@ -58,7 +62,8 @@ class XMLResponse {
      *
      * @param string $fileName
      */
-    public function saveXML($fileName) {
+    public function saveXML($fileName)
+    {
         $this->xml->saveXML($fileName);
     }
 

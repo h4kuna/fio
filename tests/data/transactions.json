@@ -1,0 +1,4444 @@
+{
+  "accountStatement": {
+    "info": {
+      "accountId": "2600267402",
+      "bankId": "2010",
+      "currency": "CZK",
+      "iban": "CZ0820100000002600267402",
+      "bic": "FIOBCZPPXXX",
+      "openingBalance": 1600.52,
+      "closingBalance": 4600.69,
+      "dateStart": "2013-01-21+0100",
+      "dateEnd": "2015-01-21+0100",
+      "yearList": null,
+      "idList": null,
+      "idFrom": 1173116186,
+      "idTo": 7133682795,
+      "idLastDownload": null
+    },
+    "transactionList": {
+      "transaction": [
+        {
+          "column22": {
+            "value": 1173116186,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-01-22+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 1000.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2223011642,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 1174500291,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-01-31+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.64,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2228698807,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 1174500292,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-01-31+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -0.09,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Odvod daně z úroků",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2228698807,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 1174833681,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-02-04+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -2500.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 2230915764,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2000346295,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-02-11+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 3500.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2401229619,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2000996693,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-02-14+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -3000.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 2403868187,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2001294497,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-02-15+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 4100.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2405049357,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2001294745,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-02-15+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -4100.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 2405050122,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2002881554,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-02-26+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 1100.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2411420446,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2003345566,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-02-28+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.52,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2414126112,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2003345567,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-02-28+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -0.07,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Odvod daně z úroků",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2414126112,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2003876041,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-03-01+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -1000.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 2415136569,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2004378417,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-03-05+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 4600.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2417281655,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2005154749,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-03-11+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 2500.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2420375112,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2006640639,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-03-19+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 100.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "670100-2209083918",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "6210",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "mBank S.A., organizační složka",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": "MARTIN  NUC",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": {
+            "value": "MARTIN NUC ZA GETTEXT V NETTE",
+            "name": "Zpráva pro příjemce",
+            "id": 16
+          },
+          "column8": {
+            "value": "Bezhotovostní příjem",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": {
+            "value": "MARTIN  NUC",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 2426390643,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2007264159,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-03-21+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -2000.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 2428876546,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2007778826,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-03-26+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 2400.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2430878423,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2008130596,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-03-28+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 300.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2432354560,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2008536160,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-03-31+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 3.18,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2434476466,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2008536162,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-03-31+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -0.47,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Odvod daně z úroků",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2434476466,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2010079138,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-04-08+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 3400.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2439674004,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2012184235,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-04-18+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -5000.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 2448798293,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2012553749,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-04-22+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -3000.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 2450426271,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2013396556,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-04-26+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 1300.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2453945684,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2013396998,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-04-26+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 8000.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2453947153,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2014059524,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-04-30+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 4.78,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2457246386,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2014059525,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-04-30+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -0.71,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Odvod daně z úroků",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2457246386,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2014978953,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-05-03+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -3200.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 2460073989,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2015333626,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-05-06+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -3008.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 2461659999,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 2015712377,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-05-09+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 8300.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 2463231549,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3017200455,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-05-24+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 550.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 3469350798,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3017342994,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-05-25+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 200.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 3469984811,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3018410414,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-05-31+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 7.20,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 3474990923,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3018410415,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-05-31+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -1.08,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Odvod daně z úroků",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 3474990923,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3517502640,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-06-03+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -3000.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 3970635191,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3518462236,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-06-09+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -13050.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": "rapid",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": "rapid",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 3974569273,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3519392264,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-06-13+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 6200.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 3978244377,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3519603931,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-06-14+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -3638.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": "sociální zdravotní",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": "sociální zdravotní",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 3979078190,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3520636303,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-06-19+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 200.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 3983342215,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3522233217,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-06-30+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -2768.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 3989805720,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3522368711,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-06-30+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 2.68,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 3990989314,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3522368712,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-06-30+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -0.40,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Odvod daně z úroků",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 3990989314,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3523991941,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-07-08+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 9806.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 3996354609,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3525358654,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-07-15+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -9808.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": "kolo",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": "kolo",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 4001719670,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3528388281,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-07-31+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 1.18,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4014491454,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3528388283,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-07-31+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -0.17,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Odvod daně z úroků",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4014491454,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3531090579,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-08-13+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 1400.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4024043168,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3532427225,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-08-20+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 1400.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4029361800,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3532427692,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-08-20+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -2801.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 4029363691,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3534232995,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-08-31+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.18,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4037408816,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3534232996,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-08-31+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -0.02,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Odvod daně z úroků",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4037408816,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3535629622,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-09-05+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 2153.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4041809129,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3537136884,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-09-13+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -2153.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 4047840162,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3540372617,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-09-30+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.28,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4061569020,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3540372618,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-09-30+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -0.04,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Odvod daně z úroků",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4061569020,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3544224120,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-10-16+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -0.50,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 4075783727,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3544224121,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-10-16+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -0.50,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 4075783728,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3544736636,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-10-18+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 20.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4077823381,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3547200376,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-10-31+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.05,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4088002824,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3554155388,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-11-30+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.05,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4115221577,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3561848227,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2013-12-31+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.05,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4144763267,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3565115631,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-01-15+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": -20.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": null,
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": {
+            "value": " ",
+            "name": "Uživatelská identifikace",
+            "id": 7
+          },
+          "column16": null,
+          "column8": {
+            "value": "Platba převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": {
+            "value": "Matějček, Milan",
+            "name": "Provedl",
+            "id": 9
+          },
+          "column18": null,
+          "column25": {
+            "value": " ",
+            "name": "Komentář",
+            "id": 25
+          },
+          "column26": null,
+          "column17": {
+            "value": 4157905193,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3568762657,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-01-31+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.05,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4172988005,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 3575640233,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-02-28+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.04,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4199919447,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 4068901610,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-03-31+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.04,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4673425284,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 4076734583,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-04-30+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.04,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 4704067831,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 5083444454,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-05-31+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.04,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 5730296160,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 5091439819,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-06-30+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.04,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 5761796955,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 5598862149,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-07-31+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.03,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 6292226541,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 6097794023,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-08-31+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.03,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 6788029235,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 6605963334,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-09-30+0200",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.03,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 7320358584,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 6615456641,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-10-31+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.03,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 7360373215,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 7119517093,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-11-30+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.03,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 7879413321,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 7130416222,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2014-12-31+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 0.03,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": null,
+          "column10": null,
+          "column3": null,
+          "column12": null,
+          "column4": null,
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Připsaný úrok",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 7923680996,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 7132773913,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2015-01-08+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 3500.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 7933843237,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        },
+        {
+          "column22": {
+            "value": 7133682795,
+            "name": "ID pohybu",
+            "id": 22
+          },
+          "column0": {
+            "value": "2015-01-12+0100",
+            "name": "Datum",
+            "id": 0
+          },
+          "column1": {
+            "value": 1000.00,
+            "name": "Objem",
+            "id": 1
+          },
+          "column14": {
+            "value": "CZK",
+            "name": "Měna",
+            "id": 14
+          },
+          "column2": {
+            "value": "2000242017",
+            "name": "Protiúčet",
+            "id": 2
+          },
+          "column10": {
+            "value": "Matějček, Milan",
+            "name": "Název protiúčtu",
+            "id": 10
+          },
+          "column3": {
+            "value": "2010",
+            "name": "Kód banky",
+            "id": 3
+          },
+          "column12": {
+            "value": "Fio banka, a.s.",
+            "name": "Název banky",
+            "id": 12
+          },
+          "column4": {
+            "value": "0558",
+            "name": "KS",
+            "id": 4
+          },
+          "column5": null,
+          "column6": null,
+          "column7": null,
+          "column16": null,
+          "column8": {
+            "value": "Příjem převodem uvnitř banky",
+            "name": "Typ",
+            "id": 8
+          },
+          "column9": null,
+          "column18": null,
+          "column25": null,
+          "column26": null,
+          "column17": {
+            "value": 7937642464,
+            "name": "ID pokynu",
+            "id": 17
+          }
+        }
+      ]
+    }
+  }
+}

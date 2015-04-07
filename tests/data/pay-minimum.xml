@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Import xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.fio.cz/schema/importIB.xsd">
+    <Orders>
+        <DomesticTransaction>
+            <accountFrom>123456789</accountFrom>
+            <currency>CZK</currency>
+            <amount>500</amount>
+            <accountTo>987654321</accountTo>
+            <bankCode>4321</bankCode>
+            <ks></ks>
+            <vs></vs>
+            <ss></ss>
+            <date>2015-01-23</date>
+            <messageForRecipient></messageForRecipient>
+            <comment></comment>
+            <paymentType>431001</paymentType>
+        </DomesticTransaction>
+    </Orders>
+</Import>

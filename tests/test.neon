@@ -1,0 +1,10 @@
+nette:
+    container:
+        debugger: TRUE
+
+extensions:
+    fioExtension: h4kuna\Fio\Nette\DI\FioExtension
+
+fioExtension:
+    account: "123456789 / 1234"
+    token: 'loremIpsum86'

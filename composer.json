@@ -1,7 +1,7 @@
 {
     "name": "h4kuna/fio",
     "type": "library",
-    "description": "Read email or gpc file from Fio bank",
+    "description": "Read JSON file from Fio bank and can send request.",
     "homepage": "https://github.com/h4kuna/fio",
     "license": "MIT",
     "authors": [
@@ -12,10 +12,10 @@
         }
     ],
     "require": {
-        "nette/utils": "~2.0",
-        "h4kuna/iterators": "~1.0",
-        "h4kuna/object-wrapper": "~1.0",
-        "h4kuna/data-type": "~1.0"
+        "nette/safe-stream": "~2.0",
+        "nette/bootstrap": "~2.0",
+        "nette/utils": "~2.2",
+        "kdyby/curl": "~2.2"
     },
     "autoload": {
         "psr-4": {
@@ -23,6 +23,7 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.4"
+        "tracy/tracy": "~2.0",
+        "nette/tester": "@dev"
     }
 }

@@ -1,3 +1,4 @@
 nbproject/
 vendor/
 composer.lock
+/tests/test.local.neon
