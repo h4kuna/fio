@@ -2,9 +2,9 @@
 
 namespace h4kuna\Fio;
 
-use h4kuna\Fio\Request\Read\IFile;
-use h4kuna\Fio\Request\Read\IFileFactory;
-use Nette\Utils\DateTime;
+use h4kuna\Fio\Request\Read\IParser,
+    h4kuna\Fio\Response\Read\TransactionList,
+    h4kuna\Fio\Utils;
 
 /**
  * Read from informtion Fio account
@@ -15,28 +15,29 @@ class FioRead extends Fio
     /** @var string */
     private $requestUrl;
 
-    /** @var IFile */
+    /** @var IParser */
     private $parser;
 
     /** @var Utils\Context */
     private $context;
 
-    public function __construct(Utils\Context $context)
+    public function __construct(Utils\Context $context, Response\Read\IStatementFactory $statementFactory)
     {
         $this->context = $context;
+        $this->parser = $statementFactory->createParser();
     }
 
     /**
      * Movements in date range.
      *
-     * @param string|int|DateTime $from
-     * @param string|int|DateTime $to
-     * @return Response\Read\TransactionList
+     * @param string|int|\DateTime $from
+     * @param string|int|\DateTime $to
+     * @return TransactionList
      */
     public function movements($from = '-1 week', $to = 'now')
     {
-        $data = $this->download('periods/%s/%s/%s/transactions.%s', DateTime::from($from)->format('Y-m-d'), DateTime::from($to)->format('Y-m-d'), $this->getParser()->getExtension());
-        return $this->parseData($data);
+        $data = $this->download('periods/%s/%s/%s/transactions.%s', Utils\String::date($from), Utils\String::date($to), $this->parser->getExtension());
+        return $this->parser->parse($data);
     }
 
     /**
@@ -51,8 +52,8 @@ class FioRead extends Fio
         if ($year === NULL) {
             $year = date('Y');
         }
-        $data = $this->download('by-id/%s/%s/%s/transactions.%s', $year, $id, $this->getParser()->getExtension());
-        return $this->parseData($data);
+        $data = $this->download('by-id/%s/%s/%s/transactions.%s', $year, $id, $this->parser->getExtension());
+        return $this->parser->parse($data);
     }
 
     /**
@@ -62,30 +63,30 @@ class FioRead extends Fio
      */
     public function lastDownload()
     {
-        $data = $this->download('last/%s/transactions.%s', $this->getParser()->getExtension());
-        return $this->parseData($data);
+        $data = $this->download('last/%s/transactions.%s', $this->parser->getExtension());
+        return $this->parser->parse($data);
     }
 
     /**
      * Set break point to id.
      *
      * @param int $moveId
-     * @return string
+     * @return void
      */
     public function setLastId($moveId)
     {
-        return $this->download('set-last-id/%s/%s/', $moveId);
+        $this->download('set-last-id/%s/%s/', $moveId);
     }
 
     /**
      * Set breakpoint to date.
      *
      * @param mixed $date
-     * @return string
+     * @return void
      */
     public function setLastDate($date)
     {
-        return $this->download('set-last-date/%s/%s/', DateTime::from($date)->format('Y-m-d'));
+        $this->download('set-last-date/%s/%s/', Utils\String::date($date));
     }
 
     /**
@@ -96,31 +97,6 @@ class FioRead extends Fio
     public function getRequestUrl()
     {
         return $this->requestUrl;
-    }
-
-    /**
-     *
-     * @param IFile $file
-     * @return \h4kuna\Fio\FioRead
-     */
-    public function setParser(IFile $file)
-    {
-        $this->parser = $file;
-        return $this;
-    }
-
-    /** @return IFile */
-    private function getParser()
-    {
-        if ($this->parser === NULL) {
-            $this->parser = new Request\Read\Files\Json();
-        }
-        return $this->parser;
-    }
-
-    private function parseData($data)
-    {
-        return $this->getParser()->parse($data);
     }
 
     private function download($apiUrl /* ... params */)

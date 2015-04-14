@@ -2,9 +2,9 @@
 
 namespace h4kuna\Fio\Test;
 
-use Kdyby\Curl\Request;
-use h4kuna\Fio\Request\IQueue;
-use h4kuna\Fio\Request\Read\IFile;
+use h4kuna\Fio\Request\IQueue,
+    h4kuna\Fio\Response\Pay\BadResponse,
+    Kdyby\Curl\Request;
 
 /**
  * @author Milan Matějček
@@ -14,21 +14,22 @@ class Queue implements IQueue
 
     public function download($token, $url)
     {
-        $path = __DIR__ . '/' . basename($url);
-        if (substr($url, -3) === IFile::GPC) {
-            return 'todo download';
-        } elseif (strstr($url, 'set-last-id')) {
-            return 'todo download';
-        } elseif (strstr($url, 'set-last-date')) {
-            return 'todo download';
+        $file = '';
+        switch (basename($url, 'json')) {
+            case 'transactions.':
+                preg_match('~((?:/[^/]+){3})$~U', $url, $find);
+                $file = str_replace(array('/', '-' . $token), array('-', ''), ltrim($find[1], '/'));
+                break;
         }
-
-        return file_get_contents($path);
+        if ($file) {
+            return file_get_contents(__DIR__ . '/tests/' . $file);
+        }
+        return $file;
     }
 
     public function upload($token, Request $curl)
     {
-        return new \h4kuna\Fio\Response\Pay\BadResponse($curl);
+        return new BadResponse($curl);
     }
 
 }

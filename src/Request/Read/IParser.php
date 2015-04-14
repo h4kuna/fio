@@ -2,13 +2,14 @@
 
 namespace h4kuna\Fio\Request\Read;
 
-use h4kuna\Fio\Response\Read\TransactionList;
+use h4kuna\Fio\Response\Read\IStatementFactory,
+    h4kuna\Fio\Response\Read\TransactionList;
 
 /**
  *
  * @author Milan Matějček
  */
-interface IFile
+interface IParser
 {
 
     /** supported */
@@ -23,6 +24,8 @@ interface IFile
     /** exists but not supported */
     const GPC = 'gpc';
     const CSV = 'csv';
+
+    public function __construct(IStatementFactory $statement);
 
     /**
      * File extension.

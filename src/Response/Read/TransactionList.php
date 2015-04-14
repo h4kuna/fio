@@ -2,10 +2,9 @@
 
 namespace h4kuna\Fio\Response\Read;
 
-use Countable;
-use h4kuna\Fio\Response\Read\ATransaction;
-use h4kuna\Fio\Response\Read\Info;
-use Iterator;
+use Countable,
+    h4kuna\Fio\Response\Read\ATransaction,
+    Iterator;
 
 /**
  * @author Milan Matějček
@@ -13,22 +12,20 @@ use Iterator;
 final class TransactionList implements Iterator, Countable
 {
 
-    private $data;
-
-    /** @var Info */
+    /** @var ATransaction[] */
+    private $transactions;
     private $info;
 
-    public function __construct(Info $info)
+    public function __construct($info)
     {
         $this->info = $info;
     }
 
     public function append(ATransaction $transaction)
     {
-        $this->data[] = $transaction;
+        $this->transactions[] = $transaction;
     }
 
-    /** @return Info */
     public function getInfo()
     {
         return $this->info;
@@ -37,32 +34,32 @@ final class TransactionList implements Iterator, Countable
     /** @return Transaction */
     public function current()
     {
-        return current($this->data);
+        return current($this->transactions);
     }
 
     public function key()
     {
-        return $this->current()->getName();
+        return key($this->transactions);
     }
 
     public function next()
     {
-        next($this->data);
+        next($this->transactions);
     }
 
     public function rewind()
     {
-        reset($this->data);
+        reset($this->transactions);
     }
 
     public function valid()
     {
-        return array_key_exists($this->key(), $this->data);
+        return array_key_exists($this->key(), $this->transactions);
     }
 
     public function count()
     {
-        return count($this->data);
+        return count($this->transactions);
     }
 
 }

@@ -11,7 +11,8 @@ class FioExtension extends CompilerExtension
     public $defaults = array(
         'account' => NULL,
         'token' => NULL,
-        'temp' => '%tempDir%/fio'
+        'temp' => '%tempDir%/fio',
+        'transactionClass' => '\h4kuna\Fio\Response\Read\Transaction'
     );
 
     public function loadConfiguration()
@@ -42,16 +43,19 @@ class FioExtension extends CompilerExtension
                 ->setClass('h4kuna\Fio\Request\Queue')
                 ->setArguments(array($config['temp']));
 
-
         // Context
         $builder->addDefinition($this->prefix('context'))
                 ->setClass('h4kuna\Fio\Utils\Context')
                 ->setArguments(array($config['token']));
 
+        // StatementFactory
+        $builder->addDefinition($this->prefix('statementFactory'))
+                ->setClass('h4kuna\Fio\Response\Read\JsonStatementFactory')
+                ->setArguments(array($config['transactionClass']));
+
         // FioPay
         $builder->addDefinition($this->prefix('fioPay'))
-                ->setClass('h4kuna\Fio\FioPay')
-                ->setArguments(array($this->prefix('@context')));
+                ->setClass('h4kuna\Fio\FioPay');
 
         // FioRead
         $builder->addDefinition($this->prefix('fioRead'))

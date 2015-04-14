@@ -2,14 +2,13 @@
 
 namespace h4kuna\Fio\Request;
 
-use Kdyby\Curl\Request;
-use Kdyby;
-use h4kuna\Fio\Utils\FioException;
-use h4kuna\Fio\Request\Pay\BadResponse;
-use h4kuna\Fio\Response\Pay\IResponse;
-use h4kuna\Fio\Response\Pay\XMLResponse;
-use Nette\Utils\FileSystem;
-use Nette\Utils\SafeStream;
+use h4kuna\Fio\Response\Pay\BadResponse,
+    h4kuna\Fio\Response\Pay\XMLResponse,
+    Kdyby,
+    Kdyby\Curl\Request,
+    Nette\Http\IResponse,
+    Nette\Utils\FileSystem,
+    Nette\Utils\SafeStream;
 
 class Queue implements IQueue
 {
@@ -44,7 +43,7 @@ class Queue implements IQueue
         try {
             $xml = $curl->send();
         } catch (Kdyby\Curl\CurlException $e) {
-            return new \h4kuna\Fio\Response\Pay\BadResponse($e);
+            return new BadResponse($e);
         }
 
         return new XMLResponse($xml);

@@ -2,8 +2,8 @@
 
 namespace h4kuna\Fio\Utils;
 
-use h4kuna\Fio\Request\IQueue;
-use Nette\Object;
+use h4kuna\Fio\Request\IQueue,
+    Nette\Object;
 
 class Context extends Object
 {

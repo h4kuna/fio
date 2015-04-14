@@ -2,54 +2,73 @@
 
 namespace h4kuna\Fio\Response\Read;
 
-use h4kuna\Fio\Utils\FioException;
-use ReflectionClass;
+use h4kuna\Fio\Utils;
 
 /**
  * @author Milan Matějček
  */
-abstract class ATransaction
+abstract class ATransaction implements \Iterator
 {
-
-    /** @var string[] */
-    private static $property;
 
     /** @var array */
     private $properties = array();
 
-    public function __construct()
-    {
-        $this->loadProperties();
-    }
-
     public function __get($name)
     {
-        if (isset($this->properties[$name])) {
+        if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
-        return NULL;
+        throw new Utils\FioException('Property does not exists. ' . $name);
     }
 
-    public function setProperty($id, $value)
+    public function bindProperty($name, $type, $value, $dateFormat)
     {
-        $key = isset(self::$property[$id]) ? self::$property[$id] : $id;
-        $this->properties[$key] = $value;
+        if ($value) {
+            $value = $this->checkValue($value, $type, $dateFormat);
+        }
+        $this->properties[$name] = $value;
     }
 
-    private function loadProperties()
+    public function current()
     {
-        if (self::$property !== NULL) {
-            return;
-        }
-        $reflection = new ReflectionClass($this);
-        if (!preg_match_all('/@property-read (?P<type>\w+) \$(?P<name>\w+).*\[(?P<id>\d+)\]/', $reflection->getDocComment(), $find)) {
-            throw new FioException('Property not found you have bad syntax.');
-        }
+        return current($this->properties);
+    }
 
-        self::$property = array();
-        foreach ($find['name'] as $key => $property) {
-            self::$property[$find['id'][$key]] = $property;
+    public function key()
+    {
+        return key($this->properties);
+    }
+
+    public function next()
+    {
+        next($this->properties);
+    }
+
+    public function rewind()
+    {
+        reset($this->properties);
+    }
+
+    public function valid()
+    {
+        return array_key_exists($this->key(), $this->properties);
+    }
+
+    protected function checkValue($value, $type, $dateFormat)
+    {
+        switch ($type) {
+            case 'int':
+                return intval($value);
+            case 'datetime':
+                return Utils\String::createFromFormat($value, $dateFormat);
+            case 'float':
+                return floatval($value);
+            case 'string':
+                return trim($value);
+            case 'string|null':
+                return trim($value) ? : NULL;
         }
+        return $value;
     }
 
 }

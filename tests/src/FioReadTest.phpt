@@ -13,13 +13,13 @@ class FioReadTest extends Tester\TestCase
 
     /** @var FioRead */
     private $fioRead;
-
     private $container;
-
+    private $token;
 
     public function __construct($container)
     {
         $this->container = $container;
+        $this->token = $container->getByType('h4kuna\Fio\Utils\Context')->getToken();
     }
 
     protected function setUp()
@@ -29,46 +29,64 @@ class FioReadTest extends Tester\TestCase
 
     public function testMovements()
     {
+        $data = $this->fioRead->movements(1420070400, '2015-04-16');
+        $moveId = 7139752765;
+        foreach ($data as $transaction) {
+            /* @var $transaction Response\Read\Transaction */
+            Assert::equal($moveId, $transaction->moveId);
+            foreach ($transaction as $property => $value) {
+                if ($property === 'moveId') {
+                    Assert::equal($moveId, $value);
+                    break 2;
+                }
+            }
+        }
 
-        $data = $this->fioRead->movements(1371081600, new \DateTime('2013-12-31'));
+        Assert::equal(Context::REST_URL . 'periods/' . $this->token . '/2015-01-01/2015-04-16/transactions.json', $this->fioRead->getRequestUrl());
+        Assert::equal(self::getContent('2015-01-01-2015-04-16-transactions.srlz'), serialize($data));
+    }
 
-        dd($data);
-        Assert::equals(Context::REST_URL . 'periods/' . $this->token . '/2013-06-13/2013-12-31/transactions.json', $this->object->getRequestUrl());
-
-        Assert::equals('h4kuna\Fio\Response\Read\TransactionList', get_class($data));
+    public function testMovementsEmpty()
+    {
+        $data = $this->fioRead->movements('2011-01-01', '2011-01-02');
+        Assert::equal(self::getContent('2011-01-01-2011-01-02-transactions.srlz'), serialize($data));
     }
 
     public function testMovementId()
     {
-        $year = 2015;
-        $moveId = 321654;
-        $this->object->movementId($moveId, $year);
-        Assert::equals(Context::REST_URL . 'by-id/' . $this->token . "/{$year}/{$moveId}/transactions.json", $this->object->getRequestUrl());
+        $data = $this->fioRead->movementId(2, 2015);
+        Assert::equal(self::getContent('2015-2-transactions.srlz'), serialize($data));
+        Assert::equal(Context::REST_URL . 'by-id/' . $this->token . '/2015/2/transactions.json', $this->fioRead->getRequestUrl());
     }
 
     public function testLastDownload()
     {
-        $this->object->lastDownload();
-        Assert::equals(Context::REST_URL . 'last/' . $this->token . '/transactions.json', $this->object->getRequestUrl());
+        $data = $this->fioRead->lastDownload();
+        Assert::equal(self::getContent('last-transactions.srlz'), serialize($data));
+        Assert::equal(Context::REST_URL . 'last/' . $this->token . '/transactions.json', $this->fioRead->getRequestUrl());
     }
 
     public function testSetLastId()
     {
-        $moveId = 321654;
-        $this->object->setLastId($moveId);
-        Assert::equals(Context::REST_URL . 'set-last-id/' . $this->token . "/{$moveId}/", $this->object->getRequestUrl());
+        $this->fioRead->setLastId(7155451447);
+        Assert::equal(Context::REST_URL . 'set-last-id/' . $this->token . "/7155451447/", $this->fioRead->getRequestUrl());
     }
 
     public function testSetLastDate()
     {
-        $this->object->setLastDate(1371081600);
-        Assert::equals(Context::REST_URL . 'set-last-date/' . $this->token . '/2013-06-13/', $this->object->getRequestUrl());
+        $dt = new \DateTime('-1 week');
+        $this->fioRead->setLastDate('-1 week');
+        Assert::equal(Context::REST_URL . 'set-last-date/' . $this->token . '/' . $dt->format('Y-m-d') . '/', $this->fioRead->getRequestUrl());
+    }
 
-        $this->object->setLastDate('2013-12-31');
-        Assert::equals(Context::REST_URL . 'set-last-date/' . $this->token . '/2013-12-31/', $this->object->getRequestUrl());
+    private static function getPathData($file)
+    {
+        return __DIR__ . '/../data/tests/' . $file;
+    }
 
-        $this->object->setLastDate(new \DateTime('2013-12-31'));
-        Assert::equals(Context::REST_URL . 'set-last-date/' . $this->token . '/2013-12-31/', $this->object->getRequestUrl());
+    private static function getContent($file)
+    {
+        return file_get_contents(self::getPathData($file));
     }
 
 }

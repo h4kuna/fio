@@ -1,0 +1,183 @@
+{
+    "accountStatement": {
+        "info": {
+            "accountId": "2000282668",
+            "bankId": "2010",
+            "currency": "CZK",
+            "iban": "CZ0620100000002000282668",
+            "bic": "FIOBCZPPXXX",
+            "openingBalance": 4102.04,
+            "closingBalance": 100.26,
+            "dateStart": "2015-02-01+0100",
+            "dateEnd": "2015-02-28+0100",
+            "yearList": 2015,
+            "idList": 2,
+            "idFrom": 7142478437,
+            "idTo": 7149201886,
+            "idLastDownload": null
+        },
+        "transactionList": {
+            "transaction": [{
+                    "column22": {
+                        "value": 7142478437,
+                        "name": "ID pohybu",
+                        "id": 22
+                    },
+                    "column0": {
+                        "value": "2015-02-06+0100",
+                        "name": "Datum",
+                        "id": 0
+                    },
+                    "column1": {
+                        "value": -4002.00,
+                        "name": "Objem",
+                        "id": 1
+                    },
+                    "column14": {
+                        "value": "CZK",
+                        "name": "Měna",
+                        "id": 14
+                    },
+                    "column2": {
+                        "value": "2000242017",
+                        "name": "Protiúčet",
+                        "id": 2
+                    },
+                    "column10": null,
+                    "column3": {
+                        "value": "2010",
+                        "name": "Kód banky",
+                        "id": 3
+                    },
+                    "column12": {
+                        "value": "Fio banka, a.s.",
+                        "name": "Název banky",
+                        "id": 12
+                    },
+                    "column4": {
+                        "value": "0558",
+                        "name": "KS",
+                        "id": 4
+                    },
+                    "column5": null,
+                    "column6": null,
+                    "column7": {
+                        "value": "pujčka",
+                        "name": "Uživatelská identifikace",
+                        "id": 7
+                    },
+                    "column16": null,
+                    "column8": {
+                        "value": "Platba převodem uvnitř banky",
+                        "name": "Typ",
+                        "id": 8
+                    },
+                    "column9": {
+                        "value": "Matějček, Milan",
+                        "name": "Provedl",
+                        "id": 9
+                    },
+                    "column18": null,
+                    "column25": {
+                        "value": "pujčka",
+                        "name": "Komentář",
+                        "id": 25
+                    },
+                    "column26": null,
+                    "column17": {
+                        "value": 7973780617,
+                        "name": "ID pokynu",
+                        "id": 17
+                    }
+                }, {
+                    "column22": {
+                        "value": 7149201885,
+                        "name": "ID pohybu",
+                        "id": 22
+                    },
+                    "column0": {
+                        "value": "2015-02-28+0100",
+                        "name": "Datum",
+                        "id": 0
+                    },
+                    "column1": {
+                        "value": 0.25,
+                        "name": "Objem",
+                        "id": 1
+                    },
+                    "column14": {
+                        "value": "CZK",
+                        "name": "Měna",
+                        "id": 14
+                    },
+                    "column2": null,
+                    "column10": null,
+                    "column3": null,
+                    "column12": null,
+                    "column4": null,
+                    "column5": null,
+                    "column6": null,
+                    "column7": null,
+                    "column16": null,
+                    "column8": {
+                        "value": "Připsaný úrok",
+                        "name": "Typ",
+                        "id": 8
+                    },
+                    "column9": null,
+                    "column18": null,
+                    "column25": null,
+                    "column26": null,
+                    "column17": {
+                        "value": 8002557848,
+                        "name": "ID pokynu",
+                        "id": 17
+                    }
+                }, {
+                    "column22": {
+                        "value": 7149201886,
+                        "name": "ID pohybu",
+                        "id": 22
+                    },
+                    "column0": {
+                        "value": "2015-02-28+0100",
+                        "name": "Datum",
+                        "id": 0
+                    },
+                    "column1": {
+                        "value": -0.03,
+                        "name": "Objem",
+                        "id": 1
+                    },
+                    "column14": {
+                        "value": "CZK",
+                        "name": "Měna",
+                        "id": 14
+                    },
+                    "column2": null,
+                    "column10": null,
+                    "column3": null,
+                    "column12": null,
+                    "column4": null,
+                    "column5": null,
+                    "column6": null,
+                    "column7": null,
+                    "column16": null,
+                    "column8": {
+                        "value": "Odvod daně z úroků",
+                        "name": "Typ",
+                        "id": 8
+                    },
+                    "column9": null,
+                    "column18": null,
+                    "column25": null,
+                    "column26": null,
+                    "column17": {
+                        "value": 8002557848,
+                        "name": "ID pokynu",
+                        "id": 17
+                    }
+                }]
+        }
+    }
+}

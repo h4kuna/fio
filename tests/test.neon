@@ -8,3 +8,7 @@ extensions:
 fioExtension:
     account: "123456789 / 1234"
     token: 'loremIpsum86'
+
+services:
+    fioExtension.queue:
+        class: h4kuna\Fio\Test\Queue

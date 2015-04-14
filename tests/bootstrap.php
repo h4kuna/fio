@@ -2,6 +2,8 @@
 
 include __DIR__ . "/../vendor/autoload.php";
 
+require_once __DIR__ . '/data/Queue.php';
+
 function dd($var /* ... */)
 {
     \Tracy\Debugger::enable(FALSE);
