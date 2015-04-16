@@ -84,7 +84,7 @@ class FioReadTest extends Tester\TestCase
         return __DIR__ . '/../data/tests/' . $file;
     }
 
-    private static function getContent($file)
+    public static function getContent($file)
     {
         return file_get_contents(self::getPathData($file));
     }

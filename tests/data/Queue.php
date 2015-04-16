@@ -2,14 +2,12 @@
 
 namespace h4kuna\Fio\Test;
 
-use h4kuna\Fio\Request\IQueue,
-    h4kuna\Fio\Response\Pay\BadResponse,
-    Kdyby\Curl\Request;
+use h4kuna\Fio;
 
 /**
  * @author Milan Matějček
  */
-class Queue implements IQueue
+class Queue implements Fio\Request\IQueue
 {
 
     public function download($token, $url)
@@ -22,14 +20,15 @@ class Queue implements IQueue
                 break;
         }
         if ($file) {
-            return file_get_contents(__DIR__ . '/tests/' . $file);
+            return Fio\FioReadTest::getContent($file);
         }
         return $file;
     }
 
-    public function upload($token, Request $curl)
+    public function upload($url, array $post, $filename)
     {
-        return new BadResponse($curl);
+
+        dd($url);
     }
 
 }

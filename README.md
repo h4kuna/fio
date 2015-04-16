@@ -27,7 +27,8 @@ fioExtension:
 
 How to use READ
 ---------------
-
+Reading
+=======
 ### Read range between date.
 
 ```php
@@ -75,4 +76,45 @@ $fioRead->setLastDate('1986-12-30');
 By movement ID.
 ```php
 $fioRead->setLastId(123456789);
+```
+
+Pay (writing)
+=============
+Api has three response languages, default is set **cs**. For change:
+```php
+/* @var $fioPay h4kuna\Fio\FioPay */
+$fioPay->setLanguage('en');
+```
+
+For send request is method send whose accept, file path to your xml or abo file or instance of class Property.
+```php
+$myFile = '/path/to/my/xml/or/abo/file'
+$fioPay->send($myFile);
+```
+
+Object pay only to czech or slovak:
+```php
+/* @var $national h4kuna\Fio\Request\Pay\Payment\National */
+$national = $fioPay->createNational($amount, $accountTo);
+$national->setVariableSymbol($vs);
+/* set next payment property $national->set* */
+$fioPay->send($national);
+```
+
+Euro zone payment:
+```php
+/* @var $euro h4kuna\Fio\Request\Pay\Payment\Euro */
+$euro = $fioPay->createEuro($amount, $accountTo, $bic, $name, $country);
+$euro->setVariableSymbol($vs);
+/* set next payment property $euro->set* */
+$fioPay->send($euro);
+```
+
+International payment:
+```php
+/* @var $international h4kuna\Fio\Request\Pay\Payment\International */
+$international = $fioPay->createInternational($amount, $accountTo, $bic, $name, $street, $city, $country, $info);
+$international->setRemittanceInfo2('foo');
+/* set next payment property $international->set* */
+$fioPay->send($international);
 ```

@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Response\Pay;
 
-use Kdyby\Curl\CurlException;
+use Kdyby\Curl\Request;
 
 /**
  * @author Milan Matějček
@@ -10,10 +10,10 @@ use Kdyby\Curl\CurlException;
 class BadResponse implements IResponse
 {
 
-    /** @var CurlException */
+    /** @var Request */
     private $curl;
 
-    public function __construct(CurlException $curl)
+    public function __construct(Request $curl)
     {
         $this->curl = $curl;
     }
@@ -25,7 +25,7 @@ class BadResponse implements IResponse
 
     public function getError()
     {
-        return $this->curl->getMessage();
+        return $this->curl;
     }
 
     public function getErrorCode()

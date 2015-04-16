@@ -2,8 +2,8 @@
 
 namespace h4kuna\Fio\Request\Pay;
 
-use XMLWriter;
-use h4kuna\Fio\Request\Pay\Payment\Property;
+use h4kuna\Fio\Request\Pay\Payment\Property,
+    XMLWriter;
 
 /**
  * @author Milan Matějček
@@ -15,13 +15,10 @@ class XMLFile
     private $xml;
 
     /** @var string */
-    private $content;
+    private $content = TRUE;
 
     /** @var string */
     private $temp;
-
-    /** @var Property */
-    private $data;
 
     public function __construct($temp)
     {
@@ -34,9 +31,10 @@ class XMLFile
      */
     public function setData(Property $data)
     {
-        $this->data = $data;
-        $this->createEmptyXml();
-        return $this;
+        if ($this->content) {
+            $this->createEmptyXml();
+        }
+        return $this->setBody($data);
     }
 
     /** @return string  */
@@ -57,7 +55,13 @@ class XMLFile
             return $this->content;
         }
 
-        return $this->content = $this->getContent();
+        return $this->content = $this->endDocument();
+    }
+
+    /** @return bool */
+    public function isReady()
+    {
+        return $this->content === NULL;
     }
 
     /**
@@ -75,10 +79,10 @@ class XMLFile
         $this->content = NULL;
     }
 
-    private function getContent()
+    private function setBody(Property $data)
     {
-        $this->xml->startElement($this->data->getStartXmlElement());
-        foreach ($this->data as $node => $value) {
+        $this->xml->startElement($data->getStartXmlElement());
+        foreach ($data as $node => $value) {
             if ($value === FALSE) {
                 continue;
             }
@@ -88,6 +92,11 @@ class XMLFile
             $this->xml->endElement();
         }
         $this->xml->endElement();
+        return $this;
+    }
+
+    private function endDocument()
+    {
         $this->xml->endDocument();
         return $this->xml->outputMemory();
     }

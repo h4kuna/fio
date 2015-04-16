@@ -2,19 +2,12 @@
 
 namespace h4kuna\Fio\Request;
 
-use h4kuna\Fio\Response\Pay\BadResponse,
-    h4kuna\Fio\Response\Pay\XMLResponse,
-    Kdyby,
-    Kdyby\Curl\Request,
-    Nette\Http\IResponse,
-    Nette\Utils\FileSystem,
-    Nette\Utils\SafeStream;
+use h4kuna\Fio\Response\Pay,
+    Kdyby\Curl,
+    Nette\Utils;
 
 class Queue implements IQueue
 {
-
-    /** @var SafeStream */
-    private $stream;
 
     /** @var string */
     private $temp;
@@ -24,29 +17,28 @@ class Queue implements IQueue
 
     public function __construct($temp)
     {
-        FileSystem::createDir($temp, 0755);
+        Utils\FileSystem::createDir($temp, 0755);
         $this->temp = $temp;
-        $this->stream = new SafeStream;
     }
 
     public function download($token, $url)
     {
         $this->availableAnotherRequest($token);
-        $request = new Kdyby\Curl\Request($url);
+        $request = new Curl\Request($url);
         return $request->get()->getResponse();
     }
 
-    /** @return IResponse  */
-    public function upload($token, Request $curl)
+    /** @return Pay\IResponse  */
+    public function upload($url, array $post, $filename)
     {
-        $this->availableAnotherRequest($token);
+        $this->availableAnotherRequest($post['token']);
         try {
-            $xml = $curl->send();
-        } catch (Kdyby\Curl\CurlException $e) {
-            return new BadResponse($e);
+            $xml = $this->createCurl($url, $post, $filename)->send();
+        } catch (Curl\CurlException $e) {
+            return new Pay\BadResponse($e);
         }
 
-        return new XMLResponse($xml);
+        return new Pay\XMLResponse($xml);
     }
 
     /**
@@ -75,7 +67,27 @@ class Queue implements IQueue
         if (!isset(self::$tokens[$key])) {
             self::$tokens[$key] = $this->temp . DIRECTORY_SEPARATOR . md5($key);
         }
-        return SafeStream::PROTOCOL . '://' . self::$tokens[$key];
+        return Utils\SafeStream::PROTOCOL . '://' . self::$tokens[$key];
+    }
+
+    /** @return CUrl */
+    private function createCurl($url, array $post, $filename)
+    {
+        $request = new Curl\Request($url);
+        $request->setPost($post, array(
+            'file' => $filename
+        ));
+
+        $curl = new Curl\CurlSender();
+        $curl->setTimeout(30);
+        $curl->options = array(
+            'verbose' => 0,
+            'ssl_verifypeer' => 0,
+            'ssl_verifyhost' => 2,
+                # 'httpheader' => 'Content-Type: multipart/form-data; charset=utf-8;'
+                ) + $curl->options;
+        $request->setSender($curl);
+        return $request;
     }
 
 }

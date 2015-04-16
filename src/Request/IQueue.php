@@ -2,8 +2,6 @@
 
 namespace h4kuna\Fio\Request;
 
-use Kdyby\Curl\Request;
-
 /**
  *
  * @author Milan Matějček
@@ -21,8 +19,10 @@ interface IQueue
     public function download($token, $url);
 
     /**
-     * @param CUrl $curl
-     * @return XMLResponse
+     * @param string $url
+     * @param array $post
+     * @param string $filename
+     * @return \h4kuna\Fio\Response\Pay\IResponse
      */
-    public function upload($token, Request $curl);
+    public function upload($url, array $post, $filename);
 }

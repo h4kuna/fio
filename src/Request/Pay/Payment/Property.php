@@ -2,10 +2,9 @@
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio\Utils\FioException;
-use h4kuna\Fio\Utils\String;
-use Iterator;
-use Nette\Utils\DateTime;
+use h4kuna\Fio\Utils,
+    Iterator,
+    Nette\Utils\DateTime;
 
 /**
  * @author Milan Matějček
@@ -43,7 +42,7 @@ abstract class Property implements Iterator
 
     /**
      * Section in manual 7.2.3.1.
-     * @var int 
+     * @var int
      */
     protected $paymentReason = FALSE;
 
@@ -59,7 +58,7 @@ abstract class Property implements Iterator
      */
     public function __construct($account)
     {
-        $accountObject = String::createAccount($account);
+        $accountObject = Utils\String::createAccount($account);
         $this->accountFrom = $accountObject->getAccount();
         $this->setDate('now');
     }
@@ -86,7 +85,7 @@ abstract class Property implements Iterator
     public function setCurrency($code)
     {
         if (!preg_match('~[a-z]{3}~i', $code)) {
-            throw new FioException('Currency code must match ISO 4217.');
+            throw new Utils\FioException('Currency code must match ISO 4217.');
         }
         $this->currency = strtoupper($code);
         return $this;
@@ -101,7 +100,7 @@ abstract class Property implements Iterator
         if (!$ks) {
             $ks = NULL;
         } elseif (!preg_match('~\d{1,4}~', $ks)) {
-            throw new FioException('Constant symbol must contain 1-4 digits.');
+            throw new Utils\FioException('Constant symbol must contain 1-4 digits.');
         }
         $this->ks = $ks;
         return $this;
@@ -113,7 +112,7 @@ abstract class Property implements Iterator
      */
     public function setMyComment($str)
     {
-        $this->comment = String::substr($str, 255);
+        $this->comment = Utils\String::substr($str, 255);
         return $this;
     }
 
@@ -133,7 +132,7 @@ abstract class Property implements Iterator
         if (!$code) {
             $code = NULL;
         } elseif (!preg_match('~\d{3}~', $code)) {
-            throw new FioException('Payment reason must contain 3 digits.');
+            throw new Utils\FioException('Payment reason must contain 3 digits.');
         }
         $this->paymentReason = $code;
         return $this;
@@ -149,7 +148,7 @@ abstract class Property implements Iterator
         if (!$ss) {
             $ss = NULL;
         } elseif (!preg_match('~\d{1,10}~', $ss)) {
-            throw new FioException('Specific symbol must contain 1-10 digits.');
+            throw new Utils\FioException('Specific symbol must contain 1-10 digits.');
         }
         $this->ss = $ss;
         return $this;
@@ -164,7 +163,7 @@ abstract class Property implements Iterator
         if (!$vs) {
             $vs = NULL;
         } elseif (!preg_match('~\d{1,10}~', $vs)) {
-            throw new FioException('Variable symbol must contain 1-10 digits.');
+            throw new Utils\FioException('Variable symbol must contain 1-10 digits.');
         }
         $this->vs = $vs;
         return $this;

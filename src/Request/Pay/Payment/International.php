@@ -2,8 +2,7 @@
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio\Utils\FioException;
-use h4kuna\Fio\Utils\String;
+use h4kuna\Fio\Utils;
 
 /**
  * @author Milan Matějček
@@ -11,9 +10,10 @@ use h4kuna\Fio\Utils\String;
 class International extends Euro
 {
 
-    const CHARGES_OUR = 470501;
-    const CHARGES_BEN = 470502;
-    const CHARGES_SHA = 470503;
+    const
+            CHARGES_OUR = 470501,
+            CHARGES_BEN = 470502,
+            CHARGES_SHA = 470503;
 
     /** @var string */
     protected $benefStreet = TRUE;
@@ -29,7 +29,7 @@ class International extends Euro
 
     /**
      * Default value is goods export.
-     * @see Property 
+     * @see Property
      */
     protected $paymentReason = 110;
 
@@ -39,26 +39,26 @@ class International extends Euro
     /**
      * @param int $type
      * @return self
-     * @throws FioException
+     * @throws Utils\FioException
      */
     public function setDetailsOfCharges($type)
     {
         static $types = array(self::CHARGES_BEN, self::CHARGES_OUR, self::CHARGES_SHA);
         if (!in_array($type, $types)) {
-            throw new FioException('Select one type from constatns. Section in manual 6.3.4.');
+            throw new Utils\FioException('Select one type from constatns. Section in manual 6.3.4.');
         }
         $this->detailsOfCharges = $type;
         return $this;
     }
 
     /**
-     * 
+     *
      * @param string $str
      * @return self
      */
     public function setRemittanceInfo4($str)
     {
-        $this->remittanceInfo4 = String::substr($str, 35);
+        $this->remittanceInfo4 = Utils\String::substr($str, 35);
         return $this;
     }
 
@@ -78,25 +78,25 @@ class International extends Euro
     /** @deprecated */
     public function setConstantSymbol($ks)
     {
-        throw new FioException('Not available.');
+        throw new Utils\FioException('Not available.');
     }
 
     /** @deprecated */
     public function setSpecificSymbol($ss)
     {
-        throw new FioException('Not available.');
+        throw new Utils\FioException('Not available.');
     }
 
     /** @deprecated */
     public function setVariableSymbol($vs)
     {
-        throw new FioException('Not available.');
+        throw new Utils\FioException('Not available.');
     }
 
     /** @deprecated */
     public function setPaymentType($type)
     {
-        throw new FioException('Not available.');
+        throw new Utils\FioException('Not available.');
     }
 
 }

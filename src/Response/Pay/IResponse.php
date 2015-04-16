@@ -12,9 +12,9 @@ interface IResponse
     /** @return bool */
     public function isOk();
 
-    /** @return string */
+    /** @return mixed */
     public function getError();
 
-    /** @return string */
+    /** @return int */
     public function getErrorCode();
 }

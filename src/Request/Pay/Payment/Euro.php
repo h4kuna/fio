@@ -2,8 +2,7 @@
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio\Utils\FioException;
-use h4kuna\Fio\Utils\String;
+use h4kuna\Fio\Utils;
 
 /**
  * @author Milan Matějček
@@ -11,8 +10,9 @@ use h4kuna\Fio\Utils\String;
 class Euro extends Property
 {
 
-    const PAYMENT_STANDARD = 431008;
-    const PAYMENT_PRIORITY = 431009;
+    const
+            PAYMENT_STANDARD = 431008,
+            PAYMENT_PRIORITY = 431009;
 
     /** @var string */
     protected $bic = TRUE;
@@ -50,12 +50,12 @@ class Euro extends Property
     /**
      *
      * @param string $accountTo ISO 13616
-     * @throws FioException
+     * @throws Utils\FioException
      */
     public function setAccountTo($accountTo)
     {
         if (strlen($accountTo) > 34) {
-            throw new FioException('Account is to long. ISO 13616.');
+            throw new Utils\FioException('Account is to long. ISO 13616.');
         }
         $this->accountTo = $accountTo;
         return $this;
@@ -65,12 +65,12 @@ class Euro extends Property
      *
      * @param string $bic
      * @return self
-     * @throws FioException
+     * @throws Utils\FioException
      */
     public function setBic($bic)
     {
         if (strlen($bic) != 11) {
-            throw new FioException('BIC must lenght 11. Is ISO 9362.');
+            throw new Utils\FioException('BIC must lenght 11. Is ISO 9362.');
         }
         $this->bic = $bic;
         return $this;
@@ -83,7 +83,7 @@ class Euro extends Property
      */
     public function setStreet($str)
     {
-        $this->benefStreet = String::substr($str, 35);
+        $this->benefStreet = Utils\String::substr($str, 35);
         return $this;
     }
 
@@ -94,7 +94,7 @@ class Euro extends Property
      */
     public function setCity($str)
     {
-        $this->benefCity = String::substr($str, 35);
+        $this->benefCity = Utils\String::substr($str, 35);
         return $this;
     }
 
@@ -107,7 +107,7 @@ class Euro extends Property
     {
         $country = strtoupper($benefCountry);
         if (strlen($country) != 2 && $country != 'TCH') {
-            throw new FioException('Look at to manual for country code section 6.3.3.');
+            throw new Utils\FioException('Look at to manual for country code section 6.3.3.');
         }
         $this->benefCountry = $country;
         return $this;
@@ -120,7 +120,7 @@ class Euro extends Property
      */
     public function setName($name)
     {
-        $this->benefName = String::substr($name, 35);
+        $this->benefName = Utils\String::substr($name, 35);
         return $this;
     }
 
@@ -131,7 +131,7 @@ class Euro extends Property
      */
     public function setRemittanceInfo1($str)
     {
-        $this->remittanceInfo1 = String::substr($str, 35);
+        $this->remittanceInfo1 = Utils\String::substr($str, 35);
         return $this;
     }
 
@@ -142,7 +142,7 @@ class Euro extends Property
      */
     public function setRemittanceInfo2($str)
     {
-        $this->remittanceInfo2 = String::substr($str, 35);
+        $this->remittanceInfo2 = Utils\String::substr($str, 35);
         return $this;
     }
 
@@ -153,20 +153,20 @@ class Euro extends Property
      */
     public function setRemittanceInfo3($str)
     {
-        $this->remittanceInfo3 = String::substr($str, 35);
+        $this->remittanceInfo3 = Utils\String::substr($str, 35);
         return $this;
     }
 
     /**
      * @param int $type
      * @return self
-     * @throws FioException
+     * @throws Utils\FioException
      */
     public function setPaymentType($type)
     {
         static $types = array(self::PAYMENT_STANDARD, self::PAYMENT_PRIORITY);
         if (!in_array($type, $types)) {
-            throw new FioException('Unsupported payment type: ' . $type);
+            throw new Utils\FioException('Unsupported payment type: ' . $type);
         }
         $this->paymentType = $type;
         return $this;

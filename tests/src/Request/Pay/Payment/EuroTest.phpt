@@ -2,11 +2,11 @@
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio\Request\Pay\XMLFile;
-use h4kuna\Fio\Request\Pay\PaymentFactory;
-use Tester;
+use h4kuna\Fio\Request\Pay\PaymentFactory,
+    h4kuna\Fio\Request\Pay\XMLFile,
+    Tester;
 
-$container = require_once __DIR__ . '/../../bootstrap.php';
+$container = require_once __DIR__ . '/../../../../bootstrap.php';
 
 /**
  * @author Milan Matějček
@@ -17,28 +17,34 @@ class EuroTest extends Tester\TestCase
     /**
      * @var PaymentFactory
      */
-    protected $object;
+    private $paymentFactory;
 
     /** @var XMLFile */
-    protected $xmlFile;
+    private $xmlFile;
+    private $container;
+
+    public function __construct($container)
+    {
+        $this->container = $container;
+    }
 
     protected function setUp()
     {
-        $this->object = new PaymentFactory('123456789');
-        $this->xmlFile = new XMLFile(self::getRoot() . '/temp');
+        $this->paymentFactory = $this->container->createService('fioExtension.paymentFactory');
+        $this->xmlFile = $this->container->createService('fioExtension.xmlFile');
     }
 
     public function testMinimum()
     {
-        $pay = $this->object->getEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp');
+        $pay = $this->paymentFactory->createEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp');
         $pay->setDate('2015-01-23');
         $xml = $this->xmlFile->setData($pay)->getXml();
-        $this->assertXmlStringEqualsXmlFile(self::getRoot() . '/data/euro-minimum.xml', $xml);
+        Tester\Assert::equal(self::getContent('euro-minimum.xml'), $xml);
     }
 
     public function testMaximum()
     {
-        $pay = $this->object->getEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp')
+        $pay = $this->paymentFactory->createEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp')
                 ->setCity('Prague')
                 ->setRemittanceInfo1('info 1')
                 ->setRemittanceInfo2('info 2')
@@ -53,12 +59,15 @@ class EuroTest extends Tester\TestCase
                 ->setVariableSymbol('123456789')
                 ->setPaymentType(Euro::PAYMENT_PRIORITY);
         $xml = $this->xmlFile->setData($pay)->getXml();
-        $this->assertXmlStringEqualsXmlFile(self::getRoot() . '/data/euro-maximum.xml', $xml);
+        Tester\Assert::equal(self::getContent('euro-maximum.xml'), $xml);
     }
 
-    private static function getRoot()
+    private static function getContent($file)
     {
-        return __DIR__ . '/../../../..';
+        return file_get_contents(__DIR__ . '/../../../../data/payment/' . $file);
     }
 
 }
+
+$test = new EuroTest($container);
+$test->run();

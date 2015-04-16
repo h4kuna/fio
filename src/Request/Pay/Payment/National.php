@@ -2,8 +2,7 @@
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio\Utils\FioException;
-use h4kuna\Fio\Utils\String;
+use h4kuna\Fio\Utils;
 
 /**
  *
@@ -12,10 +11,11 @@ use h4kuna\Fio\Utils\String;
 class National extends Property
 {
 
-    const PAYMENT_STANDARD = 431001;
-    const PAYMENT_FAST = 431004;
-    const PAYMENT_PRIORITY = 431005;
-    const PAYMENT_COLLECTION = 431022;
+    const
+            PAYMENT_STANDARD = 431001,
+            PAYMENT_FAST = 431004,
+            PAYMENT_PRIORITY = 431005,
+            PAYMENT_COLLECTION = 431022;
 
     /** @var int */
     protected $bankCode = TRUE;
@@ -29,16 +29,15 @@ class National extends Property
     /**
      * @param int|string $type
      * @return self
-     * @throws FioException
+     * @throws Utils\FioException
      */
     public function setPaymentType($type)
     {
         static $types = array(self::PAYMENT_STANDARD, self::PAYMENT_FAST, self::PAYMENT_PRIORITY, self::PAYMENT_COLLECTION);
-        if (in_array($type, $types)) {
-            $this->paymentType = $type;
-        } else {
-            throw new FioException('Unsupported payment type: ' . $type);
+        if (!in_array($type, $types)) {
+            throw new Utils\FioException('Unsupported payment type: ' . $type);
         }
+        $this->paymentType = $type;
         return $this;
     }
 
@@ -48,13 +47,13 @@ class National extends Property
      */
     public function setMessage($str)
     {
-        $this->messageForRecipient = String::substr($str, 140);
+        $this->messageForRecipient = Utils\String::substr($str, 140);
         return $this;
     }
 
     public function setAccountTo($accountTo, $bankCode = NULL)
     {
-        $accountObject = String::createAccount($accountTo, $bankCode);
+        $accountObject = Utils\String::createAccount($accountTo, $bankCode);
         $this->accountTo = $accountObject->getAccount();
         $this->bankCode = $accountObject->getBankCode();
         return $this;

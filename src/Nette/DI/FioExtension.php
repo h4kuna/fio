@@ -2,8 +2,8 @@
 
 namespace h4kuna\Fio\Nette\DI;
 
-use h4kuna\Fio\Utils\FioException;
-use Nette\DI\CompilerExtension;
+use h4kuna\Fio\Utils\FioException,
+    Nette\DI\CompilerExtension;
 
 class FioExtension extends CompilerExtension
 {
