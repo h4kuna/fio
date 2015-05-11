@@ -6,7 +6,7 @@ Installation to project
 -----------------------
 The best way to install h4kuna/fio is using Composer:
 ```sh
-$ composer require h4kuna/fio:
+$ composer require h4kuna/fio
 ```
 
 Example NEON config
@@ -25,7 +25,7 @@ fioExtension:
     transactionClass: \h4kuna\Fio\Response\Read\Transaction # if you need change name of property
 ```
 
-How to use READ
+How to use
 ---------------
 Reading
 =======
@@ -48,6 +48,14 @@ foreach ($list as $transaction) {
 dump($list->getInfo());
 ```
 
+### You can download transaction by id of year.
+```php
+use h4kuna\Fio;
+/* @var $fioRead Fio\FioRead */
+/* @var $list Fio\Response\Read\TransactionList */
+$list = $fioRead->movementId(2, 2015); // second transaction of year 2015
+```
+
 ### Very useful method where download last transactions.
 After download it automaticaly set new break point.
 ```php
@@ -59,26 +67,22 @@ $list = $fioRead->lastDownload();
 dump($list->getInfo()->idLastDownload);
 ```
 
-### You can download transaction by id of year.
-```php
-use h4kuna\Fio;
-/* @var $fioRead Fio\FioRead */
-/* @var $list Fio\Response\Read\TransactionList */
-$list = $fioRead->movementId(2, 2015); // second transaction of year 2015
-```
-
 ### Change your break point.
 By date.
 ```php
 $fioRead->setLastDate('1986-12-30');
+$list = $fioRead->lastDownload();
+dump($list->getInfo()->idLastDownload);
 ```
 
 By movement ID.
 ```php
 $fioRead->setLastId(123456789);
+$list = $fioRead->lastDownload();
+dump($list->getInfo()->idLastDownload); // 123456789
 ```
 
-Pay (writing)
+Payment (writing)
 =============
 Api has three response languages, default is set **cs**. For change:
 ```php
