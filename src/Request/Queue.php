@@ -23,7 +23,7 @@ class Queue implements IQueue
 
     public function download($token, $url)
     {
-        $this->availableAnotherRequest($token);
+        $this->availableAnotherRequest($token, 0);
         $request = new Curl\Request($url);
         return $request->get()->getResponse();
     }
@@ -31,25 +31,26 @@ class Queue implements IQueue
     /** @return Pay\IResponse  */
     public function upload($url, array $post, $filename)
     {
-        $this->availableAnotherRequest($post['token']);
+        $this->availableAnotherRequest($post['token'], self::API_INTERVAL);
         try {
             $xml = $this->createCurl($url, $post, $filename)->send();
         } catch (Curl\CurlException $e) {
             return new Pay\BadResponse($e);
         }
 
-        return new Pay\XMLResponse($xml);
+        return new Pay\XMLResponse($xml->getResponse());
     }
 
     /**
      * Interval between requests is 30s per token.
      * @param string $token
+	 * @param int $timeWait
      */
-    final protected function availableAnotherRequest($token)
+    final protected function availableAnotherRequest($token, $timeWait)
     {
         $tempFile = $this->loadFileName($token);
         $time = (int) file_get_contents($tempFile);
-        $diff = ($time + self::API_INTERVAL) - time();
+        $diff = ($time + $timeWait) - time();
         if ($time && $diff > 0) {
             sleep($diff);
         }
@@ -67,6 +68,9 @@ class Queue implements IQueue
         if (!isset(self::$tokens[$key])) {
             self::$tokens[$key] = $this->temp . DIRECTORY_SEPARATOR . md5($key);
         }
+		if(!is_file(self::$tokens[$key])) {
+			touch(self::$tokens[$key]);
+		}
         return Utils\SafeStream::PROTOCOL . '://' . self::$tokens[$key];
     }
 

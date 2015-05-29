@@ -2,8 +2,7 @@
 
 namespace h4kuna\Fio\Response\Pay;
 
-use Kdyby\Curl\Response,
-    SimpleXMLElement;
+use SimpleXMLElement;
 
 /**
  * @author Milan Matějček
@@ -15,9 +14,9 @@ class XMLResponse implements IResponse
     private $xml;
 
     /** @param string $xml */
-    public function __construct(Response $xml)
+    public function __construct($xml)
     {
-        $this->xml = new SimpleXMLElement($xml->getResponse());
+        $this->xml = new SimpleXMLElement($xml);
     }
 
     public function isOk()

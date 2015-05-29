@@ -3,7 +3,6 @@
 namespace h4kuna\Fio;
 
 use h4kuna\Fio\Request\Pay,
-    h4kuna\Fio\Request\Pay\Payment\Property,
     h4kuna\Fio\Utils;
 
 class FioPay extends Fio
@@ -62,7 +61,6 @@ class FioPay extends Fio
     }
 
     /**
-     *
      * @param Pay\Payment\Property $property
      * @return self
      */

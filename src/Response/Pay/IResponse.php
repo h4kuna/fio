@@ -9,12 +9,12 @@ namespace h4kuna\Fio\Response\Pay;
 interface IResponse
 {
 
-    /** @return bool */
-    public function isOk();
+	/** @return bool */
+	public function isOk();
 
-    /** @return mixed */
-    public function getError();
+	/** @return mixed */
+	public function getError();
 
-    /** @return int */
-    public function getErrorCode();
+	/** @return int */
+	public function getErrorCode();
 }

@@ -82,6 +82,35 @@ $list = $fioRead->lastDownload();
 dump($list->getInfo()->idLastDownload); // 123456789
 ```
 
+### Custom Transaction class
+By default is h4kuna\Fio\Response\Read\Transaction if you want other names for properties. You can set by Neon.
+```sh
+fioExtension:
+    transactionClass: \MyTransaction
+```
+
+Define annotation and you don't forget id in brackets.
+```php
+<?php
+
+use h4kuna\Fio\Response\Read\ATransaction
+
+/**
+ * @property-read float $amount [1]
+ * @property-read string $to_account [2]
+ * @property-read string $bank_code [3]
+ */
+class MyTransaction extends ATransaction
+{
+	/** custom method */
+	public function setBank_code($value)
+	{
+		return str_pad($value, 4, '0', STR_PAD_LEFT);
+	}
+}
+```
+
+
 Payment (writing)
 =============
 Api has three response languages, default is set **cs**. For change:
@@ -121,4 +150,15 @@ $international = $fioPay->createInternational($amount, $accountTo, $bic, $name, 
 $international->setRemittanceInfo2('foo');
 /* set next payment property $international->set* */
 $fioPay->send($international);
+```
+
+Send more payments in one request:
+```php
+foreach($pamentsRows as $row) {
+	/* @var $national h4kuna\Fio\Request\Pay\Payment\National */
+	$national = $fioPay->createNational($row->amount, $row->accountTo);
+	$national->setVariableSymbol($row->vs);
+	$fioPay->addPayment($national);
+}
+$fioPay->send();
 ```

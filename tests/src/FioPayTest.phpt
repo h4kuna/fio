@@ -3,7 +3,8 @@
 namespace h4kuna\Fio;
 
 use Tester,
-    Tester\Assert;
+    Tester\Assert,
+	h4kuna\Fio\Test;
 
 $container = require_once __DIR__ . '/../bootstrap.php';
 
@@ -31,11 +32,10 @@ class FioPayTest extends Tester\TestCase
 
     public function testSend()
     {
-        \Tracy\Debugger::$maxDepth = 10;
-        $national = $this->fioPay->createNational(30, '2600267402', '2010');
-        $this->fioPay->addPayment($national);
-        $national = $this->fioPay->createNational(50, '2600267402', '2010');
-        dd($this->fioPay->send($national));
+		$xml = Test\Utils::getContent('payment/response.xml');
+        $xmlResponse = new Response\Pay\XMLResponse($xml);
+		Assert::true($xmlResponse->isOk());
+		Assert::equal('1247458', $xmlResponse->getIdInstruction());
     }
 
 }

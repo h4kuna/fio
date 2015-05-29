@@ -24,10 +24,10 @@ use DateTime;
  * @property-read string $currency [14]
  * @property-read string|NULL $messageTo [16]
  * @property-read int $instructionId [17]
- * @property-read string $advancedInformation [18]
+ * @property-read string $advancedInformation [*18]
  * @property-read int $moveId [22]
  * @property-read string|NULL $comment [25]
- * @property-read string $bic [26]
+ * @property-read string $bic [*26]
  *
  */
 final class Transaction extends ATransaction

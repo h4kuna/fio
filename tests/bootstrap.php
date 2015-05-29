@@ -3,10 +3,10 @@
 include __DIR__ . "/../vendor/autoload.php";
 
 require_once __DIR__ . '/data/Queue.php';
+require_once __DIR__ . '/data/Utils.php';
 
 function dd($var /* ... */)
 {
-    \Tracy\Debugger::enable(FALSE);
     foreach (func_get_args() as $arg) {
         \Tracy\Debugger::dump($arg);
     }
@@ -29,6 +29,8 @@ if (is_file($local)) {
     $configurator->addConfig($local);
 }
 $container = $configurator->createContainer();
+
+\Tracy\Debugger::enable(FALSE);
 
 return $container;
 
