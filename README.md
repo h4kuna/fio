@@ -1,5 +1,7 @@
 Fio
 =====
+[![Build Status](https://travis-ci.org/h4kuna/fio.svg?branch=master)](https://travis-ci.org/h4kuna/fio)
+
 Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Default read via json file.
 
 Installation to project
