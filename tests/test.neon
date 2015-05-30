@@ -1,3 +1,6 @@
+php:
+    date.timezone: Europe/Prague
+
 nette:
     container:
         debugger: TRUE
