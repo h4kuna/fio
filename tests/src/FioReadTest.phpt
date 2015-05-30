@@ -44,26 +44,26 @@ class FioReadTest extends Tester\TestCase
 		}
 
 		Assert::equal(Context::REST_URL . 'periods/' . $this->token . '/2015-01-01/2015-04-16/transactions.json', $this->fioRead->getRequestUrl());
-		Assert::equal(Test\Utils::getContent('2015-01-01-2015-04-16-transactions.srlz'), serialize($data));
+		Assert::equal(unserialize(Test\Utils::getContent('2015-01-01-2015-04-16-transactions.srlz')), $data);
 	}
 
 	public function testMovementsEmpty()
 	{
 		$data = $this->fioRead->movements('2011-01-01', '2011-01-02');
-		Assert::equal(Test\Utils::getContent('2011-01-01-2011-01-02-transactions.srlz'), serialize($data));
+		Assert::equal(unserialize(Test\Utils::getContent('2011-01-01-2011-01-02-transactions.srlz')), $data);
 	}
 
 	public function testMovementId()
 	{
 		$data = $this->fioRead->movementId(2, 2015);
-		Assert::equal(Test\Utils::getContent('2015-2-transactions.srlz'), serialize($data));
+		Assert::equal(unserialize(Test\Utils::getContent('2015-2-transactions.srlz')), $data);
 		Assert::equal(Context::REST_URL . 'by-id/' . $this->token . '/2015/2/transactions.json', $this->fioRead->getRequestUrl());
 	}
 
 	public function testLastDownload()
 	{
 		$data = $this->fioRead->lastDownload();
-		Assert::equal(Test\Utils::getContent('last-transactions.srlz'), serialize($data));
+		Assert::equal(unserialize(Test\Utils::getContent('last-transactions.srlz')), $data);
 		Assert::equal(Context::REST_URL . 'last/' . $this->token . '/transactions.json', $this->fioRead->getRequestUrl());
 	}
 

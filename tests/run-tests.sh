@@ -1,7 +1,11 @@
 #!/bin/bash
 
 DIR=`dirname $0`;
+TEMP_DIR=$DIR/temp
 
-rm -rf temp/*
 
-$DIR/../vendor/bin/tester -p php $DIR -s -j 2 --colors 1 -c $DIR/data/php_unix.ini
+rm -rf $TEMP_DIR/*
+MODE=`php -r "echo php_sapi_name();"`
+mkdir -p $TEMP_DIR/$MODE/fio
+
+$DIR/../vendor/bin/tester -p php $DIR -s -j 5 --colors 1 -c $DIR/data/php_unix.ini

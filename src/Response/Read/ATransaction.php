@@ -81,6 +81,9 @@ abstract class ATransaction implements \Iterator
 	{
 		switch ($type) {
 			case 'int':
+				if(PHP_VERSION_ID < 54000) {
+					return $value + 0;
+				}
 				return intval($value);
 			case 'datetime':
 				return Utils\String::createFromFormat($value, $this->getDateFormat());

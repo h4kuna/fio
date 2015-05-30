@@ -78,7 +78,7 @@ class JsonStatementFactory implements IStatementFactory
 
 		self::$property = array();
 		foreach ($find['name'] as $key => $property) {
-			self::$property[$find['id'][$key]] = ['type' => strtolower($find['type'][$key]), 'name' => $property];
+			self::$property[$find['id'][$key]] = array('type' => strtolower($find['type'][$key]), 'name' => $property);
 		}
 		return self::$property;
 	}

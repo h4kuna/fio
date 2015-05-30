@@ -19,7 +19,6 @@ Tester\Environment::setup();
 $configurator = new Nette\Configurator;
 
 $tmp = __DIR__ . '/temp/' . php_sapi_name();
-Nette\Utils\FileSystem::createDir($tmp, 0755);
 $configurator->enableDebugger($tmp);
 $configurator->setTempDirectory($tmp);
 $configurator->setDebugMode(FALSE);
