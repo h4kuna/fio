@@ -13,7 +13,7 @@ use DateTime;
  * @property-read float $volume [1]
  * @property-read string $toAccount [2]
  * @property-read string $bankCode [3]
- * @property-read string $constatntSymbol [4]
+ * @property-read string $constantSymbol [4]
  * @property-read string $variableSymbol [5]
  * @property-read string $specificSymbol [6]
  * @property-read string|NULL $note [7]
