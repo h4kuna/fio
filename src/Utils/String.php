@@ -50,7 +50,11 @@ final class String
      */
     public static function createFromFormat($value, $format, $midnight = TRUE)
     {
-        $dt = date_create_from_format($format, $value);
+        if ($value === null) {
+            $dt = (new \DateTime())->setTimestamp(0);    //oldest date
+        } else {
+            $dt = date_create_from_format($format, $value);
+        }
         if ($midnight) {
             $dt->setTime(0, 0, 0);
         }
