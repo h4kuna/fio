@@ -51,7 +51,8 @@ final class String
     public static function createFromFormat($value, $format, $midnight = TRUE)
     {
         if ($value === null) {
-            $dt = (new \DateTime())->setTimestamp(0);    //oldest date
+            $now = new \DateTime(); //because of php 5.3 I have to split it to two lines.
+            $dt = $now->setTimestamp(0);    //oldest date
         } else {
             $dt = date_create_from_format($format, $value);
         }
