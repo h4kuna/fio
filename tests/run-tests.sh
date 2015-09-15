@@ -8,7 +8,7 @@ rm -rf $TEMP_DIR/*
 MODE=`php -r "echo php_sapi_name();"`
 mkdir -p $TEMP_DIR/$MODE/fio
 
-cd $DIR/..
+
 composer install --no-interaction --prefer-source
 
 $DIR/../vendor/bin/tester -p php $DIR -s -j 5 --colors 1 -c $DIR/data/php_unix.ini
