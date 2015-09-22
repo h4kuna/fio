@@ -2,6 +2,8 @@
 
 namespace h4kuna\Fio\Security;
 
+use h4kuna\Fio\Utils\FioException;
+
 /**
  * @author Milan Matějček
  */
