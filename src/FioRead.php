@@ -18,18 +18,14 @@ class FioRead extends Fio
     /** @var IParser */
     private $parser;
 
-    /** @var Utils\Context */
-    private $context;
-
     public function __construct(Utils\Context $context, Response\Read\IStatementFactory $statementFactory)
     {
-        $this->context = $context;
+		parent::__construct($context);
         $this->parser = $statementFactory->createParser();
     }
 
     /**
      * Movements in date range.
-     *
      * @param string|int|\DateTime $from
      * @param string|int|\DateTime $to
      * @return TransactionList
@@ -42,7 +38,6 @@ class FioRead extends Fio
 
     /**
      * List of movemnts.
-     *
      * @param int $id
      * @param int|string|NULL $year format YYYY, NULL is current
      * @return IFile
@@ -58,7 +53,6 @@ class FioRead extends Fio
 
     /**
      * Last movements from last breakpoint.
-     *
      * @return IFile
      */
     public function lastDownload()
@@ -69,7 +63,6 @@ class FioRead extends Fio
 
     /**
      * Set break point to id.
-     *
      * @param int $moveId
      * @return void
      */
@@ -80,7 +73,6 @@ class FioRead extends Fio
 
     /**
      * Set breakpoint to date.
-     *
      * @param mixed $date
      * @return void
      */
@@ -91,7 +83,6 @@ class FioRead extends Fio
 
     /**
      * Last request url for read. This is for tests.
-     *
      * @return string
      */
     public function getRequestUrl()

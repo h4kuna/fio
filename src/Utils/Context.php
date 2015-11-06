@@ -3,42 +3,49 @@
 namespace h4kuna\Fio\Utils;
 
 use h4kuna\Fio\Request\IQueue,
-    Nette\Object;
+	h4kuna\Fio\Security,
+	Nette\Object;
 
 class Context extends Object
 {
 
-    /** @var string url Fio REST API */
-    const REST_URL = 'https://www.fio.cz/ib_api/rest/';
+	/** @var IQueue */
+	private $queue;
 
-    /** @var IQueue */
-    private $queue;
+	/** @var Security\Accounts */
+	private $accounts;
 
-    /** @var string */
-    private $token;
+	function __construct(IQueue $queue, Security\Accounts $accounts)
+	{
+		$this->queue = $queue;
+		$this->accounts = $accounts;
+	}
 
-    public function __construct($token, IQueue $queue)
-    {
-        $this->token = $token;
-        $this->queue = $queue;
-    }
+	public function getAccounts()
+	{
+		return $this->accounts;
+	}
 
-    /** @return string */
-    public function getToken()
-    {
-        return $this->token;
-    }
+	public function getActiveAccount()
+	{
+		return $this->accounts->getActive();
+	}
 
-    /** @return IQueue */
-    public function getQueue()
-    {
-        return $this->queue;
-    }
+	public function getToken()
+	{
+		return $this->accounts->getActive()->getToken();
+	}
 
-    /** @return string */
-    public function getUrl()
-    {
-        return self::REST_URL;
-    }
+	/** @return IQueue */
+	public function getQueue()
+	{
+		return $this->queue;
+	}
+
+	/** @return string */
+	public function getUrl()
+	{
+		return self::REST_URL;
+	}
 
 }

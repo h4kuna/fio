@@ -20,7 +20,8 @@
     "autoload": {
         "psr-4": {
             "h4kuna\\Fio\\": "src/"
-        }
+        },
+		"files": ["src/exceptions.php"]
     },
     "require-dev": {
         "tracy/tracy": "~2.0",
