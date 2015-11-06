@@ -8,6 +8,11 @@ namespace h4kuna\Fio\Security;
 class AccountsFactory
 {
 
+	/**
+	 * @param array $accounts
+	 * @return Accounts
+	 * @throws FioException
+	 */
 	public static function create(array $accounts)
 	{
 		$accountsObject = new Accounts;

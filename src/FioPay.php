@@ -26,14 +26,13 @@ class FioPay extends Fio
     /** @var Pay\XMLFile */
     private $xmlFile;
 
-    /** @var Utils\Context */
-    private $context;
+
 
     public function __construct(Utils\Context $context, Pay\PaymentFactory $paymentFactory, Pay\XMLFile $xmlFile)
     {
+		parent::__construct($context);
         $this->paymentFatory = $paymentFactory;
         $this->xmlFile = $xmlFile;
-        $this->context = $context;
     }
 
     /** @return Pay\Payment\Euro */

@@ -2,16 +2,16 @@
 
 namespace h4kuna\Fio\Nette\DI;
 
-use h4kuna\Fio\Utils\FioException,
-	Nette\DI\CompilerExtension,
+use Nette\DI\CompilerExtension,
 	Nette\Utils;
 
 class FioExtension extends CompilerExtension
 {
 
 	public $defaults = array(
-		'account' => NULL,
-		'token' => NULL,
+		'account' => NULL, // @deprecated
+		'token' => NULL, // @deprecated
+		'accounts' => array(),
 		'temp' => '%tempDir%/fio',
 		'transactionClass' => '\h4kuna\Fio\Response\Read\Transaction'
 	);
@@ -21,15 +21,20 @@ class FioExtension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 		$config = $this->getConfig($this->defaults);
 
-		if (!$config['token']) {
-			throw new FioException('Token is required');
+		if (!$config['accounts']) { // back compatibility
+			$config['accounts']['default'] = [
+				'account' => $config['account'],
+				'token' => $config['token']
+			];
 		}
-
-		if (!$config['account']) {
-			throw new FioException('Account is required');
-		}
+		unset($config['account'], $config['token']);
 
 		Utils\FileSystem::createDir($config['temp']);
+
+		// Accounts
+		$builder->addDefinition($this->prefix('accounts'))
+				->setClass('h4kuna\Fio\Security\Accounts')
+				->setFactory('h4kuna\Fio\Security\AccountsFactory::create', array($config['accounts']));
 
 		// XMLFile
 		$builder->addDefinition($this->prefix('xmlFile'))
@@ -49,7 +54,7 @@ class FioExtension extends CompilerExtension
 		// Context
 		$builder->addDefinition($this->prefix('context'))
 				->setClass('h4kuna\Fio\Utils\Context')
-				->setArguments(array($config['token']));
+				->setArguments(array($this->prefix('queue'), $this->prefix('accounts')));
 
 		// StatementFactory
 		$builder->addDefinition($this->prefix('statementFactory'))

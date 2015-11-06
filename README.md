@@ -19,8 +19,10 @@ extensions:
 
 fioExtension:
     # mandatory
-    account: 2600267402/2010
-    token: 5asd64as5d46ad5a6
+	accounts:
+		alias: # name for select account
+			account: 2600267402/2010
+			token: 5asd64as5d46ad5a6
 
     # optional
     temp: %tempDir%/fio

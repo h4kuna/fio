@@ -9,8 +9,15 @@ extensions:
     fioExtension: h4kuna\Fio\Nette\DI\FioExtension
 
 fioExtension:
-    account: "123456789 / 1234"
-    token: 'loremIpsum86'
+	accounts:
+		default:
+			account: "123456789/1234"
+			token: 'loremIpsum86'
+		fio2:
+			account: 13212/3312
+			token: "dasdasd"
+
+
 
 services:
     fioExtension.queue:

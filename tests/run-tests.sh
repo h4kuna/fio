@@ -5,8 +5,6 @@ TEMP_DIR=$DIR/temp
 
 
 rm -rf $TEMP_DIR/*
-MODE=`php -r "echo php_sapi_name();"`
-mkdir -p $TEMP_DIR/$MODE/fio
 
 cd $DIR/..
 composer install --no-interaction --prefer-source
