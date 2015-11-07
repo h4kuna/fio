@@ -13,7 +13,7 @@ final class TransactionList implements Iterator, Countable
 {
 
     /** @var ATransaction[] */
-    private $transactions;
+    private $transactions = array();
     private $info;
 
     public function __construct($info)
