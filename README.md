@@ -15,7 +15,7 @@ Example NEON config
 -------------------
 ```
 extensions:
-    fioExtension: h4kuna\Fio\DI\FioExtension
+    fioExtension: h4kuna\Fio\Nette\DI\FioExtension
 
 fioExtension:
     # mandatory
