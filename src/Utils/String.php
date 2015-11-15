@@ -11,7 +11,10 @@ use h4kuna\Fio\Security,
 final class String
 {
 
-	public function __construct() {}
+	public function __construct()
+	{
+
+	}
 
 	/**
 	 * @param string $str

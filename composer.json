@@ -15,13 +15,13 @@
         "nette/safe-stream": "~2.0",
         "nette/bootstrap": "~2.0",
         "nette/utils": "~2.2",
-        "kdyby/curl": "~2.2"
+        "bitbang/http": "~0.1"
     },
     "autoload": {
         "psr-4": {
             "h4kuna\\Fio\\": "src/"
         },
-		"files": ["src/exceptions.php"]
+	"files": ["src/exceptions.php"]
     },
     "require-dev": {
         "tracy/tracy": "~2.0",

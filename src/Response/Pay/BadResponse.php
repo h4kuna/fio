@@ -10,27 +10,27 @@ use Kdyby\Curl\Request;
 class BadResponse implements IResponse
 {
 
-    /** @var Request */
-    private $curl;
+	/** @var Request */
+	private $curl;
 
-    public function __construct(Request $curl)
-    {
-        $this->curl = $curl;
-    }
+	public function __construct(Request $curl)
+	{
+		$this->curl = $curl;
+	}
 
-    public function isOk()
-    {
-        return FALSE;
-    }
+	public function isOk()
+	{
+		return FALSE;
+	}
 
-    public function getError()
-    {
-        return $this->curl;
-    }
+	public function getError()
+	{
+		return $this->curl;
+	}
 
-    public function getErrorCode()
-    {
-        return $this->curl->getCode();
-    }
+	public function getErrorCode()
+	{
+		return $this->curl->getCode();
+	}
 
 }
