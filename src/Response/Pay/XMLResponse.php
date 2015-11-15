@@ -10,66 +10,66 @@ use SimpleXMLElement;
 class XMLResponse implements IResponse
 {
 
-    /** @var SimpleXMLElement */
-    private $xml;
+	/** @var SimpleXMLElement */
+	private $xml;
 
-    /** @param string $xml */
-    public function __construct($xml)
-    {
-        $this->xml = new SimpleXMLElement($xml);
-    }
+	/** @param string $xml */
+	public function __construct($xml)
+	{
+		$this->xml = new SimpleXMLElement($xml);
+	}
 
-    public function isOk()
-    {
-        return $this->getError() == 'ok' && $this->getErrorCode() == 0;
-    }
+	public function isOk()
+	{
+		return $this->getError() == 'ok' && $this->getErrorCode() == 0;
+	}
 
-    /**
-     * READ XML ****************************************************************
-     * *************************************************************************
-     */
+	/**
+	 * READ XML ****************************************************************
+	 * *************************************************************************
+	 */
 
-    /** @return SimpleXMLElement */
-    public function getXml()
-    {
-        return $this->xml;
-    }
+	/** @return SimpleXMLElement */
+	public function getXml()
+	{
+		return $this->xml;
+	}
 
-    /** @return int */
-    public function getErrorCode()
-    {
-        return $this->getValue('result/errorCode');
-    }
+	/** @return int */
+	public function getErrorCode()
+	{
+		return $this->getValue('result/errorCode');
+	}
 
-    public function getIdInstruction()
-    {
-        return $this->getValue('result/idInstruction');
-    }
+	public function getIdInstruction()
+	{
+		return $this->getValue('result/idInstruction');
+	}
 
-    /** @return string */
-    public function getError()
-    {
-        return $this->getValue('result/status');
-    }
+	/** @return string */
+	public function getError()
+	{
+		return $this->getValue('result/status');
+	}
 
-    /**
-     *
-     * @param string $path
-     * @return string
-     */
-    private function getValue($path)
-    {
-        $val = $this->xml->xpath($path . '/text()');
-        return (string) $val[0];
-    }
+	/**
+	 *
+	 * @param string $path
+	 * @return string
+	 */
+	private function getValue($path)
+	{
+		$val = $this->xml->xpath($path . '/text()');
+		return (string) $val[0];
+	}
 
-    /**
-     *
-     * @param string $fileName
-     */
-    public function saveXML($fileName)
-    {
-        $this->xml->saveXML($fileName);
-    }
+	/**
+	 *
+	 * @param string $fileName
+	 */
+	public function saveXML($fileName)
+	{
+		$this->xml->saveXML($fileName);
+	}
 
 }

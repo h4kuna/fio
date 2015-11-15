@@ -3,8 +3,8 @@
 namespace h4kuna\Fio;
 
 use h4kuna\Fio\Request\Read\IParser,
-    h4kuna\Fio\Response\Read\TransactionList,
-    h4kuna\Fio\Utils;
+	h4kuna\Fio\Response\Read\TransactionList,
+	h4kuna\Fio\Utils;
 
 /**
  * Read from informtion Fio account
@@ -12,17 +12,17 @@ use h4kuna\Fio\Request\Read\IParser,
 class FioRead extends Fio
 {
 
-    /** @var string */
-    private $requestUrl;
+	/** @var string */
+	private $requestUrl;
 
-    /** @var IParser */
-    private $parser;
+	/** @var IParser */
+	private $parser;
 
-    public function __construct(Utils\Context $context, Response\Read\IStatementFactory $statementFactory)
-    {
+	public function __construct(Utils\Context $context, Response\Read\IStatementFactory $statementFactory)
+	{
 		parent::__construct($context);
-        $this->parser = $statementFactory->createParser();
-    }
+		$this->parser = $statementFactory->createParser();
+	}
 
     /**
      * Movements in date range.
@@ -36,40 +36,40 @@ class FioRead extends Fio
         return $this->parser->parse($data);
     }
 
-    /**
-     * List of movemnts.
-     * @param int $id
-     * @param int|string|NULL $year format YYYY, NULL is current
-     * @return IFile
-     */
-    public function movementId($id, $year = NULL)
-    {
-        if ($year === NULL) {
-            $year = date('Y');
-        }
-        $data = $this->download('by-id/%s/%s/%s/transactions.%s', $year, $id, $this->parser->getExtension());
-        return $this->parser->parse($data);
-    }
+	/**
+	 * List of movemnts.
+	 * @param int $id
+	 * @param int|string|NULL $year format YYYY, NULL is current
+	 * @return IFile
+	 */
+	public function movementId($id, $year = NULL)
+	{
+		if ($year === NULL) {
+			$year = date('Y');
+		}
+		$data = $this->download('by-id/%s/%s/%s/transactions.%s', $year, $id, $this->parser->getExtension());
+		return $this->parser->parse($data);
+	}
 
-    /**
-     * Last movements from last breakpoint.
-     * @return IFile
-     */
-    public function lastDownload()
-    {
-        $data = $this->download('last/%s/transactions.%s', $this->parser->getExtension());
-        return $this->parser->parse($data);
-    }
+	/**
+	 * Last movements from last breakpoint.
+	 * @return IFile
+	 */
+	public function lastDownload()
+	{
+		$data = $this->download('last/%s/transactions.%s', $this->parser->getExtension());
+		return $this->parser->parse($data);
+	}
 
-    /**
-     * Set break point to id.
-     * @param int $moveId
-     * @return void
-     */
-    public function setLastId($moveId)
-    {
-        $this->download('set-last-id/%s/%s/', $moveId);
-    }
+	/**
+	 * Set break point to id.
+	 * @param int $moveId
+	 * @return void
+	 */
+	public function setLastId($moveId)
+	{
+		$this->download('set-last-id/%s/%s/', $moveId);
+	}
 
     /**
      * Set breakpoint to date.
@@ -81,21 +81,21 @@ class FioRead extends Fio
         $this->download('set-last-date/%s/%s/', Utils\Strings::date($date));
     }
 
-    /**
-     * Last request url for read. This is for tests.
-     * @return string
-     */
-    public function getRequestUrl()
-    {
-        return $this->requestUrl;
-    }
+	/**
+	 * Last request url for read. This is for tests.
+	 * @return string
+	 */
+	public function getRequestUrl()
+	{
+		return $this->requestUrl;
+	}
 
-    private function download($apiUrl /* ... params */)
-    {
-        $args = func_get_args();
-        $args[0] = $this->context->getToken();
-        $this->requestUrl = $this->context->getUrl() . vsprintf($apiUrl, $args);
-        return $this->context->getQueue()->download($this->context->getToken(), $this->requestUrl);
-    }
+	private function download($apiUrl /* ... params */)
+	{
+		$args = func_get_args();
+		$args[0] = $this->context->getToken();
+		$this->requestUrl = $this->context->getUrl() . vsprintf($apiUrl, $args);
+		return $this->context->getQueue()->download($this->context->getToken(), $this->requestUrl);
+	}
 
 }
