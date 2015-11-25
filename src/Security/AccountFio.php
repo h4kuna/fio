@@ -5,7 +5,7 @@ namespace h4kuna\Fio\Security;
 /**
  * @author Milan Matějček
  */
-class Account
+class AccountFio
 {
 
 	/** @var string */
