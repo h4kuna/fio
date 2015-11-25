@@ -2,6 +2,8 @@
 
 namespace h4kuna\Fio\Security;
 
+use h4kuna\Fio\Utils;
+
 /**
  * @author Milan Matějček
  */
@@ -11,7 +13,7 @@ class AccountsFactory
 	/**
 	 * @param array $accounts
 	 * @return Accounts
-	 * @throws FioException
+	 * @throws Utils\FioException
 	 */
 	public static function create(array $accounts)
 	{
