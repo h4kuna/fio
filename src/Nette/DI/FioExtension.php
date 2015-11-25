@@ -22,10 +22,10 @@ class FioExtension extends CompilerExtension
 		$config = $this->getConfig($this->defaults);
 
 		if (!$config['accounts']) { // back compatibility
-			$config['accounts']['default'] = [
+			$config['accounts']['default'] = array(
 				'account' => $config['account'],
 				'token' => $config['token']
-			];
+			);
 		}
 		unset($config['account'], $config['token']);
 
