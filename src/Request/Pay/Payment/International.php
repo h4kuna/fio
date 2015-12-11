@@ -11,9 +11,9 @@ class International extends Euro
 {
 
 	const
-			CHARGES_OUR = 470501,
-			CHARGES_BEN = 470502,
-			CHARGES_SHA = 470503;
+		CHARGES_OUR = 470501,
+		CHARGES_BEN = 470502,
+		CHARGES_SHA = 470503;
 
 	/** @var string */
 	protected $benefStreet = TRUE;
@@ -43,7 +43,7 @@ class International extends Euro
 	 */
 	public function setDetailsOfCharges($type)
 	{
-		static $types = array(self::CHARGES_BEN, self::CHARGES_OUR, self::CHARGES_SHA);
+		static $types = [self::CHARGES_BEN, self::CHARGES_OUR, self::CHARGES_SHA];
 		if (!in_array($type, $types)) {
 			throw new Utils\FioException('Select one type from constatns. Section in manual 6.3.4.');
 		}
@@ -64,10 +64,10 @@ class International extends Euro
 
 	protected function getExpectedProperty()
 	{
-		return array('accountFrom', 'currency', 'amount', 'accountTo', 'bic', 'date',
+		return ['accountFrom', 'currency', 'amount', 'accountTo', 'bic', 'date',
 			'comment', 'benefName', 'benefStreet', 'benefCity', 'benefCountry',
 			'remittanceInfo1', 'remittanceInfo2', 'remittanceInfo3', 'remittanceInfo4',
-			'detailsOfCharges', 'paymentReason');
+			'detailsOfCharges', 'paymentReason'];
 	}
 
 	public function getStartXmlElement()

@@ -11,8 +11,8 @@ class Euro extends Property
 {
 
 	const
-			PAYMENT_STANDARD = 431008,
-			PAYMENT_PRIORITY = 431009;
+		PAYMENT_STANDARD = 431008,
+		PAYMENT_PRIORITY = 431009;
 
 	/** @var string */
 	protected $bic = TRUE;
@@ -164,7 +164,7 @@ class Euro extends Property
 	 */
 	public function setPaymentType($type)
 	{
-		static $types = array(self::PAYMENT_STANDARD, self::PAYMENT_PRIORITY);
+		static $types = [self::PAYMENT_STANDARD, self::PAYMENT_PRIORITY];
 		if (!in_array($type, $types)) {
 			throw new Utils\FioException('Unsupported payment type: ' . $type);
 		}
@@ -174,10 +174,10 @@ class Euro extends Property
 
 	protected function getExpectedProperty()
 	{
-		return array('accountFrom', 'currency', 'amount', 'accountTo', 'ks', 'vs',
+		return ['accountFrom', 'currency', 'amount', 'accountTo', 'ks', 'vs',
 			'ss', 'bic', 'date', 'comment', 'benefName', 'benefStreet', 'benefCity',
 			'benefCountry', 'remittanceInfo1', 'remittanceInfo2', 'remittanceInfo3',
-			'paymentReason', 'paymentType');
+			'paymentReason', 'paymentType'];
 	}
 
 	public function getStartXmlElement()

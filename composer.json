@@ -12,10 +12,10 @@
         }
     ],
     "require": {
+		"guzzlehttp/guzzle": "~6.1",
         "nette/safe-stream": "~2.0",
         "nette/bootstrap": "~2.0",
-        "nette/utils": "~2.2",
-        "bitbang/http": "~0.1"
+        "nette/utils": "~2.2"
     },
     "autoload": {
         "psr-4": {

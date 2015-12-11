@@ -19,7 +19,7 @@ class PaymentFactory
 	/** @return Payment\National */
 	public function createNational($amount, $accountTo, $bankCode = NULL)
 	{
-		static $payment = array();
+		static $payment = [];
 		if (!isset($payment[$this->account])) {
 			$payment[$this->account] = new Payment\National($this->account);
 		}
@@ -31,27 +31,27 @@ class PaymentFactory
 	/** @return Payment\International */
 	public function createInternational($amount, $accountTo, $bic, $name, $street, $city, $country, $info)
 	{
-		static $payment = array();
+		static $payment = [];
 		if (!isset($payment[$this->account])) {
 			$payment[$this->account] = new Payment\International($this->account);
 		}
 		$clone = clone $payment[$this->account];
 		$clone->setBic($bic)->setName($name)->setCountry($country)
-				->setAccountTo($accountTo)->setStreet($street)
-				->setCity($city)->setRemittanceInfo1($info)->setAmount($amount);
+			->setAccountTo($accountTo)->setStreet($street)
+			->setCity($city)->setRemittanceInfo1($info)->setAmount($amount);
 		return $clone;
 	}
 
 	/** @return Payment\Euro */
 	public function createEuro($amount, $accountTo, $bic, $name, $country)
 	{
-		static $payment = array();
+		static $payment = [];
 		if (!isset($payment[$this->account])) {
 			$payment[$this->account] = new Payment\Euro($this->account);
 		}
 		$clone = clone $payment[$this->account];
 		$clone->setBic($bic)->setName($name)->setCountry($country)
-				->setAccountTo($accountTo)->setAmount($amount);
+			->setAccountTo($accountTo)->setAmount($amount);
 		return $clone;
 	}
 

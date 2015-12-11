@@ -9,7 +9,7 @@ class FioPay extends Fio
 {
 
 	/** @var string[] */
-	private static $langs = array('en', 'cs', 'sk');
+	private static $langs = ['en', 'cs', 'sk'];
 
 	/** @var string */
 	private $uploadExtension;
@@ -88,11 +88,11 @@ class FioPay extends Fio
 			throw new Utils\FioException('Is supported only filepath or Property object.');
 		}
 
-		$post = array(
+		$post = [
 			'type' => $this->uploadExtension,
 			'token' => $this->context->getToken(),
 			'lng' => $this->language,
-		);
+		];
 
 		return $this->response = $this->context->getQueue()->upload($this->getUrl(), $post, $filename);
 	}
@@ -130,7 +130,7 @@ class FioPay extends Fio
 	private function setUploadExtenstion($extension)
 	{
 		$extension = strtolower($extension);
-		static $extensions = array('xml', 'abo');
+		static $extensions = ['xml', 'abo'];
 		if (!in_array($extension, $extensions)) {
 			throw new Utils\FioException('Unsupported file upload format: ' . $extension . ' avaible are ' . implode(', ', $extensions));
 		}

@@ -17,7 +17,7 @@ class Queue implements Fio\Request\IQueue
 		switch (basename($url, 'json')) {
 			case 'transactions.':
 				preg_match('~((?:/[^/]+){3})$~U', $url, $find);
-				$file = str_replace(array('/', '-' . $token), array('-', ''), ltrim($find[1], '/'));
+				$file = str_replace(['/', '-' . $token], ['-', ''], ltrim($find[1], '/'));
 				break;
 		}
 		if ($file) {

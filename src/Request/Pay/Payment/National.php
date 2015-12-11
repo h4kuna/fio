@@ -12,10 +12,10 @@ class National extends Property
 {
 
 	const
-			PAYMENT_STANDARD = 431001,
-			PAYMENT_FAST = 431004,
-			PAYMENT_PRIORITY = 431005,
-			PAYMENT_COLLECTION = 431022;
+		PAYMENT_STANDARD = 431001,
+		PAYMENT_FAST = 431004,
+		PAYMENT_PRIORITY = 431005,
+		PAYMENT_COLLECTION = 431022;
 
 	/** @var int */
 	protected $bankCode = TRUE;
@@ -33,7 +33,7 @@ class National extends Property
 	 */
 	public function setPaymentType($type)
 	{
-		static $types = array(self::PAYMENT_STANDARD, self::PAYMENT_FAST, self::PAYMENT_PRIORITY, self::PAYMENT_COLLECTION);
+		static $types = [self::PAYMENT_STANDARD, self::PAYMENT_FAST, self::PAYMENT_PRIORITY, self::PAYMENT_COLLECTION];
 		if (!in_array($type, $types)) {
 			throw new Utils\FioException('Unsupported payment type: ' . $type);
 		}
@@ -61,9 +61,9 @@ class National extends Property
 
 	protected function getExpectedProperty()
 	{
-		return array('accountFrom', 'currency', 'amount', 'accountTo', 'bankCode',
+		return ['accountFrom', 'currency', 'amount', 'accountTo', 'bankCode',
 			'ks', 'vs', 'ss', 'date', 'messageForRecipient', 'comment',
-			'paymentReason', 'paymentType');
+			'paymentReason', 'paymentType'];
 	}
 
 	public function getStartXmlElement()

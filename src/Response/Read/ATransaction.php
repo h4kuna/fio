@@ -11,14 +11,14 @@ abstract class ATransaction implements \Iterator
 {
 
 	/** @var array */
-	private $properties = array();
+	private $properties = [];
 
-	/** @var string */
-	private static $dateFormat;
+	/** @var Utils\Date\DateFormat */
+	protected $dateFormat;
 
-	public function __construct($dateFormat)
+	public function __construct(Utils\Date\DateFormat $dateFormat)
 	{
-		self::$dateFormat = $dateFormat;
+		$this->dateFormat = $dateFormat;
 	}
 
 	public function __get($name)
@@ -71,25 +71,16 @@ abstract class ATransaction implements \Iterator
 		return $this->properties;
 	}
 
-	/** @return string */
-	protected function getDateFormat()
-	{
-		return self::$dateFormat;
-	}
-
 	protected function checkValue($value, $type)
 	{
 		switch ($type) {
-			case 'int':
-				if (PHP_VERSION_ID < 54000) {
-					return $value + 0;
-				}
-				return intval($value);
+
 			case 'datetime':
-				return Utils\Strings::createFromFormat($value, $this->getDateFormat());
+				return $this->dateFormat->createDateTime($value);
 			case 'float':
 				return floatval($value);
 			case 'string':
+			case 'int': // on 32bit platform works inval() bad with variable symbol
 				return trim($value);
 			case 'string|null':
 				return trim($value) ? : NULL;
