@@ -6,6 +6,7 @@ TEMP_DIR=$DIR/temp
 
 rm -rf $TEMP_DIR/*
 
+rm $DIR/../composer.lock
 cd $DIR/..
 composer install --no-interaction --prefer-source
 

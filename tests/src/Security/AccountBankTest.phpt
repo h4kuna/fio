@@ -55,5 +55,4 @@ class AccountBankTest extends \Tester\TestCase
 
 }
 
-$test = new AccountBankTest();
-$test->run();
+(new AccountBankTest())->run();

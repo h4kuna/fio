@@ -47,7 +47,7 @@ abstract class Property implements Iterator
 	protected $paymentReason = FALSE;
 
 	/** @var array */
-	private static $iterator = array();
+	private static $iterator = [];
 
 	/** @var string */
 	private $key;
