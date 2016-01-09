@@ -58,7 +58,7 @@ abstract class Property implements Iterator
 	 */
 	public function __construct($account)
 	{
-		$accountObject = Utils\String::createAccount($account);
+		$accountObject = Utils\Strings::createAccount($account);
 		$this->accountFrom = $accountObject->getAccount();
 		$this->setDate('now');
 	}
@@ -112,7 +112,7 @@ abstract class Property implements Iterator
 	 */
 	public function setMyComment($str)
 	{
-		$this->comment = Utils\String::substr($str, 255);
+		$this->comment = Utils\Strings::substr($str, 255);
 		return $this;
 	}
 

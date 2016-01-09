@@ -8,7 +8,7 @@ use h4kuna\Fio\Security,
 /**
  * @author Milan Matějček
  */
-final class String
+final class Strings
 {
 
 	public function __construct()

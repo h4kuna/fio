@@ -32,7 +32,7 @@ class FioRead extends Fio
 	 */
 	public function movements($from = '-1 week', $to = 'now')
 	{
-		$data = $this->download('periods/%s/%s/%s/transactions.%s', Utils\String::date($from), Utils\String::date($to), $this->parser->getExtension());
+		$data = $this->download('periods/%s/%s/%s/transactions.%s', Utils\Strings::date($from), Utils\Strings::date($to), $this->parser->getExtension());
 		return $this->parser->parse($data);
 	}
 
@@ -78,7 +78,7 @@ class FioRead extends Fio
 	 */
 	public function setLastDate($date)
 	{
-		$this->download('set-last-date/%s/%s/', Utils\String::date($date));
+		$this->download('set-last-date/%s/%s/', Utils\Strings::date($date));
 	}
 
 	/**
