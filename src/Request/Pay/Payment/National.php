@@ -47,13 +47,13 @@ class National extends Property
      */
     public function setMessage($str)
     {
-        $this->messageForRecipient = Utils\String::substr($str, 140);
+        $this->messageForRecipient = Utils\Strings::substr($str, 140);
         return $this;
     }
 
     public function setAccountTo($accountTo, $bankCode = NULL)
     {
-        $accountObject = Utils\String::createAccount($accountTo, $bankCode);
+        $accountObject = Utils\Strings::createAccount($accountTo, $bankCode);
         $this->accountTo = $accountObject->getAccount();
         $this->bankCode = $accountObject->getBankCode();
         return $this;
