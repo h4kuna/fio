@@ -27,7 +27,7 @@ class DateFormat
 	/** @return \DateTime */
 	public function createDateTime($value)
 	{
-		return Utils\String::createFromFormat($value, $this->getFormat());
+		return Utils\Strings::createFromFormat($value, $this->getFormat());
 	}
 
 }

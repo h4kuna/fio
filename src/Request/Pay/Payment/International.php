@@ -58,7 +58,7 @@ class International extends Euro
 	 */
 	public function setRemittanceInfo4($str)
 	{
-		$this->remittanceInfo4 = Utils\String::substr($str, 35);
+		$this->remittanceInfo4 = Utils\Strings::substr($str, 35);
 		return $this;
 	}
 

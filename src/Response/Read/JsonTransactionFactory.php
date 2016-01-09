@@ -33,8 +33,8 @@ class JsonTransactionFactory implements ITransactionListFactory
 
 	public function createInfo($data, $dateFormat)
 	{
-		$data->dateStart = Utils\String::createFromFormat($data->dateStart, $dateFormat);
-		$data->dateEnd = Utils\String::createFromFormat($data->dateEnd, $dateFormat);
+		$data->dateStart = Utils\Strings::createFromFormat($data->dateStart, $dateFormat);
+		$data->dateEnd = Utils\Strings::createFromFormat($data->dateEnd, $dateFormat);
 		return $data;
 	}
 
