@@ -7,7 +7,7 @@ use Nette\Utils\DateTime;
 /**
  * @author Milan Matějček
  */
-final class String
+final class Strings
 {
 
     private function __construct()

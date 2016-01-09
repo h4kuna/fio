@@ -83,7 +83,7 @@ class Euro extends Property
      */
     public function setStreet($str)
     {
-        $this->benefStreet = Utils\String::substr($str, 35);
+        $this->benefStreet = Utils\Strings::substr($str, 35);
         return $this;
     }
 
@@ -94,7 +94,7 @@ class Euro extends Property
      */
     public function setCity($str)
     {
-        $this->benefCity = Utils\String::substr($str, 35);
+        $this->benefCity = Utils\Strings::substr($str, 35);
         return $this;
     }
 
@@ -120,7 +120,7 @@ class Euro extends Property
      */
     public function setName($name)
     {
-        $this->benefName = Utils\String::substr($name, 35);
+        $this->benefName = Utils\Strings::substr($name, 35);
         return $this;
     }
 
@@ -131,7 +131,7 @@ class Euro extends Property
      */
     public function setRemittanceInfo1($str)
     {
-        $this->remittanceInfo1 = Utils\String::substr($str, 35);
+        $this->remittanceInfo1 = Utils\Strings::substr($str, 35);
         return $this;
     }
 
@@ -142,7 +142,7 @@ class Euro extends Property
      */
     public function setRemittanceInfo2($str)
     {
-        $this->remittanceInfo2 = Utils\String::substr($str, 35);
+        $this->remittanceInfo2 = Utils\Strings::substr($str, 35);
         return $this;
     }
 
@@ -153,7 +153,7 @@ class Euro extends Property
      */
     public function setRemittanceInfo3($str)
     {
-        $this->remittanceInfo3 = Utils\String::substr($str, 35);
+        $this->remittanceInfo3 = Utils\Strings::substr($str, 35);
         return $this;
     }
 

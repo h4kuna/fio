@@ -86,7 +86,7 @@ abstract class ATransaction implements \Iterator
 				}
 				return intval($value);
 			case 'datetime':
-				return Utils\String::createFromFormat($value, $this->getDateFormat());
+				return Utils\Strings::createFromFormat($value, $this->getDateFormat());
 			case 'float':
 				return floatval($value);
 			case 'string':
