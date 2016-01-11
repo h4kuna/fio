@@ -2,8 +2,7 @@
 
 namespace h4kuna\Fio;
 
-use h4kuna\Fio\Request\Read\IParser,
-	h4kuna\Fio\Response\Read\TransactionList,
+use h4kuna\Fio\Response\Read\TransactionList,
 	h4kuna\Fio\Utils;
 
 /**
@@ -15,13 +14,13 @@ class FioRead extends Fio
 	/** @var string */
 	private $requestUrl;
 
-	/** @var IParser */
-	private $parser;
+	/** @var Response\Read\IReaderFactory */
+	private $readerFactory;
 
-	public function __construct(Utils\Context $context, Response\Read\IStatementFactory $statementFactory)
+	public function __construct(Utils\Context $context, Request\Read\IReaderFactory $readerFactory)
 	{
 		parent::__construct($context);
-		$this->parser = $statementFactory->createParser();
+		$this->readerFactory = $readerFactory;
 	}
 
 	/**
@@ -32,8 +31,8 @@ class FioRead extends Fio
 	 */
 	public function movements($from = '-1 week', $to = 'now')
 	{
-		$data = $this->download('periods/%s/%s/%s/transactions.%s', Utils\Strings::date($from), Utils\Strings::date($to), $this->parser->getExtension());
-		return $this->parser->parse($data);
+		$data = $this->download('periods/%s/%s/%s/transactions.%s', Utils\Strings::date($from), Utils\Strings::date($to), $this->readerFactory->getExtension());
+		return $this->readerFactory->create($data);
 	}
 
 	/**
@@ -47,8 +46,8 @@ class FioRead extends Fio
 		if ($year === NULL) {
 			$year = date('Y');
 		}
-		$data = $this->download('by-id/%s/%s/%s/transactions.%s', $year, $id, $this->parser->getExtension());
-		return $this->parser->parse($data);
+		$data = $this->download('by-id/%s/%s/%s/transactions.%s', $year, $id, $this->readerFactory->getExtension());
+		return $this->readerFactory->create($data);
 	}
 
 	/**
@@ -57,8 +56,8 @@ class FioRead extends Fio
 	 */
 	public function lastDownload()
 	{
-		$data = $this->download('last/%s/transactions.%s', $this->parser->getExtension());
-		return $this->parser->parse($data);
+		$data = $this->download('last/%s/transactions.%s', $this->readerFactory->getExtension());
+		return $this->readerFactory->create($data);
 	}
 
 	/**

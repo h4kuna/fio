@@ -4,25 +4,20 @@ namespace h4kuna\Fio\Request\Read\Files;
 
 use h4kuna\Fio\Request,
 	h4kuna\Fio\Response\Read,
-	Nette,
-	Nette\Utils;
+	Nette;
 
 /**
  * @author Milan Matějček
  */
-class Json extends Nette\Object implements Request\Read\IReader
+class Json extends Nette\Object implements Request\Read\IReaderFactory
 {
 
 	/** @var Read\ITransactionListFactory */
 	private $transactionListFactory;
 
-	/** @var Utils\Date\DateFormatOriginal */
-	private $dateFormatOriginal;
-
-	public function __construct(Read\ITransactionListFactory $transactionListFactory, Utils\Date\DateFormatOriginal $dateFormatOriginal)
+	public function __construct(Read\ITransactionListFactory $transactionListFactory)
 	{
 		$this->transactionListFactory = $transactionListFactory;
-		$this->dateFormatOriginal = $dateFormatOriginal;
 	}
 
 	/**
@@ -44,8 +39,8 @@ class Json extends Nette\Object implements Request\Read\IReader
 			$data = '{}';
 		}
 
-		$dateFormat = $this->dateFormatOriginal->get('Y-m-dO');
-		$json = Utils\Json::decode($data);
+		$dateFormat = 'Y-m-dO';
+		$json = Nette\Utils\Json::decode($data);
 		if (isset($json->accountStatement->info)) {
 			$info = $this->transactionListFactory->createInfo($json->accountStatement->info, $dateFormat);
 		} else {
@@ -56,7 +51,9 @@ class Json extends Nette\Object implements Request\Read\IReader
 			return $transactionList;
 		}
 		foreach ($json->accountStatement->transactionList->transaction as $transactionData) {
-			$transactionList->append($this->transactionListFactory->createTransaction($transactionData, $dateFormat));
+			$row = $this->transactionListFactory->createTransaction($transactionData, $dateFormat);
+			$transactionList->append($row);
+			$row->clearTemporaryValues();
 		}
 		return $transactionList;
 	}

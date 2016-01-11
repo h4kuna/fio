@@ -2,36 +2,29 @@
 
 namespace h4kuna\Fio\Request;
 
-use h4kuna\Fio\Response\Pay,
-	Kdyby\Curl,
+use GuzzleHttp,
+	h4kuna\Fio\Response\Pay,
 	Nette\Utils;
 
 class Queue implements IQueue
 {
 
-	/** @var string */
-	private $temp;
-
 	/** @var string[] */
 	private static $tokens = [];
 
-	public function __construct($temp)
-	{
-		Utils\FileSystem::createDir($temp, 0755);
-		$this->temp = $temp;
-	}
-
 	public function download($token, $url)
 	{
-		$this->availableAnotherRequest($token, 0);
-		$request = new Curl\Request($url);
-		return $request->get()->getResponse();
+		do {
+			$request = new GuzzleHttp\Client();
+			$response = $request->request('GET', $url);
+		} while ($this->availableAnotherRequest($token, $response));
+		return $response->getBody();
 	}
 
 	/** @return Pay\IResponse  */
 	public function upload($url, array $post, $filename)
 	{
-		$this->availableAnotherRequest($post['token'], self::API_INTERVAL);
+		$this->availableAnotherRequest($post['token'], $response);
 		try {
 			$xml = $this->createCurl($url, $post, $filename)->send();
 		} catch (Curl\CurlException $e) {
@@ -46,7 +39,7 @@ class Queue implements IQueue
 	 * @param string $token
 	 * @param int $timeWait
 	 */
-	final protected function availableAnotherRequest($token, $timeWait)
+	final protected function availableAnotherRequest($token, $response)
 	{
 		$tempFile = $this->loadFileName($token);
 		$time = (int) file_get_contents($tempFile);

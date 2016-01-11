@@ -2,14 +2,12 @@
 
 namespace h4kuna\Fio\Response\Read;
 
-use Countable,
-	h4kuna\Fio\Response\Read\ATransaction,
-	Iterator;
+use h4kuna\Fio\Response\Read\ATransaction;
 
 /**
  * @author Milan Matějček
  */
-final class TransactionList implements Iterator, Countable
+final class TransactionList implements \Iterator, \Countable
 {
 
 	/** @var ATransaction[] */

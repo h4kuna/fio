@@ -4,6 +4,7 @@ include __DIR__ . "/../vendor/autoload.php";
 
 require_once __DIR__ . '/data/Queue.php';
 require_once __DIR__ . '/data/Utils.php';
+require_once __DIR__ . '/data/FioFactory.php';
 
 function dd($var /* ... */)
 {
@@ -14,24 +15,3 @@ function dd($var /* ... */)
 }
 
 Tester\Environment::setup();
-
-// 2# Create Nette Configurator
-$configurator = new Nette\Configurator;
-
-$tmp = __DIR__ . '/temp';
-$configurator->enableDebugger($tmp);
-$configurator->setTempDirectory($tmp);
-$configurator->setDebugMode(FALSE);
-$configurator->addConfig(__DIR__ . '/test.neon');
-$local = __DIR__ . '/test.local.neon';
-if (is_file($local)) {
-	$configurator->addConfig($local);
-}
-$container = $configurator->createContainer();
-
-\Tracy\Debugger::enable(FALSE);
-
-return $container;
-
-
-

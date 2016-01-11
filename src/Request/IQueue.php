@@ -9,9 +9,6 @@ namespace h4kuna\Fio\Request;
 interface IQueue
 {
 
-	/** @var int [s] */
-	const API_INTERVAL = 30;
-
 	/**
 	 * @param string $url
 	 * @return string

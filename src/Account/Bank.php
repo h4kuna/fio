@@ -1,13 +1,13 @@
 <?php
 
-namespace h4kuna\Fio\Security;
+namespace h4kuna\Fio\Account;
 
-use h4kuna\Fio\Utils\FioException;
+use h4kuna\Fio\AccountException;
 
 /**
  * @author Milan Matějček
  */
-class AccountBank
+class Bank
 {
 
 	/** @var int */
@@ -21,16 +21,16 @@ class AccountBank
 
 	/**
 	 * @param string $account [prefix-]account[/code] no whitespace
-	 * @throws FioException
+	 * @throws AccountException
 	 */
 	public function __construct($account)
 	{
 		if (!preg_match('~^(?P<prefix>\d+-)?(?P<account>\d+)(?P<code>/\d+)?$~', $account, $find)) {
-			throw new FioException('Account must have format [prefix-]account[/code].');
+			throw new AccountException('Account must have format [prefix-]account[/code].');
 		}
 
 		if (strlen($find['account']) > 16) {
-			throw new FioException('Account max length is 16 chars.');
+			throw new AccountException('Account max length is 16 chars.');
 		}
 
 		$this->account = $find['account'];
@@ -38,7 +38,7 @@ class AccountBank
 		if (!empty($find['code'])) {
 			$this->bankCode = $find['code'];
 			if (strlen($this->getBankCode()) != 4) {
-				throw new FioException('Code must have 4 chars length.');
+				throw new AccountException('Code must have 4 chars length.');
 			}
 		}
 

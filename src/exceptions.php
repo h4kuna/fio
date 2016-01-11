@@ -1,11 +1,11 @@
 <?php
 
-namespace h4kuna\Fio\Utils;
+namespace h4kuna\Fio;
 
-/**
- * @author Milan Matějček
- */
-class FioException extends \Exception
-{
+class FioException extends \Exception {}
 
-}
+class AccountException extends FioException {}
+
+class TransactionExtendException extends FioException {}
+
+class TransactionPropertyException extends FioException {}

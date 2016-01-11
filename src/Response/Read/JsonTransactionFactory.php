@@ -23,7 +23,7 @@ class JsonTransactionFactory implements ITransactionListFactory
 	/**
 	 * @param string|ATransaction $transactionClass
 	 */
-	public function __construct($transactionClass = NULL)
+	public function __construct(ATransaction $transactionClass = NULL)
 	{
 		if ($transactionClass === NULL) {
 			$transactionClass = __NAMESPACE__ . '\Transaction';
@@ -68,7 +68,7 @@ class JsonTransactionFactory implements ITransactionListFactory
 			}
 
 			if (!$this->transactionClass instanceof ATransaction) {
-				throw new Utils\FioException('Transaction class must extends ATransation.');
+				throw new Fio\TransactionExtendException('Transaction class must extends ATransation.');
 			}
 			$this->transactionClassCheck = TRUE;
 		}
@@ -83,7 +83,7 @@ class JsonTransactionFactory implements ITransactionListFactory
 		}
 		$reflection = new \ReflectionClass($class);
 		if (!preg_match_all('/@property-read (?P<type>[\w|]+) \$(?P<name>\w+).*\[(?P<id>\d+)\]/', $reflection->getDocComment(), $find)) {
-			throw new Utils\FioException('Property not found you have bad syntax.');
+			throw new Fio\TransactionPropertyException('Property not found you have bad syntax.');
 		}
 
 		self::$property = [];

@@ -2,7 +2,8 @@
 
 namespace h4kuna\Fio\Request\Read;
 
-use h4kuna\Fio\Response\Read;
+use h4kuna\Fio\Response\Read,
+	h4kuna\Fio\Utils;
 
 /**
  *
@@ -23,7 +24,7 @@ interface IReaderFactory
 		GPC = 'gpc',
 		CSV = 'csv';
 
-	public function __construct(Read\ITransactionListFactory $statement);
+	public function __construct(Read\ITransactionListFactory $transactionListFactory);
 
 	/**
 	 * File extension.

@@ -1,8 +1,8 @@
 <?php
 
-namespace h4kuna\Fio\Security;
+namespace h4kuna\Fio\Account;
 
-use h4kuna\Fio\Utils;
+use h4kuna\Fio\AccountException;
 
 /**
  * @author Milan Matějček
@@ -23,25 +23,25 @@ class Accounts
 		return $this;
 	}
 
-	/** @return Account */
+	/** @return Account\Fio */
 	public function getActive()
 	{
 		return $this->accountExists($this->active);
 	}
 
 	/**
-	 * @return AccountFio
-	 * @throws Utils\FioException
+	 * @return Fio
+	 * @throws AccountException
 	 */
 	private function accountExists($alias)
 	{
 		if (isset($this->accounts[$alias])) {
 			return $this->accounts[$alias];
 		}
-		throw new Utils\FioException('This account alias does not exists. ' . $alias);
+		throw new AccountException('This account alias does not exists. ' . $alias);
 	}
 
-	public function addAccount($alias, AccountFio $account)
+	public function addAccount($alias, Fio $account)
 	{
 		$this->accounts[$alias] = $account;
 		if ($this->active === NULL) {

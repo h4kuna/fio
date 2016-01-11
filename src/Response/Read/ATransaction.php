@@ -2,7 +2,8 @@
 
 namespace h4kuna\Fio\Response\Read;
 
-use h4kuna\Fio\Utils;
+use h4kuna\Fio,
+	h4kuna\Fio\Utils;
 
 /**
  * @author Milan Matějček
@@ -13,10 +14,10 @@ abstract class ATransaction implements \Iterator
 	/** @var array */
 	private $properties = [];
 
-	/** @var Utils\Date\DateFormat */
+	/** @var string */
 	protected $dateFormat;
 
-	public function __construct(Utils\Date\DateFormat $dateFormat)
+	public function __construct($dateFormat)
 	{
 		$this->dateFormat = $dateFormat;
 	}
@@ -26,7 +27,12 @@ abstract class ATransaction implements \Iterator
 		if (array_key_exists($name, $this->properties)) {
 			return $this->properties[$name];
 		}
-		throw new Utils\FioException('Property does not exists. ' . $name);
+		throw new Fio\TransactionPropertyException('Property does not exists. ' . $name);
+	}
+
+	public function clearTemporaryValues()
+	{
+		$this->dateFormat = NULL;
 	}
 
 	public function bindProperty($name, $type, $value)
@@ -76,16 +82,25 @@ abstract class ATransaction implements \Iterator
 		switch ($type) {
 
 			case 'datetime':
-				return $this->dateFormat->createDateTime($value);
+				return Utils\Strings::createFromFormat($value, $this->dateFormat);
 			case 'float':
 				return floatval($value);
 			case 'string':
-			case 'int': // on 32bit platform works inval() bad with variable symbol
 				return trim($value);
+			case 'int': // on 32bit platform works inval() bad with variable symbol
+				if (self::is32bitOS()) {
+					return trim($value);
+				}
+				return intval($value);
 			case 'string|null':
 				return trim($value) ? : NULL;
 		}
 		return $value;
+	}
+
+	private static function is32bitOS()
+	{
+		return PHP_INT_SIZE === 4;
 	}
 
 }

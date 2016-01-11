@@ -1,20 +1,20 @@
 <?php
 
-namespace h4kuna\Fio\Security;
+namespace h4kuna\Fio\Account;
 
 /**
  * @author Milan Matějček
  */
-class AccountFio
+class Fio
 {
 
 	/** @var string */
 	private $token;
 
-	/** @var AccountBank */
+	/** @var Bank */
 	private $account;
 
-	public function __construct($token, AccountBank $account)
+	public function __construct($token, Bank $account)
 	{
 		$this->token = $token;
 		$this->account = $account;
