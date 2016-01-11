@@ -12,14 +12,14 @@ interface ITransactionListFactory
 {
 
 	/** @return ATransaction */
-	public function createTransaction($data, Date\DateFormat $dateFormat);
+	public function createTransaction($data, $dateFormat);
 
 	/** @return \stdClass */
-	public function createInfo($data, Date\DateFormat $dateFormat);
+	public function createInfo($data, $dateFormat);
 
 	/** @return TransactionList */
 	public function createTransactionList($info);
 
-	/** @return Request\Read\IReader */
+	/** @return Request\Read\IReaderFactory */
 	public function createReader();
 }

@@ -19,7 +19,7 @@ class Fio extends Object
 	/** @var Utils\Context */
 	protected $context;
 
-	private function __construct(Utils\Context $context)
+	public function __construct(Utils\Context $context)
 	{
 		$this->context = $context;
 	}
@@ -28,10 +28,16 @@ class Fio extends Object
 	 * @param atring $alias
 	 * @return self
 	 */
-	public function setAccount($alias)
+	public function setActive($alias)
 	{
 		$this->context->getAccounts()->setActive($alias);
 		return $this;
+	}
+
+	/** @return Account\Fio */
+	public function getActive()
+	{
+		return $this->context->getAccounts()->getActive();
 	}
 
 }

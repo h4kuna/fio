@@ -2,8 +2,7 @@
 
 namespace h4kuna\Fio;
 
-use h4kuna\Fio\Utils\Context,
-	Tester,
+use Tester,
 	Tester\Assert,
 	h4kuna\Fio\Test;
 
@@ -12,20 +11,33 @@ $container = require_once __DIR__ . '/../bootstrap.php';
 class FioReadTest extends Tester\TestCase
 {
 
+	/** @var Test\FioFactory */
+	private $fioFactory;
+
 	/** @var FioRead */
 	private $fioRead;
-	private $container;
+
+	/** @var string */
 	private $token;
 
-	public function __construct($container)
+	public function __construct(Test\FioFactory $fioFactory)
 	{
-		$this->container = $container;
-		$this->token = $container->getByType('h4kuna\Fio\Utils\Context')->getToken();
+		$this->fioFactory = $fioFactory;
 	}
 
 	protected function setUp()
 	{
-		$this->fioRead = $this->container->createService('fioExtension.fioRead');
+		$this->fioRead = $this->fioFactory->createFioRead([
+			'foo' => [
+				'account' => '123456789',
+				'token' => 'abcdefgh'
+			],
+			'bar' => [
+				'account' => '987654321',
+				'token' => 'hgfedcba'
+			]
+		]);
+		$this->token = $this->fioRead->getActive()->getToken();
 	}
 
 	public function testMovements()
@@ -43,7 +55,7 @@ class FioReadTest extends Tester\TestCase
 			}
 		}
 
-		Assert::equal(Context::REST_URL . 'periods/' . $this->token . '/2015-01-01/2015-04-16/transactions.json', $this->fioRead->getRequestUrl());
+		Assert::equal(Fio::REST_URL . 'periods/' . $this->token . '/2015-01-01/2015-04-16/transactions.json', $this->fioRead->getRequestUrl());
 		Assert::equal(unserialize(Test\Utils::getContent('2015-01-01-2015-04-16-transactions.srlz')), $data);
 	}
 
@@ -55,32 +67,36 @@ class FioReadTest extends Tester\TestCase
 
 	public function testMovementId()
 	{
+		$token = $this->fioRead->setActive('bar')->getActive()->getToken();
+		Assert::same('hgfedcba', $token);
 		$data = $this->fioRead->movementId(2, 2015);
+
 		Assert::equal(unserialize(Test\Utils::getContent('2015-2-transactions.srlz')), $data);
-		Assert::equal(Context::REST_URL . 'by-id/' . $this->token . '/2015/2/transactions.json', $this->fioRead->getRequestUrl());
+		Assert::equal(Fio::REST_URL . 'by-id/' . $token . '/2015/2/transactions.json', $this->fioRead->getRequestUrl());
 	}
 
 	public function testLastDownload()
 	{
 		$data = $this->fioRead->lastDownload();
 		Assert::equal(unserialize(Test\Utils::getContent('last-transactions.srlz')), $data);
-		Assert::equal(Context::REST_URL . 'last/' . $this->token . '/transactions.json', $this->fioRead->getRequestUrl());
+		Assert::equal(Fio::REST_URL . 'last/' . $this->token . '/transactions.json', $this->fioRead->getRequestUrl());
 	}
 
 	public function testSetLastId()
 	{
 		$this->fioRead->setLastId(7155451447);
-		Assert::equal(Context::REST_URL . 'set-last-id/' . $this->token . "/7155451447/", $this->fioRead->getRequestUrl());
+		Assert::equal(Fio::REST_URL . 'set-last-id/' . $this->token . "/7155451447/", $this->fioRead->getRequestUrl());
 	}
 
 	public function testSetLastDate()
 	{
 		$dt = new \DateTime('-1 week');
 		$this->fioRead->setLastDate('-1 week');
-		Assert::equal(Context::REST_URL . 'set-last-date/' . $this->token . '/' . $dt->format('Y-m-d') . '/', $this->fioRead->getRequestUrl());
+		Assert::equal(Fio::REST_URL . 'set-last-date/' . $this->token . '/' . $dt->format('Y-m-d') . '/', $this->fioRead->getRequestUrl());
 	}
 
 }
 
-$test = new FioReadTest($container);
-$test->run();
+$fioFactory = new Test\FioFactory();
+
+(new FioReadTest($fioFactory))->run();

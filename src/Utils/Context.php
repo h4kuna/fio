@@ -2,8 +2,9 @@
 
 namespace h4kuna\Fio\Utils;
 
-use h4kuna\Fio\Request\IQueue,
-	h4kuna\Fio\Security,
+use h4kuna\Fio,
+	h4kuna\Fio\Request,
+	h4kuna\Fio\Account,
 	Nette\Object;
 
 class Context extends Object
@@ -12,10 +13,10 @@ class Context extends Object
 	/** @var IQueue */
 	private $queue;
 
-	/** @var Security\Accounts */
+	/** @var Account\Accounts */
 	private $accounts;
 
-	function __construct(IQueue $queue, Security\Accounts $accounts)
+	function __construct(Request\IQueue $queue, Account\Accounts $accounts)
 	{
 		$this->queue = $queue;
 		$this->accounts = $accounts;
@@ -45,7 +46,7 @@ class Context extends Object
 	/** @return string */
 	public function getUrl()
 	{
-		return self::REST_URL;
+		return Fio\Fio::REST_URL;
 	}
 
 }
