@@ -2,8 +2,6 @@
 
 namespace h4kuna\Fio\Response\Read;
 
-use h4kuna\Fio\Request;
-
 /**
  * @author Milan Matějček
  */
@@ -19,6 +17,4 @@ interface ITransactionListFactory
 	/** @return TransactionList */
 	public function createTransactionList($info);
 
-	/** @return Request\Read\IReader */
-	public function createReader();
 }

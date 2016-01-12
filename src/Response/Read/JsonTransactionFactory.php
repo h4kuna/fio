@@ -54,11 +54,6 @@ class JsonTransactionFactory implements ITransactionListFactory
 		return new TransactionList($info);
 	}
 
-	public function createReader()
-	{
-		return new Fio\Request\Read\Files\Json($this);
-	}
-
 	protected function createTransactionObject($dateFormat)
 	{
 		if ($this->transactionClassCheck === FALSE) {
