@@ -68,6 +68,9 @@ abstract class Property implements Iterator
 	public function setAmount($val)
 	{
 		$this->amount = floatval($val);
+		if ($val <= 0) {
+			throw new Fio\InvalidArgumentException('Amount must by positive number.');
+		}
 		return $this;
 	}
 
