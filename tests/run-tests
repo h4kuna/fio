@@ -1,8 +1,7 @@
 #!/bin/bash
 
-DIR=`dirname $0`;
+DIR=`pwd`/`dirname $0`;
 TEMP_DIR=$DIR/temp
-
 
 rm -rf $TEMP_DIR/*
 

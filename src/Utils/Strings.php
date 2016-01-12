@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Utils;
 
-use h4kuna\Fio\Security,
+use h4kuna\Fio\Account,
 	Nette\Utils\DateTime;
 
 /**
@@ -26,14 +26,14 @@ final class Strings
 	/**
 	 * @param string $account
 	 * @param string $bankCode
-	 * @return Security\AccountBank
+	 * @return Account\Bank
 	 */
 	public static function createAccount($account, $bankCode = NULL)
 	{
 		if ($bankCode) {
 			$account .= '/';
 		}
-		return new Security\AccountBank($account . $bankCode);
+		return new Account\Bank($account . $bankCode);
 	}
 
 	/**
