@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Response\Read;
 
-use h4kuna\Fio\Response\Read\ATransaction;
+use h4kuna\Fio\Response\Read\TransactionAbstract;
 
 /**
  * @author Milan Matějček
@@ -10,7 +10,7 @@ use h4kuna\Fio\Response\Read\ATransaction;
 final class TransactionList implements \Iterator, \Countable
 {
 
-	/** @var ATransaction[] */
+	/** @var TransactionAbstract[] */
 	private $transactions = [];
 	private $info;
 
@@ -19,7 +19,7 @@ final class TransactionList implements \Iterator, \Countable
 		$this->info = $info;
 	}
 
-	public function append(ATransaction $transaction)
+	public function append(TransactionAbstract $transaction)
 	{
 		$this->transactions[] = $transaction;
 	}

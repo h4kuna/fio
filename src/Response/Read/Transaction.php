@@ -30,7 +30,7 @@ use DateTime;
  * @property-read string $bic [*26]
  *
  */
-final class Transaction extends ATransaction
+final class Transaction extends TransactionAbstract
 {
 
 }
