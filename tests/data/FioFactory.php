@@ -40,7 +40,7 @@ class FioFactory extends \h4kuna\Fio\Utils\FioFactory
 
 	public function getReader()
 	{
-		return $this->createTransactionListFactory()->createReader();
+		return $this->createReader();
 	}
 
 }

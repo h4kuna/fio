@@ -25,8 +25,7 @@ class FioFactory
 
 	public function createFioRead()
 	{
-		$transactionList = $this->createTransactionListFactory();
-		return new Fio\FioRead($this->getQueue(), $this->getAccounts(), $transactionList->createReader());
+		return new Fio\FioRead($this->getQueue(), $this->getAccounts(), $this->createReader());
 	}
 
 	public function createFioPay()
@@ -63,7 +62,6 @@ class FioFactory
 		return $this->transactionClass;
 	}
 
-
 	/**
 	 * READ ********************************************************************
 	 * *************************************************************************
@@ -72,6 +70,11 @@ class FioFactory
 	{
 		// @todo test next class
 		return new Fio\Response\Read\JsonTransactionFactory($this->getTransactionClass());
+	}
+
+	protected function createReader()
+	{
+		return new Fio\Request\Read\Files\Json($this->createTransactionListFactory());
 	}
 
 	/**
