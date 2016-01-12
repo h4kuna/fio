@@ -14,5 +14,6 @@ function dd($var /* ... */)
 	exit;
 }
 
+date_default_timezone_set('Europe/Prague');
 Tester\Environment::setup();
 \Tracy\Debugger::enable(FALSE, __DIR__ . '/temp');
