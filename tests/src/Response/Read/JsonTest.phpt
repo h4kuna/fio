@@ -22,7 +22,6 @@ class JsonStatementFactoryTest extends \Tester\TestCase
 	{
 		$json = $this->fioFactory->getReader();
 		$list = $json->create(Test\Utils::getContent('2015-01-01-2015-04-16-transactions.json'));
-		Test\Utils::saveFile('custom.json', serialize($list));
 		Assert::equal(Test\Utils::getContent('custom.json'), serialize($list));
 	}
 
