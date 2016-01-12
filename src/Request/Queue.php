@@ -31,7 +31,30 @@ class Queue implements IQueue
 
 	public function download($token, $url)
 	{
-		$request = new GuzzleHttp\Client();
+		return $this->request($token, function(GuzzleHttp\Client $client) use ($url) {
+				return $client->request('GET', $url);
+			});
+	}
+
+	/** @return Pay\IResponse  */
+	public function upload($url, $token, array $post, $filename)
+	{
+		$newPost = [];
+		foreach ($post as $name => $value) {
+			$newPost[] = ['name' => $name, 'contents' => $value];
+		}
+		$newPost[] = ['name' => 'file', 'contents' => fopen($filename, 'r')];
+
+		/* @var $response GuzzleHttp\Psr7\Stream */
+		$response = $this->request($token, function(GuzzleHttp\Client $client) use ($url, $newPost) {
+			return $client->request('POST', $url, [GuzzleHttp\RequestOptions::MULTIPART => $newPost]);
+		});
+		return new Pay\XMLResponse($response->getContents());
+	}
+
+	private function request($token, $fallback)
+	{
+		$request = new GuzzleHttp\Client;
 		$tempFile = self::loadFileName($token);
 		$file = fopen(self::safeProtocol($tempFile), 'w');
 		$i = 0;
@@ -39,11 +62,13 @@ class Queue implements IQueue
 			$next = FALSE;
 			++$i;
 			try {
-				$response = $request->request('GET', $url);
+				$response = $fallback($request);
 			} catch (GuzzleHttp\Exception\ClientException $e) {
 				if ($e->getCode() !== self::HEADER_CONFLICT || !$this->sleep) {
+					fclose($file);
 					throw $e;
 				} elseif ($i >= $this->limitLoop) {
+					fclose($file);
 					throw new Fio\QueueLimitException('You have limit up requests to server ' . $this->limitLoop);
 				}
 				self::sleep($tempFile);
@@ -53,19 +78,6 @@ class Queue implements IQueue
 		fclose($file);
 		touch($tempFile);
 		return $response->getBody();
-	}
-
-	/** @return Pay\IResponse  */
-	public function upload($url, array $post, $filename)
-	{
-		$this->availableAnotherRequest($post['token'], $response);
-		try {
-			$xml = $this->createCurl($url, $post, $filename)->send();
-		} catch (Curl\CurlException $e) {
-			return new Pay\BadResponse($e);
-		}
-
-		return new Pay\XMLResponse($xml->getResponse());
 	}
 
 	private static function sleep($filename)

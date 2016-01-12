@@ -8,9 +8,39 @@ namespace h4kuna\Fio\Test;
 class FioFactory extends \h4kuna\Fio\Utils\FioFactory
 {
 
-	public function createQueue()
+	public function __construct($transactionClass = NULL)
+	{
+		$accounts = [
+			'foo' => [
+				'account' => '123456789',
+				'token' => 'abcdefgh'
+			],
+			'bar' => [
+				'account' => '987654321',
+				'token' => 'hgfedcba'
+			]
+		];
+		parent::__construct($accounts, $transactionClass);
+	}
+
+	protected function createQueue()
 	{
 		return new Queue;
+	}
+
+	public function getPaymetFactory()
+	{
+		return $this->createPaymentFactory();
+	}
+
+	public function getXmlFile()
+	{
+		return $this->createXmlFile();
+	}
+
+	public function getReader()
+	{
+		return $this->createTransactionListFactory()->createReader();
 	}
 
 }

@@ -2,28 +2,31 @@
 
 namespace h4kuna\Fio\Request\Pay;
 
+use h4kuna\Fio\Account;
+
 /**
  * @author Milan Matějček
  */
 class PaymentFactory
 {
 
-	/** @var string */
-	private $account;
+	/** @var Account\Accounts */
+	private $accounts;
 
-	public function __construct($account)
+	public function __construct(Account\Accounts $account)
 	{
-		$this->account = $account;
+		$this->accounts = $account;
 	}
 
 	/** @return Payment\National */
 	public function createNational($amount, $accountTo, $bankCode = NULL)
 	{
 		static $payment = [];
-		if (!isset($payment[$this->account])) {
-			$payment[$this->account] = new Payment\National($this->account);
+		$account = $this->accounts->getActive()->getAccount();
+		if (!isset($payment[$account])) {
+			$payment[$account] = new Payment\National($account);
 		}
-		$clone = clone $payment[$this->account];
+		$clone = clone $payment[$account];
 		$clone->setAccountTo($accountTo, $bankCode)->setAmount($amount);
 		return $clone;
 	}
@@ -32,10 +35,11 @@ class PaymentFactory
 	public function createInternational($amount, $accountTo, $bic, $name, $street, $city, $country, $info)
 	{
 		static $payment = [];
-		if (!isset($payment[$this->account])) {
-			$payment[$this->account] = new Payment\International($this->account);
+		$account = $this->accounts->getActive()->getAccount();
+		if (!isset($payment[$account])) {
+			$payment[$account] = new Payment\International($account);
 		}
-		$clone = clone $payment[$this->account];
+		$clone = clone $payment[$account];
 		$clone->setBic($bic)->setName($name)->setCountry($country)
 			->setAccountTo($accountTo)->setStreet($street)
 			->setCity($city)->setRemittanceInfo1($info)->setAmount($amount);
@@ -46,10 +50,11 @@ class PaymentFactory
 	public function createEuro($amount, $accountTo, $bic, $name, $country)
 	{
 		static $payment = [];
-		if (!isset($payment[$this->account])) {
-			$payment[$this->account] = new Payment\Euro($this->account);
+		$account = $this->accounts->getActive()->getAccount();
+		if (!isset($payment[$account])) {
+			$payment[$account] = new Payment\Euro($account);
 		}
-		$clone = clone $payment[$this->account];
+		$clone = clone $payment[$account];
 		$clone->setBic($bic)->setName($name)->setCountry($country)
 			->setAccountTo($accountTo)->setAmount($amount);
 		return $clone;

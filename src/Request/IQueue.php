@@ -21,9 +21,10 @@ interface IQueue
 
 	/**
 	 * @param string $url
+	 * @param string $token
 	 * @param array $post
 	 * @param string $filename
 	 * @return Response\Pay\IResponse
 	 */
-	public function upload($url, array $post, $filename);
+	public function upload($url, $token, array $post, $filename);
 }

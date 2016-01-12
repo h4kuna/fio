@@ -2,7 +2,8 @@
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio\Utils;
+use h4kuna\Fio,
+	h4kuna\Fio\Utils;
 
 /**
  *
@@ -24,18 +25,18 @@ class National extends Property
 	protected $messageForRecipient;
 
 	/** @var int */
-	protected $paymentType = self::PAYMENT_STANDARD;
+	protected $paymentType = FALSE;
 
 	/**
 	 * @param int|string $type
 	 * @return self
-	 * @throws Utils\FioException
+	 * @throws Fio\InvalidArgumentException
 	 */
 	public function setPaymentType($type)
 	{
 		static $types = [self::PAYMENT_STANDARD, self::PAYMENT_FAST, self::PAYMENT_PRIORITY, self::PAYMENT_COLLECTION];
 		if (!in_array($type, $types)) {
-			throw new Utils\FioException('Unsupported payment type: ' . $type);
+			throw new Fio\InvalidArgumentException('Unsupported payment type: ' . $type);
 		}
 		$this->paymentType = $type;
 		return $this;

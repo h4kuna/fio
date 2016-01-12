@@ -15,3 +15,4 @@ function dd($var /* ... */)
 }
 
 Tester\Environment::setup();
+\Tracy\Debugger::enable(FALSE, __DIR__ . '/temp');
