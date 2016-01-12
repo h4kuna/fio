@@ -97,14 +97,14 @@ Define annotation and you don't forget id in brackets.
 ```php
 <?php
 
-use h4kuna\Fio\Response\Read\ATransaction
+use h4kuna\Fio\Response\Read\TransactionAbstract
 
 /**
  * @property-read float $amount [1]
  * @property-read string $to_account [2]
  * @property-read string $bank_code [3]
  */
-class MyTransaction extends ATransaction
+class MyTransaction extends TransactionAbstract
 {
 	/** custom method */
 	public function setBank_code($value)

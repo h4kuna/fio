@@ -8,7 +8,7 @@ use h4kuna\Fio,
 /**
  * @author Milan Matějček
  */
-abstract class ATransaction implements \Iterator
+abstract class TransactionAbstract implements \Iterator
 {
 
 	/** @var array */

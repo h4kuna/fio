@@ -2,8 +2,7 @@
 
 namespace h4kuna\Fio\Response\Read;
 
-use h4kuna\Fio\Request,
-	h4kuna\Fio\Utils\Date;
+use h4kuna\Fio\Request;
 
 /**
  * @author Milan Matějček
@@ -11,7 +10,7 @@ use h4kuna\Fio\Request,
 interface ITransactionListFactory
 {
 
-	/** @return ATransaction */
+	/** @return TransactionAbstract */
 	public function createTransaction($data, $dateFormat);
 
 	/** @return \stdClass */

@@ -21,9 +21,9 @@ class JsonTransactionFactory implements ITransactionListFactory
 	protected $transactionClassCheck = FALSE;
 
 	/**
-	 * @param string|ATransaction $transactionClass
+	 * @param string|TransactionAbstract $transactionClass
 	 */
-	public function __construct(ATransaction $transactionClass = NULL)
+	public function __construct(TransactionAbstract $transactionClass = NULL)
 	{
 		if ($transactionClass === NULL) {
 			$transactionClass = __NAMESPACE__ . '\Transaction';
@@ -67,7 +67,7 @@ class JsonTransactionFactory implements ITransactionListFactory
 				$this->transactionClass = new $class($dateFormat);
 			}
 
-			if (!$this->transactionClass instanceof ATransaction) {
+			if (!$this->transactionClass instanceof TransactionAbstract) {
 				throw new Fio\TransactionExtendException('Transaction class must extends ATransation.');
 			}
 			$this->transactionClassCheck = TRUE;
