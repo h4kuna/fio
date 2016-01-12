@@ -2,14 +2,12 @@
 
 namespace h4kuna\Fio\Request\Read;
 
-use h4kuna\Fio\Response\Read,
-	h4kuna\Fio\Utils;
+use h4kuna\Fio\Response;
 
 /**
- *
  * @author Milan Matějček
  */
-interface IReaderFactory
+interface IReader
 {
 
 	/** supported */
@@ -24,7 +22,7 @@ interface IReaderFactory
 		GPC = 'gpc',
 		CSV = 'csv';
 
-	public function __construct(Read\ITransactionListFactory $transactionListFactory);
+	public function __construct(Response\Read\ITransactionListFactory $statement);
 
 	/**
 	 * File extension.
@@ -34,9 +32,8 @@ interface IReaderFactory
 
 	/**
 	 * Prepare downloaded data before append.
-	 *
 	 * @param string $data
-	 * @return Read\TransactionList
+	 * @return Response\Read\TransactionList
 	 */
 	public function create($data);
 }

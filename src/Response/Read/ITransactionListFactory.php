@@ -20,6 +20,6 @@ interface ITransactionListFactory
 	/** @return TransactionList */
 	public function createTransactionList($info);
 
-	/** @return Request\Read\IReaderFactory */
+	/** @return Request\Read\IReader */
 	public function createReader();
 }
