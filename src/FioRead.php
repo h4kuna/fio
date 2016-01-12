@@ -14,10 +14,10 @@ class FioRead extends Fio
 	/** @var string */
 	private $requestUrl;
 
-	/** @var Response\Read\IReaderFactory */
+	/** @var Response\Read\IReader */
 	private $readerFactory;
 
-	public function __construct(Utils\Context $context, Request\Read\IReaderFactory $readerFactory)
+	public function __construct(Utils\Context $context, Request\Read\IReader $readerFactory)
 	{
 		parent::__construct($context);
 		$this->readerFactory = $readerFactory;

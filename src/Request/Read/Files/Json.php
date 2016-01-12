@@ -9,7 +9,7 @@ use h4kuna\Fio\Request,
 /**
  * @author Milan Matějček
  */
-class Json extends Nette\Object implements Request\Read\IReaderFactory
+class Json extends Nette\Object implements Request\Read\IReader
 {
 
 	/** @var Read\ITransactionListFactory */
