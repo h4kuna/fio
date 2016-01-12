@@ -3,6 +3,7 @@
 namespace h4kuna\Fio\Request;
 
 use GuzzleHttp,
+	h4kuna\Fio,
 	h4kuna\Fio\Response\Pay,
 	Nette\Utils;
 
@@ -12,12 +13,45 @@ class Queue implements IQueue
 	/** @var string[] */
 	private static $tokens = [];
 
+	/** @var int */
+	private $limitLoop = 5;
+
+	/** @var bool */
+	private $sleep = TRUE;
+
+	public function setLimitLoop($limitLoop)
+	{
+		$this->limitLoop = $limitLoop;
+	}
+
+	public function setSleep($sleep)
+	{
+		$this->sleep = (bool) $sleep;
+	}
+
 	public function download($token, $url)
 	{
+		$request = new GuzzleHttp\Client();
+		$tempFile = self::loadFileName($token);
+		$file = fopen(self::safeProtocol($tempFile), 'w');
+		$i = 0;
 		do {
-			$request = new GuzzleHttp\Client();
-			$response = $request->request('GET', $url);
-		} while ($this->availableAnotherRequest($token, $response));
+			$next = FALSE;
+			++$i;
+			try {
+				$response = $request->request('GET', $url);
+			} catch (GuzzleHttp\Exception\ClientException $e) {
+				if ($e->getCode() !== self::HEADER_CONFLICT || !$this->sleep) {
+					throw $e;
+				} elseif ($i >= $this->limitLoop) {
+					throw new Fio\QueueLimitException('You have limit up requests to server ' . $this->limitLoop);
+				}
+				self::sleep($tempFile);
+				$next = TRUE;
+			}
+		} while ($next);
+		fclose($file);
+		touch($tempFile);
 		return $response->getBody();
 	}
 
@@ -34,37 +68,31 @@ class Queue implements IQueue
 		return new Pay\XMLResponse($xml->getResponse());
 	}
 
-	/**
-	 * Interval between requests is 30s per token.
-	 * @param string $token
-	 * @param int $timeWait
-	 */
-	final protected function availableAnotherRequest($token, $response)
+	private static function sleep($filename)
 	{
-		$tempFile = $this->loadFileName($token);
-		$time = (int) file_get_contents($tempFile);
-		$diff = ($time + $timeWait) - time();
-		if ($time && $diff > 0) {
-			sleep($diff);
+		$criticalTime = time() - filemtime($filename);
+		if ($criticalTime < self::WAIT_TIME) {
+			sleep(self::WAIT_TIME - $criticalTime);
 		}
-		file_put_contents($tempFile, time());
 	}
 
 	/**
-	 *
 	 * @param string $token
 	 * @return string
 	 */
-	private function loadFileName($token)
+	private static function loadFileName($token)
 	{
 		$key = substr($token, 10, -10);
 		if (!isset(self::$tokens[$key])) {
-			self::$tokens[$key] = $this->temp . DIRECTORY_SEPARATOR . md5($key);
+			self::$tokens[$key] = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($key);
 		}
-		if (!is_file(self::$tokens[$key])) {
-			touch(self::$tokens[$key]);
-		}
-		return Utils\SafeStream::PROTOCOL . '://' . self::$tokens[$key];
+
+		return self::$tokens[$key];
+	}
+
+	private static function safeProtocol($filename)
+	{
+		return Utils\SafeStream::PROTOCOL . '://' . $filename;
 	}
 
 	/** @return CUrl */
