@@ -1,7 +1,6 @@
 nbproject/
 vendor/
 composer.lock
-/tests/test.local.neon
 *~
 /tests/**/output/
 /tests/origin/account.ini

@@ -27,16 +27,7 @@ class FioReadTest extends Tester\TestCase
 
 	protected function setUp()
 	{
-		$this->fioRead = $this->fioFactory->createFioRead([
-			'foo' => [
-				'account' => '123456789',
-				'token' => 'abcdefgh'
-			],
-			'bar' => [
-				'account' => '987654321',
-				'token' => 'hgfedcba'
-			]
-		]);
+		$this->fioRead = $this->fioFactory->createFioRead();
 		$this->token = $this->fioRead->getActive()->getToken();
 	}
 
@@ -98,5 +89,4 @@ class FioReadTest extends Tester\TestCase
 }
 
 $fioFactory = new Test\FioFactory();
-
 (new FioReadTest($fioFactory))->run();

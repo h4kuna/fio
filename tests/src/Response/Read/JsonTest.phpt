@@ -5,16 +5,23 @@ namespace h4kuna\Fio\Response\Read;
 use Tester\Assert,
 	h4kuna\Fio\Test;
 
-require __DIR__ . '/../../bootstrap.php';
+require __DIR__ . '/../../../bootstrap.php';
 
 class JsonStatementFactoryTest extends \Tester\TestCase
 {
 
+	/** @var Test\FioFactory */
+	private $fioFactory;
+
+	public function __construct(Test\FioFactory $fioFactory)
+	{
+		$this->fioFactory = $fioFactory;
+	}
+
 	public function testCustonTransactionClass()
 	{
-		$statement = new JsonStatementFactory('h4kuna\Fio\Response\Read\MyTransactionTest');
-		$json = new \h4kuna\Fio\Request\Read\Files\Json($statement);
-		$list = $json->parse(Test\Utils::getContent('2015-01-01-2015-04-16-transactions.json'));
+		$json = $this->fioFactory->getReader();
+		$list = $json->create(Test\Utils::getContent('2015-01-01-2015-04-16-transactions.json'));
 		Test\Utils::saveFile('custom.json', serialize($list));
 		Assert::equal(Test\Utils::getContent('custom.json'), serialize($list));
 	}
@@ -26,7 +33,7 @@ class JsonStatementFactoryTest extends \Tester\TestCase
  * @property-read string $to_account [2]
  * @property-read string $bank_code [3]
  */
-class MyTransactionTest extends ATransaction
+class MyTransactionTest extends TransactionAbstract
 {
 
 	/** custom method */
@@ -45,5 +52,5 @@ class MyTransactionTest extends ATransaction
 
 }
 
-$test = new JsonStatementFactoryTest();
-$test->run();
+$fioFactory = new Test\FioFactory('h4kuna\Fio\Response\Read\MyTransactionTest');
+(new JsonStatementFactoryTest($fioFactory))->run();

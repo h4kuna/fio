@@ -2,7 +2,8 @@
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio\Utils;
+use h4kuna\Fio,
+	h4kuna\Fio\Utils;
 
 /**
  * @author Milan Matějček
@@ -39,7 +40,7 @@ class Euro extends Property
 	protected $remittanceInfo3;
 
 	/** @var int */
-	protected $paymentType = self::PAYMENT_STANDARD;
+	protected $paymentType = FALSE;
 
 	public function __construct($account)
 	{
@@ -50,12 +51,12 @@ class Euro extends Property
 	/**
 	 *
 	 * @param string $accountTo ISO 13616
-	 * @throws Utils\FioException
+	 * @throws Fio\InvalidArgumentException
 	 */
 	public function setAccountTo($accountTo)
 	{
 		if (strlen($accountTo) > 34) {
-			throw new Utils\FioException('Account is to long. ISO 13616.');
+			throw new Fio\InvalidArgumentException('Account is to long. ISO 13616.');
 		}
 		$this->accountTo = $accountTo;
 		return $this;
@@ -65,12 +66,12 @@ class Euro extends Property
 	 *
 	 * @param string $bic
 	 * @return self
-	 * @throws Utils\FioException
+	 * @throws Fio\InvalidArgumentException
 	 */
 	public function setBic($bic)
 	{
 		if (strlen($bic) != 11) {
-			throw new Utils\FioException('BIC must lenght 11. Is ISO 9362.');
+			throw new Fio\InvalidArgumentException('BIC must lenght 11. Is ISO 9362.');
 		}
 		$this->bic = $bic;
 		return $this;
@@ -107,7 +108,7 @@ class Euro extends Property
 	{
 		$country = strtoupper($benefCountry);
 		if (strlen($country) != 2 && $country != 'TCH') {
-			throw new Utils\FioException('Look at to manual for country code section 6.3.3.');
+			throw new Fio\InvalidArgumentException('Look at to manual for country code section 6.3.3.');
 		}
 		$this->benefCountry = $country;
 		return $this;
@@ -131,7 +132,7 @@ class Euro extends Property
 	 */
 	public function setRemittanceInfo1($str)
 	{
-		$this->remittanceInfo1 = Utils\Stringss::substr($str, 35);
+		$this->remittanceInfo1 = Utils\Strings::substr($str, 35);
 		return $this;
 	}
 
@@ -160,13 +161,13 @@ class Euro extends Property
 	/**
 	 * @param int $type
 	 * @return self
-	 * @throws Utils\FioException
+	 * @throws Fio\InvalidArgumentException
 	 */
 	public function setPaymentType($type)
 	{
 		static $types = [self::PAYMENT_STANDARD, self::PAYMENT_PRIORITY];
 		if (!in_array($type, $types)) {
-			throw new Utils\FioException('Unsupported payment type: ' . $type);
+			throw new Fio\InvalidArgumentException('Unsupported payment type: ' . $type);
 		}
 		$this->paymentType = $type;
 		return $this;

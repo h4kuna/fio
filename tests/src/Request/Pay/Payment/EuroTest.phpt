@@ -15,24 +15,24 @@ $container = require_once __DIR__ . '/../../../../bootstrap.php';
 class EuroTest extends Tester\TestCase
 {
 
-	/**
-	 * @var PaymentFactory
-	 */
+	/** @var PaymentFactory */
 	private $paymentFactory;
 
 	/** @var XMLFile */
 	private $xmlFile;
-	private $container;
 
-	public function __construct($container)
+	/** @var Test\FioFactory */
+	private $fioFactory;
+
+	public function __construct(Test\FioFactory $fioFactory)
 	{
-		$this->container = $container;
+		$this->fioFactory = $fioFactory;
 	}
 
 	protected function setUp()
 	{
-		$this->paymentFactory = $this->container->createService('fioExtension.paymentFactory');
-		$this->xmlFile = $this->container->createService('fioExtension.xmlFile');
+		$this->paymentFactory = $this->fioFactory->getPaymetFactory();
+		$this->xmlFile = $this->fioFactory->getXmlFile();
 	}
 
 	public function testMinimum()
@@ -46,24 +46,24 @@ class EuroTest extends Tester\TestCase
 	public function testMaximum()
 	{
 		$pay = $this->paymentFactory->createEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp')
-				->setCity('Prague')
-				->setRemittanceInfo1('info 1')
-				->setRemittanceInfo2('info 2')
-				->setRemittanceInfo3('info 3')
-				->setStreet('Street 44')
-				->setConstantSymbol('321')
-				->setCurrency('Usd')
-				->setMyComment('Lorem ipsum')
-				->setDate('2014-01-23')
-				->setPaymentReason('110')
-				->setSpecificSymbol('378')
-				->setVariableSymbol('123456789')
-				->setPaymentType(Euro::PAYMENT_PRIORITY);
+			->setCity('Prague')
+			->setRemittanceInfo1('info 1')
+			->setRemittanceInfo2('info 2')
+			->setRemittanceInfo3('info 3')
+			->setStreet('Street 44')
+			->setConstantSymbol('321')
+			->setCurrency('Usd')
+			->setMyComment('Lorem ipsum')
+			->setDate('2014-01-23')
+			->setPaymentReason('110')
+			->setSpecificSymbol('378')
+			->setVariableSymbol('123456789')
+			->setPaymentType(Euro::PAYMENT_PRIORITY);
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		Tester\Assert::equal(Test\Utils::getContent('payment/euro-maximum.xml'), $xml);
 	}
 
 }
 
-$test = new EuroTest($container);
-$test->run();
+$fioFactory = new Test\FioFactory;
+(new EuroTest($fioFactory))->run();

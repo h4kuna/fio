@@ -2,8 +2,7 @@
 
 namespace h4kuna\Fio;
 
-use h4kuna\Fio\Request\Pay,
-	h4kuna\Fio\Utils;
+use h4kuna\Fio\Request\Pay;
 
 class FioPay extends Fio
 {
@@ -26,9 +25,9 @@ class FioPay extends Fio
 	/** @var Pay\XMLFile */
 	private $xmlFile;
 
-	public function __construct(Utils\Context $context, Pay\PaymentFactory $paymentFactory, Pay\XMLFile $xmlFile)
+	public function __construct(Request\IQueue $queue, Account\Accounts $accounts, Pay\PaymentFactory $paymentFactory, Pay\XMLFile $xmlFile)
 	{
-		parent::__construct($context);
+		parent::__construct($queue, $accounts);
 		$this->paymentFatory = $paymentFactory;
 		$this->xmlFile = $xmlFile;
 	}
@@ -68,10 +67,9 @@ class FioPay extends Fio
 	}
 
 	/**
-	 * @todo check filesize ??? 2MB in documentation
 	 * @param string|Pay\Payment\Property $filename
-	 * @return Pay\IResponse
-	 * @throws Utils\FioException
+	 * @return Response\Pay\IResponse
+	 * @throws InvalidArgumentException
 	 */
 	public function send($filename = NULL)
 	{
@@ -85,30 +83,30 @@ class FioPay extends Fio
 		} elseif (is_file($filename)) {
 			$this->setUploadExtenstion(pathinfo($filename, PATHINFO_EXTENSION));
 		} else {
-			throw new Utils\FioException('Is supported only filepath or Property object.');
+			throw new InvalidArgumentException('Is supported only filepath or Property object.');
 		}
 
+		$token = $this->getActive()->getToken();
 		$post = [
 			'type' => $this->uploadExtension,
-			'token' => $this->context->getToken(),
+			'token' => $token,
 			'lng' => $this->language,
 		];
 
-		return $this->response = $this->context->getQueue()->upload($this->getUrl(), $post, $filename);
+		return $this->response = $this->queue->upload($this->getUrl(), $token, $post, $filename);
 	}
 
 	/**
 	 * Response language.
-	 *
 	 * @param string $lang
 	 * @return self
-	 * @throws Utils\FioException
+	 * @throws InvalidArgumentException
 	 */
 	public function setLanguage($lang)
 	{
 		$lang = strtolower($lang);
 		if (!in_array($lang, self::$langs)) {
-			throw new Utils\FioException('Unsupported language: ' . $lang . ' avaible are ' . implode(', ', self::$langs));
+			throw new InvalidArgumentException($lang . ' avaible are ' . implode(', ', self::$langs));
 		}
 		$this->language = $lang;
 		return $this;
@@ -117,22 +115,21 @@ class FioPay extends Fio
 	/** @return string */
 	private function getUrl()
 	{
-		return $this->context->getUrl() . 'import/';
+		return self::REST_URL . 'import/';
 	}
 
 	/**
 	 * Set upload file extension.
-	 *
 	 * @param string $extension
 	 * @return self
-	 * @throws Utils\FioException
+	 * @throws InvalidArgumentException
 	 */
 	private function setUploadExtenstion($extension)
 	{
 		$extension = strtolower($extension);
 		static $extensions = ['xml', 'abo'];
 		if (!in_array($extension, $extensions)) {
-			throw new Utils\FioException('Unsupported file upload format: ' . $extension . ' avaible are ' . implode(', ', $extensions));
+			throw new InvalidArgumentException('Unsupported file upload format: ' . $extension . ' avaible are ' . implode(', ', $extensions));
 		}
 		$this->uploadExtension = $extension;
 		return $this;

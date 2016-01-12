@@ -4,6 +4,11 @@ Fio
 
 Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Default read via json file.
 
+Nette framework
+---------------
+Follow this [extension](//github.com/h4kuna/fio-nette).
+
+
 Installation to project
 -----------------------
 The best way to install h4kuna/fio is using Composer:
@@ -11,26 +16,39 @@ The best way to install h4kuna/fio is using Composer:
 $ composer require h4kuna/fio
 ```
 
-Example NEON config
--------------------
-```
-extensions:
-    fioExtension: h4kuna\Fio\DI\FioExtension
-
-fioExtension:
-    # mandatory
-	accounts:
-		alias: # name for select account
-			account: 2600267402/2010
-			token: 5asd64as5d46ad5a6
-
-    # optional
-    temp: %tempDir%/fio
-    transactionClass: \h4kuna\Fio\Response\Read\Transaction # if you need change name of property
-```
-
 How to use
 ---------------
+### FioFactory
+This object help you create instances of FioPay and FioRead.
+
+```php
+use h4kuna\Fio;
+$fioFactory = new Fio\Utils\FioFactory([
+	'my-alias' => [
+		'account' => '123456789',
+		'token' => 'abcdefg'
+	],
+	'next-alias' => [
+		'account' => '987654321',
+		'token' => 'tuvwxyz'
+	]
+]);
+
+$fioRead = $fioFactory->createFioRead();
+$fioPay = $fioFactory->createFioPay();
+```
+
+How switch account
+==================
+### Object (Fio\Account\Accounts) whose care about accounts is in both objects like reference.
+```php
+use h4kuna\Fio;
+/* @var $fioRead Fio\FioRead */
+/* @var $fioPay Fio\FioPay */
+$fioRead->setActive('next-alias');
+echo $fioPay->getActive(); // next-alias
+```
+
 Reading
 =======
 ### Read range between date.
@@ -43,13 +61,13 @@ $list = $fioRead->movements(/* $from, $to */); // default is last week
 
 foreach ($list as $transaction) {
     /* @var $transaction Fio\Response\Read\Transaction */
-    dump($transaction->moveId);
+    var_dump($transaction->moveId);
     foreach ($transaction as $property => $value) {
-        dump($property, $value);
+        var_dump($property, $value);
     }
 }
 
-dump($list->getInfo());
+var_dump($list->getInfo());
 ```
 
 ### You can download transaction by id of year.
@@ -68,7 +86,7 @@ use h4kuna\Fio;
 /* @var $list Fio\Response\Read\TransactionList */
 $list = $fioRead->lastDownload();
 // same use like above
-dump($list->getInfo()->idLastDownload);
+var_dump($list->getInfo()->idLastDownload);
 ```
 
 ### Change your break point.
@@ -76,22 +94,19 @@ By date.
 ```php
 $fioRead->setLastDate('1986-12-30');
 $list = $fioRead->lastDownload();
-dump($list->getInfo()->idLastDownload);
+var_dump($list->getInfo()->idLastDownload);
 ```
 
 By movement ID.
 ```php
 $fioRead->setLastId(123456789);
 $list = $fioRead->lastDownload();
-dump($list->getInfo()->idLastDownload); // 123456789
+var_dump($list->getInfo()->idLastDownload); // 123456789
 ```
 
 ### Custom Transaction class
-By default is h4kuna\Fio\Response\Read\Transaction if you want other names for properties. You can set by Neon.
-```sh
-fioExtension:
-    transactionClass: \MyTransaction
-```
+By default is h4kuna\Fio\Response\Read\Transaction if you want other names for properties. Let's define as second parameter to FioFactory.
+
 
 Define annotation and you don't forget id in brackets.
 ```php
@@ -112,6 +127,8 @@ class MyTransaction extends TransactionAbstract
 		return str_pad($value, 4, '0', STR_PAD_LEFT);
 	}
 }
+
+$fioFactory = new Utils\FioFactory([/* ... */], 'MyTransaction');
 ```
 
 

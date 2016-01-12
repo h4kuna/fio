@@ -2,7 +2,8 @@
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio\Utils;
+use h4kuna\Fio,
+	h4kuna\Fio\Utils;
 
 /**
  * @author Milan Matějček
@@ -39,13 +40,13 @@ class International extends Euro
 	/**
 	 * @param int $type
 	 * @return self
-	 * @throws Utils\FioException
+	 * @throws Fio\InvalidArgumentException
 	 */
 	public function setDetailsOfCharges($type)
 	{
 		static $types = [self::CHARGES_BEN, self::CHARGES_OUR, self::CHARGES_SHA];
 		if (!in_array($type, $types)) {
-			throw new Utils\FioException('Select one type from constatns. Section in manual 6.3.4.');
+			throw new Fio\InvalidArgumentException('Select one type from constatns. Section in manual 6.3.4.');
 		}
 		$this->detailsOfCharges = $type;
 		return $this;
@@ -78,25 +79,25 @@ class International extends Euro
 	/** @deprecated */
 	public function setConstantSymbol($ks)
 	{
-		throw new Utils\FioException('Not available.');
+		throw new Fio\InvalidArgumentException('Not available.');
 	}
 
 	/** @deprecated */
 	public function setSpecificSymbol($ss)
 	{
-		throw new Utils\FioException('Not available.');
+		throw new Fio\InvalidArgumentException('Not available.');
 	}
 
 	/** @deprecated */
 	public function setVariableSymbol($vs)
 	{
-		throw new Utils\FioException('Not available.');
+		throw new Fio\InvalidArgumentException('Not available.');
 	}
 
 	/** @deprecated */
 	public function setPaymentType($type)
 	{
-		throw new Utils\FioException('Not available.');
+		throw new Fio\InvalidArgumentException('Not available.');
 	}
 
 }

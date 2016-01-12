@@ -21,9 +21,9 @@ class JsonTransactionFactory implements ITransactionListFactory
 	protected $transactionClassCheck = FALSE;
 
 	/**
-	 * @param string|TransactionAbstract $transactionClass
+	 * @param string $transactionClass
 	 */
-	public function __construct(TransactionAbstract $transactionClass = NULL)
+	public function __construct($transactionClass = NULL)
 	{
 		if ($transactionClass === NULL) {
 			$transactionClass = __NAMESPACE__ . '\Transaction';
@@ -65,10 +65,12 @@ class JsonTransactionFactory implements ITransactionListFactory
 			if (is_string($this->transactionClass)) {
 				$class = $this->transactionClass;
 				$this->transactionClass = new $class($dateFormat);
+			} else {
+				throw new Fio\InvalidArgumentException('Add you class as string.');
 			}
 
 			if (!$this->transactionClass instanceof TransactionAbstract) {
-				throw new Fio\TransactionExtendException('Transaction class must extends ATransation.');
+				throw new Fio\TransactionExtendException('Transaction class must extends TransationAbstract.');
 			}
 			$this->transactionClassCheck = TRUE;
 		}

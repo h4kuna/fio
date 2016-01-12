@@ -26,9 +26,9 @@ class Queue implements Fio\Request\IQueue
 		return $file;
 	}
 
-	public function upload($url, array $post, $filename)
+	public function upload($url, $token, array $post, $filename)
 	{
-		// not implemented for test
+		return file_get_contents($filename);
 	}
 
 }
