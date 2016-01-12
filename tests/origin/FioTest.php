@@ -21,6 +21,7 @@ foreach ($fioRead->movements('-1 month') as $transaction) {
 	\Tester\Assert::true(is_int($transaction->moveId));
 }
 
+// blocation is per token
 $fioPay = $fioFactory->createFioPay();
 $fioPay->setActive('pay');
 $national = $fioPay->createNational(100, '2000242017/2010');
