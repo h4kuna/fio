@@ -38,9 +38,8 @@ $fioRead = $fioFactory->createFioRead();
 $fioPay = $fioFactory->createFioPay();
 ```
 
-How switch account
-==================
-### Object (Fio\Account\Accounts) whose care about accounts is in both objects like reference.
+### How switch account
+Object (Fio\Account\Accounts) whose care about accounts is in both objects like reference.
 ```php
 use h4kuna\Fio;
 /* @var $fioRead Fio\FioRead */
