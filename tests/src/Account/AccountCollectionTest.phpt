@@ -14,8 +14,8 @@ class AccountCollectionTest extends \Tester\TestCase
 
 	public function testAddAccount()
 	{
-		$account1 = new Fio('foo', new Bank('323536'));
-		$account2 = new Fio('bar', new Bank('978654'));
+		$account1 = new Account('323536', 'foo');
+		$account2 = new Account('978654', 'bar');
 		$accounts = new AccountCollection;
 		$accounts->addAccount('foo', $account1);
 		$accounts->addAccount('bar', $account2);
@@ -30,7 +30,7 @@ class AccountCollectionTest extends \Tester\TestCase
 	 */
 	public function testInvalidAlias()
 	{
-		$account1 = new Fio('foo', new Bank('323536'));
+		$account1 = new Account('323536', 'foo');
 		$accounts = new AccountCollection;
 		$accounts->addAccount('foo', $account1);
 		$accounts->setActive('bar');
