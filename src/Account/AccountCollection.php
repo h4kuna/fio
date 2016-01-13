@@ -7,7 +7,7 @@ use h4kuna\Fio\AccountException;
 /**
  * @author Milan Matějček
  */
-class AccountCollection
+class AccountCollection implements \Countable, \IteratorAggregate
 {
 
 	/** @var Account[] */
@@ -47,6 +47,24 @@ class AccountCollection
 		if ($this->active === NULL) {
 			$this->setActive($alias);
 		}
+	}
+
+	/**
+	 * Returns items count.
+	 * @return int
+	 */
+	public function count()
+	{
+		return count($this->accounts);
+	}
+
+	/**
+	 * Returns an iterator over all items.
+	 * @return \ArrayIterator
+	 */
+	public function getIterator()
+	{
+		return new \ArrayIterator($this->accounts);
 	}
 
 }
