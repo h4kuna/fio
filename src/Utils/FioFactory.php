@@ -7,8 +7,8 @@ use h4kuna\Fio;
 class FioFactory
 {
 
-	/** @var Fio\Account\Accounts */
-	private $accounts;
+	/** @var Fio\Account\AccountCollection */
+	private $accountCollection;
 
 	/** @var Context */
 	private $queue;
@@ -18,19 +18,19 @@ class FioFactory
 
 	public function __construct(array $accounts, $transactionClass = NULL)
 	{
-		$this->accounts = $this->createAccounts($accounts);
+		$this->accountCollection = $this->createAccountCollection($accounts);
 		$this->queue = $this->createQueue();
 		$this->transactionClass = $transactionClass;
 	}
 
 	public function createFioRead()
 	{
-		return new Fio\FioRead($this->getQueue(), $this->getAccounts(), $this->createReader());
+		return new Fio\FioRead($this->getQueue(), $this->getAccountCollection(), $this->createReader());
 	}
 
 	public function createFioPay()
 	{
-		return new Fio\FioPay($this->getQueue(), $this->getAccounts(), $this->createPaymentFactory(), $this->createXmlFile());
+		return new Fio\FioPay($this->getQueue(), $this->getAccountCollection(), $this->createPaymentFactory(), $this->createXmlFile());
 	}
 
 	/**
@@ -42,14 +42,14 @@ class FioFactory
 		return new Fio\Request\Queue();
 	}
 
-	protected function createAccounts(array $accounts)
+	protected function createAccountCollection(array $accounts)
 	{
-		return Fio\Account\AccountsFactory::create($accounts);
+		return Fio\Account\AccountCollectionFactory::create($accounts);
 	}
 
-	final protected function getAccounts()
+	final protected function getAccountCollection()
 	{
-		return $this->accounts;
+		return $this->accountCollection;
 	}
 
 	final protected function getQueue()
@@ -88,7 +88,7 @@ class FioFactory
 
 	protected function createPaymentFactory()
 	{
-		return new Fio\Request\Pay\PaymentFactory($this->getAccounts());
+		return new Fio\Request\Pay\PaymentFactory($this->getAccountCollection());
 	}
 
 }

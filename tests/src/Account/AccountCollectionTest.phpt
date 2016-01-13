@@ -9,14 +9,14 @@ $container = require __DIR__ . '/../../bootstrap.php';
 /**
  * @author Milan Matějček
  */
-class AccountsTest extends \Tester\TestCase
+class AccountCollectionTest extends \Tester\TestCase
 {
 
 	public function testAddAccount()
 	{
 		$account1 = new Fio('foo', new Bank('323536'));
 		$account2 = new Fio('bar', new Bank('978654'));
-		$accounts = new Accounts;
+		$accounts = new AccountCollection;
 		$accounts->addAccount('foo', $account1);
 		$accounts->addAccount('bar', $account2);
 
@@ -31,11 +31,11 @@ class AccountsTest extends \Tester\TestCase
 	public function testInvalidAlias()
 	{
 		$account1 = new Fio('foo', new Bank('323536'));
-		$accounts = new Accounts;
+		$accounts = new AccountCollection;
 		$accounts->addAccount('foo', $account1);
 		$accounts->setActive('bar');
 	}
 
 }
 
-(new AccountsTest())->run();
+(new AccountCollectionTest())->run();

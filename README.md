@@ -39,7 +39,7 @@ $fioPay = $fioFactory->createFioPay();
 ```
 
 ### How switch account
-Object (Fio\Account\Accounts) whose care about accounts is in both objects like reference.
+Object (Fio\Account\AccountCollection) whose care about accounts is in both objects like reference.
 ```php
 use h4kuna\Fio;
 /* @var $fioRead Fio\FioRead */
