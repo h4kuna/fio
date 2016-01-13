@@ -42,7 +42,10 @@ class Euro extends Property
 	/** @var int */
 	protected $paymentType = FALSE;
 
-	public function __construct($account)
+	/**
+	 * @param Fio\Account\Account $account
+	 */
+	public function __construct(Fio\Account\Account $account)
 	{
 		parent::__construct($account);
 		$this->setCurrency('EUR');

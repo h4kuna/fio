@@ -13,7 +13,7 @@ class Account
 	/** @var string */
 	private $token;
 
-	public function __construct($account, $token = NULL)
+	public function __construct($account, $token)
 	{
 		$this->account = new Bank($account);
 		$this->token = $token;
