@@ -20,9 +20,10 @@ class AccountCollectionTest extends \Tester\TestCase
 		$accounts->addAccount('foo', $account1);
 		$accounts->addAccount('bar', $account2);
 
-		Assert::same($accounts->getActive(), $account1);
-		$accounts->setActive('bar');
-		Assert::same($accounts->getActive(), $account2);
+		Assert::same($accounts->get('foo'), $account1);
+		Assert::same($accounts->get('bar'), $account2);
+		Assert::same($accounts['foo'], $account1);
+		Assert::same($accounts['bar'], $account2);
 	}
 
 	/**
@@ -33,7 +34,7 @@ class AccountCollectionTest extends \Tester\TestCase
 		$account1 = new Account('323536', 'foo');
 		$accounts = new AccountCollection;
 		$accounts->addAccount('foo', $account1);
-		$accounts->setActive('bar');
+		$accounts->get('bar');
 	}
 
 	public function testCount()
