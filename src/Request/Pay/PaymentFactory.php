@@ -10,19 +10,19 @@ use h4kuna\Fio\Account;
 class PaymentFactory
 {
 
-	/** @var Account\Accounts */
-	private $accounts;
+	/** @var Account\AccountCollection */
+	private $accountCollection;
 
-	public function __construct(Account\Accounts $account)
+	public function __construct(Account\AccountCollection $accountCollection)
 	{
-		$this->accounts = $account;
+		$this->accountCollection = $accountCollection;
 	}
 
 	/** @return Payment\National */
 	public function createNational($amount, $accountTo, $bankCode = NULL)
 	{
 		static $payment = [];
-		$account = $this->accounts->getActive()->getAccount();
+		$account = $this->accountCollection->getActive()->getAccount();
 		if (!isset($payment[$account])) {
 			$payment[$account] = new Payment\National($account);
 		}
@@ -35,7 +35,7 @@ class PaymentFactory
 	public function createInternational($amount, $accountTo, $bic, $name, $street, $city, $country, $info)
 	{
 		static $payment = [];
-		$account = $this->accounts->getActive()->getAccount();
+		$account = $this->accountCollection->getActive()->getAccount();
 		if (!isset($payment[$account])) {
 			$payment[$account] = new Payment\International($account);
 		}
@@ -50,7 +50,7 @@ class PaymentFactory
 	public function createEuro($amount, $accountTo, $bic, $name, $country)
 	{
 		static $payment = [];
-		$account = $this->accounts->getActive()->getAccount();
+		$account = $this->accountCollection->getActive()->getAccount();
 		if (!isset($payment[$account])) {
 			$payment[$account] = new Payment\Euro($account);
 		}

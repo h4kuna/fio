@@ -7,10 +7,10 @@ use h4kuna\Fio\AccountException;
 /**
  * @author Milan Matějček
  */
-class Accounts
+class AccountCollection
 {
 
-	/** @var Account[] */
+	/** @var Fio[] */
 	private $accounts;
 
 	/** @var string */

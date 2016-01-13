@@ -17,9 +17,9 @@ class FioRead extends Fio
 	/** @var Response\Read\IReader */
 	private $readerFactory;
 
-	public function __construct(Request\IQueue $queue, Account\Accounts $accounts, Request\Read\IReader $readerFactory)
+	public function __construct(Request\IQueue $queue, Account\AccountCollection $accountCollection, Request\Read\IReader $readerFactory)
 	{
-		parent::__construct($queue, $accounts);
+		parent::__construct($queue, $accountCollection);
 		$this->readerFactory = $readerFactory;
 	}
 
@@ -92,7 +92,7 @@ class FioRead extends Fio
 	private function download($apiUrl /* ... params */)
 	{
 		$args = func_get_args();
-		$args[0] = $token = $this->accounts->getActive()->getToken();
+		$args[0] = $token = $this->accountCollection->getActive()->getToken();
 		$this->requestUrl = self::REST_URL . vsprintf($apiUrl, $args);
 		return $this->queue->download($token, $this->requestUrl);
 	}
