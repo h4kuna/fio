@@ -21,8 +21,7 @@ class PaymentFactory
 	/** @return Payment\National */
 	public function createNational($amount, $accountTo, $bankCode = NULL)
 	{
-		$account = $this->account->getAccount();
-		return (new Payment\National($account))
+		return (new Payment\National($this->account))
 			->setAccountTo($accountTo, $bankCode)
 			->setAmount($amount);
 	}
@@ -30,8 +29,7 @@ class PaymentFactory
 	/** @return Payment\International */
 	public function createInternational($amount, $accountTo, $bic, $name, $street, $city, $country, $info)
 	{
-		$account = $this->account->getAccount();
-		return (new Payment\International($account))
+		return (new Payment\International($this->account))
 			->setBic($bic)
 			->setName($name)
 			->setCountry($country)
@@ -45,8 +43,7 @@ class PaymentFactory
 	/** @return Payment\Euro */
 	public function createEuro($amount, $accountTo, $bic, $name, $country)
 	{
-		$account = $this->account->getAccount();
-		return (new Payment\Euro($account))
+		return (new Payment\Euro($this->account))
 			->setBic($bic)
 			->setName($name)
 			->setCountry($country)

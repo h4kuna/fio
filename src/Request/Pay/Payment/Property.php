@@ -54,13 +54,11 @@ abstract class Property implements Iterator
 	private $key;
 
 	/**
-	 * @param string $account
-	 * @param string $temp
+	 * @param Fio\Account\Account $account
 	 */
-	public function __construct($account)
+	public function __construct(Fio\Account\Account $account)
 	{
-		$accountObject = Utils\Strings::createAccount($account);
-		$this->accountFrom = $accountObject->getAccount();
+		$this->accountFrom = $account->getAccount();
 		$this->setDate('now');
 	}
 
