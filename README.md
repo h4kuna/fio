@@ -34,18 +34,8 @@ $fioFactory = new Fio\Utils\FioFactory([
 	]
 ]);
 
-$fioRead = $fioFactory->createFioRead();
-$fioPay = $fioFactory->createFioPay();
-```
-
-### How switch account
-Object (Fio\Account\AccountCollection) whose care about accounts is in both objects like reference.
-```php
-use h4kuna\Fio;
-/* @var $fioRead Fio\FioRead */
-/* @var $fioPay Fio\FioPay */
-$fioRead->setActive('next-alias');
-echo $fioPay->getActive(); // next-alias
+$fioRead = $fioFactory->createFioRead('my-alias');
+$fioPay = $fioFactory->createFioPay('next-alias');
 ```
 
 Reading

@@ -28,7 +28,7 @@ class FioReadTest extends Tester\TestCase
 	protected function setUp()
 	{
 		$this->fioRead = $this->fioFactory->createFioRead();
-		$this->token = $this->fioRead->getActive()->getToken();
+		$this->token = $this->fioRead->getAccount()->getToken();
 	}
 
 	public function testMovements()
@@ -58,7 +58,7 @@ class FioReadTest extends Tester\TestCase
 
 	public function testMovementId()
 	{
-		$token = $this->fioRead->setActive('bar')->getActive()->getToken();
+		$token = $this->fioFactory->createFioRead('bar')->getAccount()->getToken();
 		Assert::same('hgfedcba', $token);
 		$data = $this->fioRead->movementId(2, 2015);
 
