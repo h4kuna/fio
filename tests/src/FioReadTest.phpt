@@ -58,12 +58,13 @@ class FioReadTest extends Tester\TestCase
 
 	public function testMovementId()
 	{
-		$token = $this->fioFactory->createFioRead('bar')->getAccount()->getToken();
+		$fioRead = $this->fioFactory->createFioRead('bar');
+		$token = $fioRead->getAccount()->getToken();
 		Assert::same('hgfedcba', $token);
-		$data = $this->fioRead->movementId(2, 2015);
+		$data = $fioRead->movementId(2, 2015);
 
 		Assert::equal(unserialize(Test\Utils::getContent('2015-2-transactions.srlz')), $data);
-		Assert::equal(Fio::REST_URL . 'by-id/' . $token . '/2015/2/transactions.json', $this->fioRead->getRequestUrl());
+		Assert::equal(Fio::REST_URL . 'by-id/' . $token . '/2015/2/transactions.json', $fioRead->getRequestUrl());
 	}
 
 	public function testLastDownload()

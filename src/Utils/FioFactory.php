@@ -73,10 +73,10 @@ class FioFactory
 	final protected function getAccount($name)
 	{
 		if ($name) {
-			return $this->getAccountCollection()->accountExists($name);
+			return $this->getAccountCollection()->get($name);
 		}
 
-		return $this->getAccountCollection()->getActive();
+		return $this->getAccountCollection()->getDefault();
 	}
 
 	final protected function getQueue()
