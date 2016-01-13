@@ -41,7 +41,7 @@ class Fio extends Object
 		return $this;
 	}
 
-	/** @return Account\Fio */
+	/** @return Account\Account */
 	public function getActive()
 	{
 		return $this->accountCollection->getActive();

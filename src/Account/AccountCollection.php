@@ -10,7 +10,7 @@ use h4kuna\Fio\AccountException;
 class AccountCollection
 {
 
-	/** @var Fio[] */
+	/** @var Account[] */
 	private $accounts;
 
 	/** @var string */
@@ -23,14 +23,14 @@ class AccountCollection
 		return $this;
 	}
 
-	/** @return Account\Fio */
+	/** @return Account */
 	public function getActive()
 	{
 		return $this->accountExists($this->active);
 	}
 
 	/**
-	 * @return Fio
+	 * @return Account
 	 * @throws AccountException
 	 */
 	private function accountExists($alias)
@@ -41,7 +41,7 @@ class AccountCollection
 		throw new AccountException('This account alias does not exists. ' . $alias);
 	}
 
-	public function addAccount($alias, Fio $account)
+	public function addAccount($alias, Account $account)
 	{
 		$this->accounts[$alias] = $account;
 		if ($this->active === NULL) {
