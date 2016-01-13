@@ -25,9 +25,9 @@ class FioPay extends Fio
 	/** @var Pay\XMLFile */
 	private $xmlFile;
 
-	public function __construct(Request\IQueue $queue, Account\AccountCollection $accountCollection, Pay\PaymentFactory $paymentFactory, Pay\XMLFile $xmlFile)
+	public function __construct(Request\IQueue $queue, Account\Account $account, Pay\PaymentFactory $paymentFactory, Pay\XMLFile $xmlFile)
 	{
-		parent::__construct($queue, $accountCollection);
+		parent::__construct($queue, $account);
 		$this->paymentFatory = $paymentFactory;
 		$this->xmlFile = $xmlFile;
 	}
@@ -86,7 +86,7 @@ class FioPay extends Fio
 			throw new InvalidArgumentException('Is supported only filepath or Property object.');
 		}
 
-		$token = $this->getActive()->getToken();
+		$token = $this->getAccount()->getToken();
 		$post = [
 			'type' => $this->uploadExtension,
 			'token' => $token,

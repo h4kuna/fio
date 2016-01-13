@@ -23,14 +23,27 @@ class FioFactory
 		$this->transactionClass = $transactionClass;
 	}
 
-	public function createFioRead()
+	/**
+	 * @param string $name Configured account name from AccountCollection
+	 *
+	 * @return Fio\FioRead
+	 */
+	public function createFioRead($name = NULL)
 	{
-		return new Fio\FioRead($this->getQueue(), $this->getAccountCollection(), $this->createReader());
+		return new Fio\FioRead($this->getQueue(), $this->getAccount($name), $this->createReader());
 	}
 
-	public function createFioPay()
+	/**
+	 * @param string $name Configured account name from AccountCollection
+	 *
+	 * @return Fio\FioPay
+	 */
+	public function createFioPay($name = NULL)
 	{
-		return new Fio\FioPay($this->getQueue(), $this->getAccountCollection(), $this->createPaymentFactory(), $this->createXmlFile());
+		return new Fio\FioPay(
+			$this->getQueue(), $this->getAccount($name),
+			$this->createPaymentFactory($name), $this->createXmlFile()
+		);
 	}
 
 	/**
@@ -50,6 +63,20 @@ class FioFactory
 	final protected function getAccountCollection()
 	{
 		return $this->accountCollection;
+	}
+
+	/**
+	 * @param string $name Configured account name from AccountCollection
+	 *
+	 * @return Fio\Account\Account
+	 */
+	final protected function getAccount($name)
+	{
+		if ($name) {
+			return $this->getAccountCollection()->accountExists($name);
+		}
+
+		return $this->getAccountCollection()->getActive();
 	}
 
 	final protected function getQueue()
@@ -86,9 +113,14 @@ class FioFactory
 		return new Fio\Request\Pay\XMLFile(sys_get_temp_dir());
 	}
 
-	protected function createPaymentFactory()
+	/**
+	 * @param string $name Configured account name from AccountCollection
+	 *
+	 * @return Fio\Request\Pay\PaymentFactory
+	 */
+	protected function createPaymentFactory($name = NULL)
 	{
-		return new Fio\Request\Pay\PaymentFactory($this->getAccountCollection());
+		return new Fio\Request\Pay\PaymentFactory($this->getAccount($name));
 	}
 
 }

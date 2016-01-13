@@ -22,29 +22,21 @@ class Fio extends Object
 	/** @var Request\IQueue */
 	protected $queue;
 
-	/** @var Account\AccountCollection */
-	protected $accountCollection;
+	/** @var Account\Account */
+	protected $account;
 
-	public function __construct(Request\IQueue $queue, Account\AccountCollection $accountCollection)
+	public function __construct(Request\IQueue $queue, Account\Account $account)
 	{
 		$this->queue = $queue;
-		$this->accountCollection = $accountCollection;
+		$this->account = $account;
 	}
 
 	/**
-	 * @param atring $alias
-	 * @return self
+	 * @return Account\Account;
 	 */
-	public function setActive($alias)
+	public function getAccount()
 	{
-		$this->accountCollection->setActive($alias);
-		return $this;
-	}
-
-	/** @return Account\Account */
-	public function getActive()
-	{
-		return $this->accountCollection->getActive();
+		return $this->account;
 	}
 
 }
