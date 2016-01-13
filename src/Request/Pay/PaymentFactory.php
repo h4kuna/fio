@@ -21,43 +21,37 @@ class PaymentFactory
 	/** @return Payment\National */
 	public function createNational($amount, $accountTo, $bankCode = NULL)
 	{
-		static $payment = [];
 		$account = $this->accountCollection->getActive()->getAccount();
-		if (!isset($payment[$account])) {
-			$payment[$account] = new Payment\National($account);
-		}
-		$clone = clone $payment[$account];
-		$clone->setAccountTo($accountTo, $bankCode)->setAmount($amount);
-		return $clone;
+		return (new Payment\National($account))
+			->setAccountTo($accountTo, $bankCode)
+			->setAmount($amount);
 	}
 
 	/** @return Payment\International */
 	public function createInternational($amount, $accountTo, $bic, $name, $street, $city, $country, $info)
 	{
-		static $payment = [];
 		$account = $this->accountCollection->getActive()->getAccount();
-		if (!isset($payment[$account])) {
-			$payment[$account] = new Payment\International($account);
-		}
-		$clone = clone $payment[$account];
-		$clone->setBic($bic)->setName($name)->setCountry($country)
-			->setAccountTo($accountTo)->setStreet($street)
-			->setCity($city)->setRemittanceInfo1($info)->setAmount($amount);
-		return $clone;
+		return (new Payment\International($account))
+			->setBic($bic)
+			->setName($name)
+			->setCountry($country)
+			->setAccountTo($accountTo)
+			->setStreet($street)
+			->setCity($city)
+			->setRemittanceInfo1($info)
+			->setAmount($amount);
 	}
 
 	/** @return Payment\Euro */
 	public function createEuro($amount, $accountTo, $bic, $name, $country)
 	{
-		static $payment = [];
 		$account = $this->accountCollection->getActive()->getAccount();
-		if (!isset($payment[$account])) {
-			$payment[$account] = new Payment\Euro($account);
-		}
-		$clone = clone $payment[$account];
-		$clone->setBic($bic)->setName($name)->setCountry($country)
-			->setAccountTo($accountTo)->setAmount($amount);
-		return $clone;
+		return (new Payment\Euro($account))
+			->setBic($bic)
+			->setName($name)
+			->setCountry($country)
+			->setAccountTo($accountTo)
+			->setAmount($amount);
 	}
 
 }
