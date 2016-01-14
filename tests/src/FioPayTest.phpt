@@ -11,7 +11,7 @@ $container = require_once __DIR__ . '/../bootstrap.php';
 /**
  * @author Milan Matějček
  */
-class XMLResponseTest extends Tester\TestCase
+class FioPayTest extends Tester\TestCase
 {
 
 	/** @var FioPay */
@@ -32,9 +32,11 @@ class XMLResponseTest extends Tester\TestCase
 
 	public function testSend()
 	{
-		$payment1 = $this->fioPay->createNational(100, '24301556/1234');
+		$payment1 = $this->fioPay->createNational(100, '24301556/1234')
+			->setDate('2016-01-12');
 		$this->fioPay->addPayment($payment1);
-		$payment2 = $this->fioPay->createNational(200, '9865/0997');
+		$payment2 = $this->fioPay->createNational(200, '9865/0997')
+			->setDate('2016-01-12');
 		$xml = $this->fioPay->send($payment2);
 		Assert::same(Test\Utils::getContent('payment/multi-pay.xml'), $xml);
 	}
@@ -42,4 +44,4 @@ class XMLResponseTest extends Tester\TestCase
 }
 
 $fioFactory = new Test\FioFactory;
-(new XMLResponseTest($fioFactory))->run();
+(new FioPayTest($fioFactory))->run();
