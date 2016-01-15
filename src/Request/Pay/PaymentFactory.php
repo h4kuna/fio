@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Request\Pay;
 
-use h4kuna\Fio\Account;
+use h4kuna\Fio\Account\FioAccount;
 
 /**
  * @author Milan Matějček
@@ -10,10 +10,10 @@ use h4kuna\Fio\Account;
 class PaymentFactory
 {
 
-	/** @var Account\Account */
+	/** @var FioAccount */
 	private $account;
 
-	public function __construct(Account\Account $account)
+	public function __construct(FioAccount $account)
 	{
 		$this->account = $account;
 	}

@@ -3,6 +3,7 @@
 namespace h4kuna\Fio\Request\Pay\Payment;
 
 use h4kuna\Fio,
+    h4kuna\Fio\Account\FioAccount,
 	h4kuna\Fio\Utils;
 
 /**
@@ -43,9 +44,9 @@ class Euro extends Property
 	protected $paymentType = FALSE;
 
 	/**
-	 * @param Fio\Account\Account $account
+	 * @param FioAccount $account
 	 */
-	public function __construct(Fio\Account\Account $account)
+	public function __construct(FioAccount $account)
 	{
 		parent::__construct($account);
 		$this->setCurrency('EUR');

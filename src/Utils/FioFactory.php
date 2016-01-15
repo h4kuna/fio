@@ -84,7 +84,7 @@ class FioFactory
 		return $this->queue;
 	}
 
-	protected final function getTransactionClass()
+	final protected function getTransactionClass()
 	{
 		return $this->transactionClass;
 	}

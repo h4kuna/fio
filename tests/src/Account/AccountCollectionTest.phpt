@@ -14,16 +14,14 @@ class AccountCollectionTest extends \Tester\TestCase
 
 	public function testAddAccount()
 	{
-		$account1 = new Account('323536', 'foo');
-		$account2 = new Account('978654', 'bar');
+		$account1 = new FioAccount('323536', 'foo');
+		$account2 = new FioAccount('978654', 'bar');
 		$accounts = new AccountCollection;
 		$accounts->addAccount('foo', $account1);
 		$accounts->addAccount('bar', $account2);
 
 		Assert::same($accounts->get('foo'), $account1);
 		Assert::same($accounts->get('bar'), $account2);
-		Assert::same($accounts['foo'], $account1);
-		Assert::same($accounts['bar'], $account2);
 	}
 
 	/**
@@ -31,7 +29,7 @@ class AccountCollectionTest extends \Tester\TestCase
 	 */
 	public function testInvalidAlias()
 	{
-		$account1 = new Account('323536', 'foo');
+		$account1 = new FioAccount('323536', 'foo');
 		$accounts = new AccountCollection;
 		$accounts->addAccount('foo', $account1);
 		$accounts->get('bar');
@@ -39,8 +37,8 @@ class AccountCollectionTest extends \Tester\TestCase
 
 	public function testCount()
 	{
-		$account1 = new Account('323536', 'foo');
-		$account2 = new Account('978654', 'bar');
+		$account1 = new FioAccount('323536', 'foo');
+		$account2 = new FioAccount('978654', 'bar');
 		$accounts = new AccountCollection;
 		$accounts->addAccount('foo', $account1);
 		$accounts->addAccount('bar', $account2);
@@ -50,8 +48,8 @@ class AccountCollectionTest extends \Tester\TestCase
 
 	public function testIteration()
 	{
-		$account1 = new Account('323536', 'foo');
-		$account2 = new Account('978654', 'bar');
+		$account1 = new FioAccount('323536', 'foo');
+		$account2 = new FioAccount('978654', 'bar');
 		$accounts = new AccountCollection;
 		$accounts->addAccount('foo', $account1);
 		$accounts->addAccount('bar', $account2);

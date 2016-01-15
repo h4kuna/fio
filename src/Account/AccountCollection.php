@@ -7,14 +7,15 @@ use h4kuna\Fio\AccountException;
 /**
  * @author Milan Matějček
  */
-class AccountCollection implements \ArrayAccess, \Countable, \IteratorAggregate
+class AccountCollection implements \Countable, \IteratorAggregate
 {
 
-	/** @var Account[] */
+	/** @var FioAccount[] */
 	private $accounts;
 
 	/**
-	 * @return Account
+	 * @param string
+	 * @return FioAccount
 	 * @throws AccountException
 	 */
 	public function get($alias)
@@ -25,10 +26,7 @@ class AccountCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 		throw new AccountException('This account alias does not exists: ' . $alias);
 	}
 
-	/**
-	 * @return Account
-	 * @throws AccountException
-	 */
+	/** @return FioAccount */
 	public function getDefault()
 	{
 		return reset($this->accounts);
@@ -36,11 +34,15 @@ class AccountCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
 	/**
 	 * @param string $alias
-	 * @param Account $account
-	 * @return AccountCollection
+	 * @param FioAccount $account
+	 * @return self
 	 */
-	public function addAccount($alias, Account $account)
+	public function addAccount($alias, FioAccount $account)
 	{
+		if (isset($this->accounts[$alias])) {
+			throw new AccountException('This alias already exists: ' . $alias);
+		}
+
 		$this->accounts[$alias] = $account;
 		return $this;
 	}
@@ -61,42 +63,6 @@ class AccountCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 	public function getIterator()
 	{
 		return new \ArrayIterator($this->accounts);
-	}
-
-	/**
-	 * Replaces or appends a item.
-	 * @return mixed
-	 */
-	public function offsetSet($alias, $account)
-	{
-		$this->addAccount($alias, $account);
-	}
-
-	/**
-	 * Returns a item.
-	 * @return mixed
-	 */
-	public function offsetGet($alias)
-	{
-		return $this->accounts[$alias];
-	}
-
-	/**
-	 * Determines whether a item exists.
-	 * @return bool
-	 */
-	public function offsetExists($alias)
-	{
-		return isset($this->accounts[$alias]);
-	}
-
-	/**
-	 * Removes the element from this list.
-	 * @return void
-	 */
-	public function offsetUnset($alias)
-	{
-		unset($this->accounts[$alias]);
 	}
 
 }

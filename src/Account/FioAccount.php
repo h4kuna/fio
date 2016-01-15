@@ -5,7 +5,7 @@ namespace h4kuna\Fio\Account;
 /**
  * @author Milan Matějček
  */
-class Account
+class FioAccount
 {
 	/** @var Bank */
 	private $account;

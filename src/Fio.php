@@ -22,17 +22,17 @@ class Fio extends Object
 	/** @var Request\IQueue */
 	protected $queue;
 
-	/** @var Account\Account */
+	/** @var Account\FioAccount */
 	protected $account;
 
-	public function __construct(Request\IQueue $queue, Account\Account $account)
+	public function __construct(Request\IQueue $queue, Account\FioAccount $account)
 	{
 		$this->queue = $queue;
 		$this->account = $account;
 	}
 
 	/**
-	 * @return Account\Account;
+	 * @return Account\FioAccount;
 	 */
 	public function getAccount()
 	{
