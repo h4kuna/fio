@@ -20,10 +20,7 @@ class Json extends Nette\Object implements Request\Read\IReader
 		$this->transactionListFactory = $transactionListFactory;
 	}
 
-	/**
-	 *
-	 * @return string
-	 */
+	/** @return string */
 	public function getExtension()
 	{
 		return self::JSON;

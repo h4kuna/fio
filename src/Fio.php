@@ -31,9 +31,7 @@ class Fio extends Object
 		$this->account = $account;
 	}
 
-	/**
-	 * @return Account\FioAccount;
-	 */
+	/** @return Account\FioAccount */
 	public function getAccount()
 	{
 		return $this->account;

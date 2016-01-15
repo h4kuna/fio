@@ -5,6 +5,7 @@ namespace h4kuna\Fio\Account;
 use h4kuna\Fio\AccountException;
 
 /**
+ * @author Tomáš Jacík
  * @author Milan Matějček
  */
 class AccountCollection implements \Countable, \IteratorAggregate

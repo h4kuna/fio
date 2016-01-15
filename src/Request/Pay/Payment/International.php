@@ -53,7 +53,6 @@ class International extends Euro
 	}
 
 	/**
-	 *
 	 * @param string $str
 	 * @return self
 	 */
@@ -76,25 +75,25 @@ class International extends Euro
 		return 'ForeignTransaction';
 	}
 
-	/** @deprecated */
+	/** @internal */
 	public function setConstantSymbol($ks)
 	{
 		throw new Fio\InvalidArgumentException('Not available.');
 	}
 
-	/** @deprecated */
+	/** @internal */
 	public function setSpecificSymbol($ss)
 	{
 		throw new Fio\InvalidArgumentException('Not available.');
 	}
 
-	/** @deprecated */
+	/** @internal */
 	public function setVariableSymbol($vs)
 	{
 		throw new Fio\InvalidArgumentException('Not available.');
 	}
 
-	/** @deprecated */
+	/** @internal */
 	public function setPaymentType($type)
 	{
 		throw new Fio\InvalidArgumentException('Not available.');

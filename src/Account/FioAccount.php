@@ -7,6 +7,7 @@ namespace h4kuna\Fio\Account;
  */
 class FioAccount
 {
+
 	/** @var Bank */
 	private $account;
 

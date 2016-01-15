@@ -3,7 +3,7 @@
 namespace h4kuna\Fio\Request\Pay\Payment;
 
 use h4kuna\Fio,
-    h4kuna\Fio\Account\FioAccount,
+	h4kuna\Fio\Account,
 	h4kuna\Fio\Utils;
 
 /**
@@ -43,17 +43,13 @@ class Euro extends Property
 	/** @var int */
 	protected $paymentType = FALSE;
 
-	/**
-	 * @param FioAccount $account
-	 */
-	public function __construct(FioAccount $account)
+	public function __construct(Account\FioAccount $account)
 	{
 		parent::__construct($account);
 		$this->setCurrency('EUR');
 	}
 
 	/**
-	 *
 	 * @param string $accountTo ISO 13616
 	 * @throws Fio\InvalidArgumentException
 	 */
@@ -67,7 +63,6 @@ class Euro extends Property
 	}
 
 	/**
-	 *
 	 * @param string $bic
 	 * @return self
 	 * @throws Fio\InvalidArgumentException
@@ -82,7 +77,6 @@ class Euro extends Property
 	}
 
 	/**
-	 *
 	 * @param string $str
 	 * @return self
 	 */
@@ -93,7 +87,6 @@ class Euro extends Property
 	}
 
 	/**
-	 *
 	 * @param string $str
 	 * @return self
 	 */
@@ -104,7 +97,6 @@ class Euro extends Property
 	}
 
 	/**
-	 *
 	 * @param string $benefCountry
 	 * @return self
 	 */
@@ -119,7 +111,6 @@ class Euro extends Property
 	}
 
 	/**
-	 *
 	 * @param string $name
 	 * @return self
 	 */
@@ -130,7 +121,6 @@ class Euro extends Property
 	}
 
 	/**
-	 *
 	 * @param string $str
 	 * @return self
 	 */
@@ -141,7 +131,6 @@ class Euro extends Property
 	}
 
 	/**
-	 *
 	 * @param string $str
 	 * @return self
 	 */
@@ -152,7 +141,6 @@ class Euro extends Property
 	}
 
 	/**
-	 *
 	 * @param string $str
 	 * @return self
 	 */

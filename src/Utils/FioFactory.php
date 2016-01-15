@@ -25,7 +25,6 @@ class FioFactory
 
 	/**
 	 * @param string $name Configured account name from AccountCollection
-	 *
 	 * @return Fio\FioRead
 	 */
 	public function createFioRead($name = NULL)
@@ -35,7 +34,6 @@ class FioFactory
 
 	/**
 	 * @param string $name Configured account name from AccountCollection
-	 *
 	 * @return Fio\FioPay
 	 */
 	public function createFioPay($name = NULL)
@@ -67,7 +65,6 @@ class FioFactory
 
 	/**
 	 * @param string $name Configured account name from AccountCollection
-	 *
 	 * @return Fio\Account\Account
 	 */
 	final protected function getAccount($name)
@@ -95,7 +92,6 @@ class FioFactory
 	 */
 	protected function createTransactionListFactory()
 	{
-		// @todo test next class
 		return new Fio\Response\Read\JsonTransactionFactory($this->getTransactionClass());
 	}
 
@@ -115,7 +111,6 @@ class FioFactory
 
 	/**
 	 * @param string $name Configured account name from AccountCollection
-	 *
 	 * @return Fio\Request\Pay\PaymentFactory
 	 */
 	protected function createPaymentFactory($name = NULL)

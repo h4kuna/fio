@@ -3,7 +3,7 @@
 namespace h4kuna\Fio\Request\Pay\Payment;
 
 use h4kuna\Fio,
-    h4kuna\Fio\Account\FioAccount,
+	h4kuna\Fio\Account,
 	h4kuna\Fio\Utils,
 	Iterator,
 	Nette\Utils\DateTime;
@@ -15,7 +15,7 @@ abstract class Property implements Iterator
 {
 	/** XML PROPERTY MUST BE PROTECTED ************************************** */
 
-	/** @var int */
+	/** @var Account\FioAccount */
 	protected $accountFrom = TRUE;
 
 	/** @var string */
@@ -54,10 +54,7 @@ abstract class Property implements Iterator
 	/** @var string */
 	private $key;
 
-	/**
-	 * @param FioAccount $account
-	 */
-	public function __construct(FioAccount $account)
+	public function __construct(Account\FioAccount $account)
 	{
 		$this->accountFrom = $account->getAccount();
 		$this->setDate('now');
@@ -81,7 +78,6 @@ abstract class Property implements Iterator
 
 	/**
 	 * Currency code ISO 4217.
-	 *
 	 * @param string $code case insensitive
 	 * @return self
 	 */
@@ -142,7 +138,6 @@ abstract class Property implements Iterator
 	}
 
 	/**
-	 *
 	 * @param string $ss
 	 * @return self
 	 */

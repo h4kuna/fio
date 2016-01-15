@@ -16,5 +16,4 @@ interface ITransactionListFactory
 
 	/** @return TransactionList */
 	public function createTransactionList($info);
-
 }

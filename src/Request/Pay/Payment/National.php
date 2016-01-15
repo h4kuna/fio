@@ -6,7 +6,6 @@ use h4kuna\Fio,
 	h4kuna\Fio\Utils;
 
 /**
- *
  * @author Milan Matějček
  */
 class National extends Property
