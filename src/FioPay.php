@@ -25,7 +25,7 @@ class FioPay extends Fio
 	/** @var Pay\XMLFile */
 	private $xmlFile;
 
-	public function __construct(Request\IQueue $queue, Account\Account $account, Pay\PaymentFactory $paymentFactory, Pay\XMLFile $xmlFile)
+	public function __construct(Request\IQueue $queue, Account\FioAccount $account, Pay\PaymentFactory $paymentFactory, Pay\XMLFile $xmlFile)
 	{
 		parent::__construct($queue, $account);
 		$this->paymentFatory = $paymentFactory;

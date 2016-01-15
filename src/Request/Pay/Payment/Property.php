@@ -3,6 +3,7 @@
 namespace h4kuna\Fio\Request\Pay\Payment;
 
 use h4kuna\Fio,
+    h4kuna\Fio\Account\FioAccount,
 	h4kuna\Fio\Utils,
 	Iterator,
 	Nette\Utils\DateTime;
@@ -54,9 +55,9 @@ abstract class Property implements Iterator
 	private $key;
 
 	/**
-	 * @param Fio\Account\Account $account
+	 * @param FioAccount $account
 	 */
-	public function __construct(Fio\Account\Account $account)
+	public function __construct(FioAccount $account)
 	{
 		$this->accountFrom = $account->getAccount();
 		$this->setDate('now');

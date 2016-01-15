@@ -24,7 +24,7 @@ class AccountCollectionFactory
 			} elseif (!isset($info['account'])) {
 				throw new AccountException("Key 'account' is required for $alias.");
 			}
-			$accountCollection->addAccount($alias, new Account($info['account'], $info['token']));
+			$accountCollection->addAccount($alias, new FioAccount($info['account'], $info['token']));
 		}
 		return $accountCollection;
 	}

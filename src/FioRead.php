@@ -17,7 +17,7 @@ class FioRead extends Fio
 	/** @var Response\Read\IReader */
 	private $readerFactory;
 
-	public function __construct(Request\IQueue $queue, Account\Account $account, Request\Read\IReader $readerFactory)
+	public function __construct(Request\IQueue $queue, Account\FioAccount $account, Request\Read\IReader $readerFactory)
 	{
 		parent::__construct($queue, $account);
 		$this->readerFactory = $readerFactory;
