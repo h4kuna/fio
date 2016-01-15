@@ -4,6 +4,8 @@ Fio
 
 Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Default read via json file.
 
+Require PHP 5.5+.
+
 Nette framework
 ---------------
 Follow this [extension](//github.com/h4kuna/fio-nette).
