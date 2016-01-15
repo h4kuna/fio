@@ -107,24 +107,4 @@ class Queue implements IQueue
 		return Utils\SafeStream::PROTOCOL . '://' . $filename;
 	}
 
-	/** @return CUrl */
-	private function createCurl($url, array $post, $filename)
-	{
-		$request = new Curl\Request($url);
-		$request->setPost($post, [
-			'file' => $filename
-		]);
-
-		$curl = new Curl\CurlSender();
-		$curl->setTimeout(30);
-		$curl->options = [
-			'verbose' => 0,
-			'ssl_verifypeer' => 0,
-			'ssl_verifyhost' => 2,
-			# 'httpheader' => 'Content-Type: multipart/form-data; charset=utf-8;'
-			] + $curl->options;
-		$request->setSender($curl);
-		return $request;
-	}
-
 }
