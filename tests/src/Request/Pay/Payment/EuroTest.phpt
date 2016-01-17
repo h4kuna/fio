@@ -2,9 +2,9 @@
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio\Request\Pay\PaymentFactory,
-	h4kuna\Fio\Request\Pay\XMLFile,
+use h4kuna\Fio\Request\Pay\XMLFile,
 	Tester,
+	h4kuna\Fio,
 	h4kuna\Fio\Test;
 
 $container = require_once __DIR__ . '/../../../../bootstrap.php';
@@ -15,8 +15,8 @@ $container = require_once __DIR__ . '/../../../../bootstrap.php';
 class EuroTest extends Tester\TestCase
 {
 
-	/** @var PaymentFactory */
-	private $paymentFactory;
+	/** @var Fio\FioPay */
+	private $fioPay;
 
 	/** @var XMLFile */
 	private $xmlFile;
@@ -31,13 +31,13 @@ class EuroTest extends Tester\TestCase
 
 	protected function setUp()
 	{
-		$this->paymentFactory = $this->fioFactory->getPaymetFactory();
+		$this->fioPay = $this->fioFactory->createFioPay();
 		$this->xmlFile = $this->fioFactory->getXmlFile();
 	}
 
 	public function testMinimum()
 	{
-		$pay = $this->paymentFactory->createEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp');
+		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp');
 		$pay->setDate('2015-01-23');
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		Tester\Assert::equal(Test\Utils::getContent('payment/euro-minimum.xml'), $xml);
@@ -45,7 +45,7 @@ class EuroTest extends Tester\TestCase
 
 	public function testMaximum()
 	{
-		$pay = $this->paymentFactory->createEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp')
+		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp')
 			->setCity('Prague')
 			->setRemittanceInfo1('info 1')
 			->setRemittanceInfo2('info 2')

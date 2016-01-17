@@ -19,35 +19,46 @@ class FioPay extends Fio
 	/** @var Pay\XMLResponse */
 	private $response;
 
-	/** @var Pay\PaymentFactory */
-	private $paymentFatory;
-
 	/** @var Pay\XMLFile */
 	private $xmlFile;
 
-	public function __construct(Request\IQueue $queue, Account\FioAccount $account, Pay\PaymentFactory $paymentFactory, Pay\XMLFile $xmlFile)
+	public function __construct(Request\IQueue $queue, Account\FioAccount $account, Pay\XMLFile $xmlFile)
 	{
 		parent::__construct($queue, $account);
-		$this->paymentFatory = $paymentFactory;
 		$this->xmlFile = $xmlFile;
 	}
 
 	/** @return Pay\Payment\Euro */
 	public function createEuro($amount, $accountTo, $bic, $name, $country)
 	{
-		return $this->paymentFatory->createEuro($amount, $accountTo, $bic, $name, $country);
+		return (new Pay\Payment\Euro($this->account))
+						->setBic($bic)
+						->setName($name)
+						->setCountry($country)
+						->setAccountTo($accountTo)
+						->setAmount($amount);
 	}
 
 	/** @return Pay\Payment\National */
 	public function createNational($amount, $accountTo, $bankCode = NULL)
 	{
-		return $this->paymentFatory->createNational($amount, $accountTo, $bankCode);
+		return (new Pay\Payment\National($this->account))
+						->setAccountTo($accountTo, $bankCode)
+						->setAmount($amount);
 	}
 
 	/** @return Pay\Payment\International */
 	public function createInternational($amount, $accountTo, $bic, $name, $street, $city, $country, $info)
 	{
-		return $this->paymentFatory->createInternational($amount, $accountTo, $bic, $name, $street, $city, $country, $info);
+		return (new Pay\Payment\International($this->account))
+						->setBic($bic)
+						->setName($name)
+						->setCountry($country)
+						->setAccountTo($accountTo)
+						->setStreet($street)
+						->setCity($city)
+						->setRemittanceInfo1($info)
+						->setAmount($amount);
 	}
 
 	/** @return Pay\IResponse */

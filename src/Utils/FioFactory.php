@@ -39,8 +39,7 @@ class FioFactory
 	public function createFioPay($name = NULL)
 	{
 		return new Fio\FioPay(
-			$this->getQueue(), $this->getAccount($name),
-			$this->createPaymentFactory($name), $this->createXmlFile()
+			$this->getQueue(), $this->getAccount($name), $this->createXmlFile()
 		);
 	}
 
@@ -107,15 +106,6 @@ class FioFactory
 	protected function createXmlFile()
 	{
 		return new Fio\Request\Pay\XMLFile(sys_get_temp_dir());
-	}
-
-	/**
-	 * @param string $name Configured account name from AccountCollection
-	 * @return Fio\Request\Pay\PaymentFactory
-	 */
-	protected function createPaymentFactory($name = NULL)
-	{
-		return new Fio\Request\Pay\PaymentFactory($this->getAccount($name));
 	}
 
 }

@@ -28,11 +28,6 @@ class FioFactory extends \h4kuna\Fio\Utils\FioFactory
 		return new Queue;
 	}
 
-	public function getPaymetFactory()
-	{
-		return $this->createPaymentFactory();
-	}
-
 	public function getXmlFile()
 	{
 		return $this->createXmlFile();
