@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio\Request\Pay,
+use h4kuna\Fio,
 	Tester\Assert,
 	Tester\TestCase,
 	h4kuna\Fio\Test;
@@ -15,8 +15,8 @@ $container = require_once __DIR__ . '/../../../../bootstrap.php';
 class InternationalTest extends TestCase
 {
 
-	/** @var PaymentFactory */
-	private $paymentFactory;
+	/** @var Fio\FioPay */
+	private $fioPay;
 
 	/** @var XMLFile */
 	private $xmlFile;
@@ -31,13 +31,13 @@ class InternationalTest extends TestCase
 
 	protected function setUp()
 	{
-		$this->paymentFactory = $this->fioFactory->getPaymetFactory();
+		$this->fioPay = $this->fioFactory->createFioPay();
 		$this->xmlFile = $this->fioFactory->getXmlFile();
 	}
 
 	public function testMinimum()
 	{
-		$pay = $this->paymentFactory->createInternational(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'Street 44', 'Prague', 'jp', 'Info 1');
+		$pay = $this->fioPay->createInternational(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'Street 44', 'Prague', 'jp', 'Info 1');
 		$pay->setDate('2015-01-23');
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		Assert::equal(Test\Utils::getContent('payment/international-minimum.xml'), $xml);
@@ -45,15 +45,15 @@ class InternationalTest extends TestCase
 
 	public function testMaximum()
 	{
-		$pay = $this->paymentFactory->createInternational(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'Street 44', 'Prague', 'jp', 'Info 1')
-			->setDetailsOfCharges(International::CHARGES_SHA)
-			->setRemittanceInfo2('info 2')
-			->setRemittanceInfo3('info 3')
-			->setRemittanceInfo4('info 4')
-			->setCurrency('Usd')
-			->setMyComment('Lorem ipsum')
-			->setDate('2014-01-23')
-			->setPaymentReason('311');
+		$pay = $this->fioPay->createInternational(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'Street 44', 'Prague', 'jp', 'Info 1')
+				->setDetailsOfCharges(International::CHARGES_SHA)
+				->setRemittanceInfo2('info 2')
+				->setRemittanceInfo3('info 3')
+				->setRemittanceInfo4('info 4')
+				->setCurrency('Usd')
+				->setMyComment('Lorem ipsum')
+				->setDate('2014-01-23')
+				->setPaymentReason('311');
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		Assert::equal(Test\Utils::getContent('payment/international-maximum.xml'), $xml);
 	}
