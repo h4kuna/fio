@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Request\Pay;
 
-use h4kuna\Fio\Request\Pay\Payment\Property,
+use h4kuna\Fio\Request\Pay\Payment,
 	XMLWriter;
 
 /**
@@ -26,10 +26,10 @@ class XMLFile
 	}
 
 	/**
-	 * @param Property $data
+	 * @param Payment\Property $data
 	 * @return self
 	 */
-	public function setData(Property $data)
+	public function setData(Payment\Property $data)
 	{
 		if ($this->content) {
 			$this->createEmptyXml();
@@ -79,7 +79,7 @@ class XMLFile
 		$this->content = NULL;
 	}
 
-	private function setBody(Property $data)
+	private function setBody(Payment\Property $data)
 	{
 		$this->xml->startElement($data->getStartXmlElement());
 		foreach ($data as $node => $value) {
