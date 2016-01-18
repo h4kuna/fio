@@ -20,6 +20,17 @@ $ composer require h4kuna/fio
 
 How to use
 ---------------
+Here is [example](tests/origin/FioTest.php) and run via cli. This script require account.ini in same directory, whose looks like.
+```ini
+[my-account]
+account = 123456789
+token = abcdefghijklmn
+
+[wife-account]
+account = 987654321
+token = zyxuvtsrfd
+```
+
 ### FioFactory
 This object help you create instances of FioPay and FioRead.
 
