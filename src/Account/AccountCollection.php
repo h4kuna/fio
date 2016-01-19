@@ -12,7 +12,7 @@ class AccountCollection implements \Countable, \IteratorAggregate
 {
 
 	/** @var FioAccount[] */
-	private $accounts;
+	private $accounts = [];
 
 	/**
 	 * @param string
@@ -27,7 +27,7 @@ class AccountCollection implements \Countable, \IteratorAggregate
 		throw new AccountException('This account alias does not exists: ' . $alias);
 	}
 
-	/** @return FioAccount */
+	/** @return FioAccount|FALSE */
 	public function getDefault()
 	{
 		return reset($this->accounts);

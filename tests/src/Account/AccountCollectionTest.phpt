@@ -7,6 +7,7 @@ use Tester\Assert;
 $container = require __DIR__ . '/../../bootstrap.php';
 
 /**
+ * @author Tomáš Jacík
  * @author Milan Matějček
  */
 class AccountCollectionTest extends \Tester\TestCase
@@ -40,9 +41,10 @@ class AccountCollectionTest extends \Tester\TestCase
 		$account1 = new FioAccount('323536', 'foo');
 		$account2 = new FioAccount('978654', 'bar');
 		$accounts = new AccountCollection;
+		Assert::equal(0, $accounts->count());
+
 		$accounts->addAccount('foo', $account1);
 		$accounts->addAccount('bar', $account2);
-
 		Assert::same(count($accounts), 2);
 	}
 
@@ -58,6 +60,24 @@ class AccountCollectionTest extends \Tester\TestCase
 			'foo' => $account1,
 			'bar' => $account2,
 		]);
+	}
+
+	public function testEmpty()
+	{
+		$accounts = new AccountCollection;
+		Assert::equal(FALSE, $accounts->getDefault());
+	}
+
+	/**
+	 * @throws \h4kuna\Fio\AccountException
+	 */
+	public function testDuplicity()
+	{
+		$account1 = new FioAccount('323536', 'foo');
+		$account2 = new FioAccount('978654', 'bar');
+		$accounts = new AccountCollection;
+		$accounts->addAccount('foo', $account1);
+		$accounts->addAccount('foo', $account2);
 	}
 
 }
