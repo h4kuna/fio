@@ -10,7 +10,7 @@ class FioFactory
 	/** @var Fio\Account\AccountCollection */
 	private $accountCollection;
 
-	/** @var Context */
+	/** @var Fio\Request\IQueue */
 	private $queue;
 
 	/** @var string */
@@ -64,7 +64,7 @@ class FioFactory
 
 	/**
 	 * @param string $name Configured account name from AccountCollection
-	 * @return Fio\Account\Account
+	 * @return Fio\Account\FioAccount
 	 */
 	final protected function getAccount($name)
 	{

@@ -25,7 +25,7 @@ final class Strings
 
 	/**
 	 * @param string $account
-	 * @param string $bankCode
+	 * @param string|NULL $bankCode
 	 * @return Account\Bank
 	 */
 	public static function createAccount($account, $bankCode = NULL)
