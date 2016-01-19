@@ -1,6 +1,9 @@
 Fio
 =====
 [![Build Status](https://travis-ci.org/h4kuna/fio.svg?branch=master)](https://travis-ci.org/h4kuna/fio)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/h4kuna/fio/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/h4kuna/fio/?branch=master)
+[![Downloads this Month](https://img.shields.io/packagist/dm/h4kuna/fio.svg)](https://packagist.org/packages/h4kuna/fio)
+[![Latest stable](https://img.shields.io/packagist/v/h4kuna/fio.svg)](https://packagist.org/packages/h4kuna/fio)
 
 Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Default read via json file.
 
