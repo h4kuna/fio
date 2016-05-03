@@ -19,9 +19,25 @@ class Queue implements IQueue
 	/** @var bool */
 	private $sleep = TRUE;
 
+	/** @var array */
+	private $downloadOptions = [];
+
 	public function setLimitLoop($limitLoop)
 	{
 		$this->limitLoop = $limitLoop;
+	}
+
+	public function setDownloadOptions($downloadOptions)
+	{
+		foreach ($downloadOptions as $define => $value) {
+			if (is_string($define)) {
+				if (!defined($define)) {
+					throw new Fio\InvalidArgumentException('Value must be name of global constant like CURLOPT_*.');
+				}
+				$define = constant($define);
+			}
+			$this->downloadOptions[$define] = $value;
+		}
 	}
 
 	public function setSleep($sleep)
@@ -32,7 +48,7 @@ class Queue implements IQueue
 	public function download($token, $url)
 	{
 		return $this->request($token, function(GuzzleHttp\Client $client) use ($url) {
-				return $client->request('GET', $url);
+				return $client->request('GET', $url, $this->downloadOptions);
 			});
 	}
 
