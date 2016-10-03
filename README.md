@@ -163,7 +163,7 @@ $fioPay->send($national);
 Euro zone payment:
 ```php
 /* @var $euro h4kuna\Fio\Request\Pay\Payment\Euro */
-$euro = $fioPay->createEuro($amount, $accountTo, $bic, $name, $country);
+$euro = $fioPay->createEuro($amount, $accountTo, $name);
 $euro->setVariableSymbol($vs);
 /* set next payment property $euro->set* */
 $fioPay->send($euro);
