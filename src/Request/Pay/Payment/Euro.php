@@ -17,7 +17,7 @@ class Euro extends Property
 		PAYMENT_PRIORITY = 431009;
 
 	/** @var string */
-	protected $bic = TRUE;
+	protected $bic;
 
 	/** @var string */
 	protected $benefName = TRUE;
@@ -29,7 +29,7 @@ class Euro extends Property
 	protected $benefCity;
 
 	/** @var string */
-	protected $benefCountry = TRUE;
+	protected $benefCountry;
 
 	/** @var string */
 	protected $remittanceInfo1;

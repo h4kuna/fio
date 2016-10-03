@@ -17,10 +17,16 @@ class International extends Euro
 		CHARGES_SHA = 470503;
 
 	/** @var string */
+	protected $bic = TRUE;
+
+	/** @var string */
 	protected $benefStreet = TRUE;
 
 	/** @var string */
 	protected $benefCity = TRUE;
+
+	/** @var string */
+	protected $benefCountry = TRUE;
 
 	/** @var string */
 	protected $remittanceInfo1 = TRUE;

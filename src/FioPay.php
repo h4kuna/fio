@@ -29,12 +29,10 @@ class FioPay extends Fio
 	}
 
 	/** @return Pay\Payment\Euro */
-	public function createEuro($amount, $accountTo, $bic, $name, $country)
+	public function createEuro($amount, $accountTo, $name)
 	{
 		return (new Pay\Payment\Euro($this->account))
-						->setBic($bic)
 						->setName($name)
-						->setCountry($country)
 						->setAccountTo($accountTo)
 						->setAmount($amount);
 	}

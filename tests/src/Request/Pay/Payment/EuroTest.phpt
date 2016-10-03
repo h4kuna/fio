@@ -37,7 +37,7 @@ class EuroTest extends Tester\TestCase
 
 	public function testMinimum()
 	{
-		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp');
+		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'Milan');
 		$pay->setDate('2015-01-23');
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		Tester\Assert::equal(Test\Utils::getContent('payment/euro-minimum.xml'), $xml);
@@ -45,12 +45,14 @@ class EuroTest extends Tester\TestCase
 
 	public function testMaximum()
 	{
-		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'jp')
+		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'Milan')
 			->setCity('Prague')
+			->setBic('ABAGATWWXXX')
 			->setRemittanceInfo1('info 1')
 			->setRemittanceInfo2('info 2')
 			->setRemittanceInfo3('info 3')
 			->setStreet('Street 44')
+			->setCountry('jp')
 			->setConstantSymbol('321')
 			->setCurrency('Usd')
 			->setMyComment('Lorem ipsum')

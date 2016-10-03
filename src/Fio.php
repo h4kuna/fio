@@ -17,7 +17,7 @@ class Fio extends Object
 	 * @todo INKASO does not work
 	 * @var string
 	 */
-	const FIO_API_VERSION = '1.4.4';
+	const FIO_API_VERSION = '1.5.1';
 
 	/** @var Request\IQueue */
 	protected $queue;
