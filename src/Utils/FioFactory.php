@@ -16,11 +16,20 @@ class FioFactory
 	/** @var string */
 	private $transactionClass;
 
-	public function __construct(array $accounts, $transactionClass = NULL)
+	/** @var string */
+	protected $temp;
+
+	public function __construct(array $accounts, $transactionClass = NULL, $temp = NULL)
 	{
+		$this->setTemp($temp);
 		$this->accountCollection = $this->createAccountCollection($accounts);
 		$this->queue = $this->createQueue();
 		$this->transactionClass = $transactionClass;
+	}
+
+	private function setTemp($temp)
+	{
+		$this->temp = $temp ? : sys_get_temp_dir();
 	}
 
 	/**
@@ -49,7 +58,7 @@ class FioFactory
 	 */
 	protected function createQueue()
 	{
-		return new Fio\Request\Queue();
+		return new Fio\Request\Queue($this->temp);
 	}
 
 	protected function createAccountCollection(array $accounts)
@@ -105,7 +114,7 @@ class FioFactory
 	 */
 	protected function createXmlFile()
 	{
-		return new Fio\Request\Pay\XMLFile(sys_get_temp_dir());
+		return new Fio\Request\Pay\XMLFile($this->temp);
 	}
 
 }

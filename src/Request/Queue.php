@@ -22,6 +22,14 @@ class Queue implements IQueue
 	/** @var array */
 	private $downloadOptions = [];
 
+	/** @var string */
+	private $tempDir;
+
+	public function __construct($tempDir)
+	{
+		$this->tempDir = $tempDir;
+	}
+
 	public function setLimitLoop($limitLoop)
 	{
 		$this->limitLoop = $limitLoop;
@@ -71,7 +79,7 @@ class Queue implements IQueue
 	private function request($token, $fallback)
 	{
 		$request = new GuzzleHttp\Client;
-		$tempFile = self::loadFileName($token);
+		$tempFile = $this->loadFileName($token);
 		$file = fopen(self::safeProtocol($tempFile), 'w');
 		$i = 0;
 		do {
@@ -108,11 +116,11 @@ class Queue implements IQueue
 	 * @param string $token
 	 * @return string
 	 */
-	private static function loadFileName($token)
+	private function loadFileName($token)
 	{
 		$key = substr($token, 10, -10);
 		if (!isset(self::$tokens[$key])) {
-			self::$tokens[$key] = sys_get_temp_dir() . DIRECTORY_SEPARATOR . md5($key);
+			self::$tokens[$key] = $this->tempDir . DIRECTORY_SEPARATOR . md5($key);
 		}
 
 		return self::$tokens[$key];
