@@ -5,7 +5,8 @@ namespace h4kuna\Fio\Request\Pay\Payment;
 use h4kuna\Fio\Request\Pay\XMLFile,
 	Tester,
 	h4kuna\Fio,
-	h4kuna\Fio\Test;
+	h4kuna\Fio\Test,
+	Salamium\Testinium;
 
 $container = require_once __DIR__ . '/../../../../bootstrap.php';
 
@@ -40,7 +41,7 @@ class EuroTest extends Tester\TestCase
 		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'Milan');
 		$pay->setDate('2015-01-23');
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		Tester\Assert::equal(Test\Utils::getContent('payment/euro-minimum.xml'), $xml);
+		Tester\Assert::equal(Testinium\File::load('payment/euro-minimum.xml'), $xml);
 	}
 
 	public function testMaximum()
@@ -62,7 +63,7 @@ class EuroTest extends Tester\TestCase
 			->setVariableSymbol('123456789')
 			->setPaymentType(Euro::PAYMENT_PRIORITY);
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		Tester\Assert::equal(Test\Utils::getContent('payment/euro-maximum.xml'), $xml);
+		Tester\Assert::equal(Testinium\File::load('payment/euro-maximum.xml'), $xml);
 	}
 
 }

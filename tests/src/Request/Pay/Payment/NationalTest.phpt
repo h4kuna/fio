@@ -5,7 +5,8 @@ namespace h4kuna\Fio\Request\Pay\Payment;
 use Tester,
 	Tester\Assert,
 	h4kuna\Fio,
-	h4kuna\Fio\Test;
+	h4kuna\Fio\Test,
+	Salamium\Testinium;
 
 $container = require_once __DIR__ . '/../../../../bootstrap.php';
 
@@ -41,17 +42,17 @@ class NationalTest extends Tester\TestCase
 		$pay->setDate('2015-01-23');
 		$xml = $this->xmlFile->setData($pay)->getXml();
 
-		Assert::equal(Test\Utils::getContent('payment/pay-minimum.xml'), $xml);
+		Assert::equal(Testinium\File::load('payment/pay-minimum.xml'), $xml);
 
 		// same Property paymentFactory
 		$pay->setAccountTo('987654321/4321');
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		Assert::equal(Test\Utils::getContent('payment/pay-minimum.xml'), $xml);
+		Assert::equal(Testinium\File::load('payment/pay-minimum.xml'), $xml);
 
 		// cloned paymentFactory Property
 		$pay = $this->fioPay->createNational(500, '987654321', '4321');
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		$expectedXml = Test\Utils::getContent('payment/pay-minimum.xml');
+		$expectedXml = Testinium\File::load('payment/pay-minimum.xml');
 		Assert::equal(str_replace('2015-01-23', date('Y-m-d'), $expectedXml), $xml);
 	}
 
@@ -68,7 +69,7 @@ class NationalTest extends Tester\TestCase
 				->setVariableSymbol('123456789')
 				->setPaymentType(National::PAYMENT_FAST);
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		Assert::equal(Test\Utils::getContent('payment/pay-maximum.xml'), $xml);
+		Assert::equal(Testinium\File::load('payment/pay-maximum.xml'), $xml);
 	}
 
 }

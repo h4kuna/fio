@@ -2,8 +2,9 @@
 
 namespace h4kuna\Fio\Response\Read;
 
-use Tester\Assert,
-	h4kuna\Fio\Test;
+use h4kuna\Fio\Test,
+	Salamium\Testinium,
+	Tester\Assert;
 
 require __DIR__ . '/../../../bootstrap.php';
 
@@ -21,8 +22,8 @@ class JsonStatementFactoryTest extends \Tester\TestCase
 	public function testCustonTransactionClass()
 	{
 		$json = $this->fioFactory->getReader();
-		$list = $json->create(Test\Utils::getContent('2015-01-01-2015-04-16-transactions.json'));
-		Assert::same(Test\Utils::getContent('custom.srlz'), serialize($list));
+		$list = $json->create(Testinium\File::load('2015-01-01-2015-04-16-transactions.json'));
+		Assert::same(Testinium\File::load('custom.srlz'), serialize($list));
 	}
 
 }
