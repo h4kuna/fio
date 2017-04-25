@@ -36,6 +36,12 @@ class Json implements Request\Read\IReader
 			$data = '{}';
 		}
 
+		if (self::isJsonBug()) {
+			// all float values are transform to string
+			// bug for php7.1 https://bugs.php.net/bug.php?id=72567
+			$data = preg_replace('~: ?(-?\d+\.\d+),~', ':"$1",', $data);
+		}
+
 		$dateFormat = 'Y-m-dO';
 		$json = Nette\Utils\Json::decode($data);
 		if (isset($json->accountStatement->info)) {
@@ -54,5 +60,12 @@ class Json implements Request\Read\IReader
 		}
 		return $transactionList;
 	}
+	
+	
+	public static function isJsonBug() 
+	{
+		return PHP_VERSION_ID >= 70100;
+	}
 
 }
+

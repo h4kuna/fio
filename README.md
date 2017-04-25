@@ -10,6 +10,8 @@ Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Default read 
 
 Require PHP 5.5+. For older PHP 5.3+ let's use stable [version 1.2.1](https://github.com/h4kuna/fio/releases/tag/v1.2.1).
 
+> Note: php 7.1 [has bug](https://bugs.php.net/bug.php?id=72567) with float number and json_encode, therefore all float numbers are retyping to sting.
+
 Nette framework
 ---------------
 Follow this [extension](//github.com/h4kuna/fio-nette).

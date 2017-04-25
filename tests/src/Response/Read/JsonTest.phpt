@@ -3,6 +3,7 @@
 namespace h4kuna\Fio\Response\Read;
 
 use h4kuna\Fio\Test,
+	h4kuna\Fio\Request\Read\Files,
 	Salamium\Testinium,
 	Tester\Assert;
 
@@ -23,7 +24,11 @@ class JsonStatementFactoryTest extends \Tester\TestCase
 	{
 		$json = $this->fioFactory->getReader();
 		$list = $json->create(Testinium\File::load('2015-01-01-2015-04-16-transactions.json'));
-		Assert::same(Testinium\File::load('custom.srlz'), serialize($list));
+		if (Files\Json::isJsonBug()) {
+			Assert::same(Testinium\File::load('custom71.srlz'), serialize($list));	
+		} else {
+			Assert::same(Testinium\File::load('custom.srlz'), serialize($list));
+		}
 	}
 
 }
