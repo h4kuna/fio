@@ -29,7 +29,7 @@ class FioFactory
 
 	private function setTemp($temp)
 	{
-		$this->temp = $temp ? : sys_get_temp_dir();
+		$this->temp = $temp ?: sys_get_temp_dir();
 	}
 
 	/**

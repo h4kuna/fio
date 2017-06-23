@@ -93,7 +93,7 @@ abstract class TransactionAbstract implements \Iterator
 				}
 				return intval($value);
 			case 'string|null':
-				return trim($value) ? : NULL;
+				return trim($value) ?: NULL;
 		}
 		return $value;
 	}
