@@ -2,12 +2,10 @@
 
 namespace h4kuna\Fio;
 
-use Nette\Object;
-
 /**
  * @author Milan Matějček
  */
-class Fio extends Object
+class Fio
 {
 
 	/** @var string url Fio REST API */
