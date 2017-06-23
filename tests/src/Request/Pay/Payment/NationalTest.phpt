@@ -59,15 +59,15 @@ class NationalTest extends Tester\TestCase
 	public function testMaximum()
 	{
 		$pay = $this->fioPay->createNational(1000, '987654/9874')
-				->setConstantSymbol('321')
-				->setCurrency('eur')
-				->setMyComment('Lorem ipsum')
-				->setDate('2014-01-23')
-				->setPaymentReason('333')
-				->setMessage('Hello Mr. Joe')
-				->setSpecificSymbol('378')
-				->setVariableSymbol('123456789')
-				->setPaymentType(National::PAYMENT_FAST);
+			->setConstantSymbol('321')
+			->setCurrency('eur')
+			->setMyComment('Lorem ipsum')
+			->setDate('2014-01-23')
+			->setPaymentReason('333')
+			->setMessage('Hello Mr. Joe')
+			->setSpecificSymbol('378')
+			->setVariableSymbol('123456789')
+			->setPaymentType(National::PAYMENT_FAST);
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		Assert::equal(Testinium\File::load('payment/pay-maximum.xml'), $xml);
 	}

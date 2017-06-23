@@ -47,14 +47,14 @@ class InternationalTest extends TestCase
 	public function testMaximum()
 	{
 		$pay = $this->fioPay->createInternational(500, 'AT611904300234573201', 'ABAGATWWXXX', 'Milan', 'Street 44', 'Prague', 'jp', 'Info 1')
-				->setDetailsOfCharges(International::CHARGES_SHA)
-				->setRemittanceInfo2('info 2')
-				->setRemittanceInfo3('info 3')
-				->setRemittanceInfo4('info 4')
-				->setCurrency('Usd')
-				->setMyComment('Lorem ipsum')
-				->setDate('2014-01-23')
-				->setPaymentReason('311');
+			->setDetailsOfCharges(International::CHARGES_SHA)
+			->setRemittanceInfo2('info 2')
+			->setRemittanceInfo3('info 3')
+			->setRemittanceInfo4('info 4')
+			->setCurrency('Usd')
+			->setMyComment('Lorem ipsum')
+			->setDate('2014-01-23')
+			->setPaymentReason('311');
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		Assert::equal(Testinium\File::load('payment/international-maximum.xml'), $xml);
 	}

@@ -113,11 +113,10 @@ class FioPay extends Fio
 	 */
 	public function setLanguage($lang)
 	{
-		$lang = strtolower($lang);
-		if (!in_array($lang, self::$langs)) {
-			throw new InvalidArgumentException($lang . ' avaible are ' . implode(', ', self::$langs));
+		$this->language = strtolower($lang);
+		if (!in_array($this->language, self::$langs)) {
+			throw new InvalidArgumentException($this->language . ' avaible are ' . implode(', ', self::$langs));
 		}
-		$this->language = $lang;
 		return $this;
 	}
 

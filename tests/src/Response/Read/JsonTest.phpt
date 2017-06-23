@@ -25,7 +25,7 @@ class JsonStatementFactoryTest extends \Tester\TestCase
 		$json = $this->fioFactory->getReader();
 		$list = $json->create(Testinium\File::load('2015-01-01-2015-04-16-transactions.json'));
 		if (Files\Json::isJsonBug()) {
-			Assert::same(Testinium\File::load('custom71.srlz'), serialize($list));	
+			Assert::same(Testinium\File::load('php7.1/custom.srlz'), serialize($list));
 		} else {
 			Assert::same(Testinium\File::load('custom.srlz'), serialize($list));
 		}

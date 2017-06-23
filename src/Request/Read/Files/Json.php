@@ -60,12 +60,14 @@ class Json implements Request\Read\IReader
 		}
 		return $transactionList;
 	}
-	
-	
-	public static function isJsonBug() 
+
+	/**
+	 * @internal
+	 * @return bool
+	 */
+	public static function isJsonBug()
 	{
 		return PHP_VERSION_ID >= 70100;
 	}
 
 }
-
