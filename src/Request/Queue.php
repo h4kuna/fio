@@ -78,7 +78,7 @@ class Queue implements IQueue
 
 	private function request($token, $fallback)
 	{
-		$request = new GuzzleHttp\Client;
+		$request = new GuzzleHttp\Client(['headers' => ['X-Powered-By' => 'h4kuna/fio']]);
 		$tempFile = $this->loadFileName($token);
 		$file = fopen(self::safeProtocol($tempFile), 'w');
 		$i = 0;
