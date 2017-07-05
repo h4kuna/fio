@@ -4,6 +4,7 @@ Fio
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/h4kuna/fio/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/h4kuna/fio/?branch=master)
 [![Downloads this Month](https://img.shields.io/packagist/dm/h4kuna/fio.svg)](https://packagist.org/packages/h4kuna/fio)
 [![Latest stable](https://img.shields.io/packagist/v/h4kuna/fio.svg)](https://packagist.org/packages/h4kuna/fio)
+[![Coverage Status](https://coveralls.io/repos/github/h4kuna/fio/badge.svg?branch=master)](https://coveralls.io/github/h4kuna/fio?branch=master)
 
 Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Default read via json file.
 

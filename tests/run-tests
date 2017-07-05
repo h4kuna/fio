@@ -9,4 +9,11 @@ rm $DIR/../composer.lock
 cd $DIR/..
 composer install --no-interaction --prefer-source
 
-$DIR/../vendor/bin/tester -p php $DIR -s -j 5 --colors 1 -c $DIR/config/php-unix.ini
+INTERPRET='';
+if [ "$1" == "" ]; then
+	INTERPRET="php"
+else
+	INTERPRET=$@
+fi
+
+$DIR/../vendor/bin/tester -s -j 5 --colors 1 -c $DIR/config/php-unix.ini -p $INTERPRET $DIR/src
