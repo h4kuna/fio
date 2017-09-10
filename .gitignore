@@ -1,5 +1,6 @@
-nbproject/
-vendor/
+/.idea/
+/nbproject/
+/vendor/
 composer.lock
 *~
 /tests/**/output/
