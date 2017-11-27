@@ -35,13 +35,13 @@ class Queue implements IQueue
 		$this->limitLoop = $limitLoop;
 	}
 
+	/**
+	 * @param array|\Iterator $downloadOptions
+	 */
 	public function setDownloadOptions($downloadOptions)
 	{
 		foreach ($downloadOptions as $define => $value) {
-			if (is_string($define)) {
-				if (!defined($define)) {
-					throw new Fio\InvalidArgumentException('Value must be name of global constant like CURLOPT_*.');
-				}
+			if (is_string($define) && defined($define)) {
 				$define = constant($define);
 			}
 			$this->downloadOptions[$define] = $value;
