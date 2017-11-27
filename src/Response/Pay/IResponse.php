@@ -3,7 +3,6 @@
 namespace h4kuna\Fio\Response\Pay;
 
 /**
- *
  * @author Milan Matějček
  */
 interface IResponse

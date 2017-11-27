@@ -32,31 +32,31 @@ class FioPay extends Fio
 	public function createEuro($amount, $accountTo, $name)
 	{
 		return (new Pay\Payment\Euro($this->account))
-				->setName($name)
-				->setAccountTo($accountTo)
-				->setAmount($amount);
+			->setName($name)
+			->setAccountTo($accountTo)
+			->setAmount($amount);
 	}
 
 	/** @return Pay\Payment\National */
-	public function createNational($amount, $accountTo, $bankCode = NULL)
+	public function createNational($amount, $accountTo, $bankCode = null)
 	{
 		return (new Pay\Payment\National($this->account))
-				->setAccountTo($accountTo, $bankCode)
-				->setAmount($amount);
+			->setAccountTo($accountTo, $bankCode)
+			->setAmount($amount);
 	}
 
 	/** @return Pay\Payment\International */
 	public function createInternational($amount, $accountTo, $bic, $name, $street, $city, $country, $info)
 	{
 		return (new Pay\Payment\International($this->account))
-				->setBic($bic)
-				->setName($name)
-				->setCountry($country)
-				->setAccountTo($accountTo)
-				->setStreet($street)
-				->setCity($city)
-				->setRemittanceInfo1($info)
-				->setAmount($amount);
+			->setBic($bic)
+			->setName($name)
+			->setCountry($country)
+			->setAccountTo($accountTo)
+			->setStreet($street)
+			->setCity($city)
+			->setRemittanceInfo1($info)
+			->setAmount($amount);
 	}
 
 	/** @return Pay\IResponse */
@@ -80,7 +80,7 @@ class FioPay extends Fio
 	 * @return Response\Pay\IResponse
 	 * @throws InvalidArgumentException
 	 */
-	public function send($filename = NULL)
+	public function send($filename = null)
 	{
 		if ($filename instanceof Pay\Payment\Property) {
 			$this->xmlFile->setData($filename);

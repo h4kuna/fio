@@ -53,7 +53,6 @@ class XMLResponse implements IResponse
 	}
 
 	/**
-	 *
 	 * @param string $path
 	 * @return string
 	 */
@@ -64,7 +63,6 @@ class XMLResponse implements IResponse
 	}
 
 	/**
-	 *
 	 * @param string $fileName
 	 */
 	public function saveXML($fileName)

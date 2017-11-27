@@ -12,6 +12,7 @@ final class TransactionList implements \Iterator, \Countable
 
 	/** @var TransactionAbstract[] */
 	private $transactions = [];
+
 	private $info;
 
 	public function __construct($info)

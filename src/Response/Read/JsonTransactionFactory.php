@@ -18,14 +18,14 @@ class JsonTransactionFactory implements ITransactionListFactory
 	private $transactionClass;
 
 	/** @var bool */
-	protected $transactionClassCheck = FALSE;
+	protected $transactionClassCheck = false;
 
 	/**
 	 * @param string $transactionClass
 	 */
-	public function __construct($transactionClass = NULL)
+	public function __construct($transactionClass = null)
 	{
-		if ($transactionClass === NULL) {
+		if ($transactionClass === null) {
 			$transactionClass = __NAMESPACE__ . '\Transaction';
 		}
 		$this->transactionClass = $transactionClass;
@@ -42,7 +42,7 @@ class JsonTransactionFactory implements ITransactionListFactory
 	{
 		$transaction = $this->createTransactionObject($dateFormat);
 		foreach (self::metaProperty($transaction) as $id => $meta) {
-			$value = isset($data->{'column' . $id}) ? $data->{'column' . $id}->value : NULL;
+			$value = isset($data->{'column' . $id}) ? $data->{'column' . $id}->value : null;
 			$transaction->bindProperty($meta['name'], $meta['type'], $value);
 		}
 		return $transaction;
@@ -56,7 +56,7 @@ class JsonTransactionFactory implements ITransactionListFactory
 
 	protected function createTransactionObject($dateFormat)
 	{
-		if ($this->transactionClassCheck === FALSE) {
+		if ($this->transactionClassCheck === false) {
 			if (is_string($this->transactionClass)) {
 				$class = $this->transactionClass;
 				$this->transactionClass = new $class($dateFormat);
@@ -67,7 +67,7 @@ class JsonTransactionFactory implements ITransactionListFactory
 			if (!$this->transactionClass instanceof TransactionAbstract) {
 				throw new Fio\TransactionExtendException('Transaction class must extends TransationAbstract.');
 			}
-			$this->transactionClassCheck = TRUE;
+			$this->transactionClassCheck = true;
 		}
 
 		return clone $this->transactionClass;
@@ -75,7 +75,7 @@ class JsonTransactionFactory implements ITransactionListFactory
 
 	private static function metaProperty($class)
 	{
-		if (self::$property !== NULL) {
+		if (self::$property !== null) {
 			return self::$property;
 		}
 		$reflection = new \ReflectionClass($class);

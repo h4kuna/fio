@@ -20,7 +20,7 @@ class Euro extends Property
 	protected $bic;
 
 	/** @var string */
-	protected $benefName = TRUE;
+	protected $benefName = true;
 
 	/** @var string */
 	protected $benefStreet;
@@ -41,7 +41,7 @@ class Euro extends Property
 	protected $remittanceInfo3;
 
 	/** @var int */
-	protected $paymentType = FALSE;
+	protected $paymentType = false;
 
 	public function __construct(Account\FioAccount $account)
 	{

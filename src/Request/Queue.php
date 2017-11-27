@@ -17,7 +17,7 @@ class Queue implements IQueue
 	private $limitLoop = 5;
 
 	/** @var bool */
-	private $sleep = TRUE;
+	private $sleep = true;
 
 	/** @var array */
 	private $downloadOptions = [];
@@ -30,9 +30,12 @@ class Queue implements IQueue
 		$this->tempDir = $tempDir;
 	}
 
+	/**
+	 * @param int $limitLoop
+	 */
 	public function setLimitLoop($limitLoop)
 	{
-		$this->limitLoop = $limitLoop;
+		$this->limitLoop = (int) $limitLoop;
 	}
 
 	/**
@@ -55,12 +58,12 @@ class Queue implements IQueue
 
 	public function download($token, $url)
 	{
-		return $this->request($token, function(GuzzleHttp\Client $client) use ($url) {
-				return $client->request('GET', $url, $this->downloadOptions);
-			});
+		return $this->request($token, function (GuzzleHttp\Client $client) use ($url) {
+			return $client->request('GET', $url, $this->downloadOptions);
+		});
 	}
 
-	/** @return Pay\IResponse  */
+	/** @return Pay\IResponse */
 	public function upload($url, $token, array $post, $filename)
 	{
 		$newPost = [];
@@ -70,7 +73,7 @@ class Queue implements IQueue
 		$newPost[] = ['name' => 'file', 'contents' => fopen($filename, 'r')];
 
 		/* @var $response GuzzleHttp\Psr7\Stream */
-		$response = $this->request($token, function(GuzzleHttp\Client $client) use ($url, $newPost) {
+		$response = $this->request($token, function (GuzzleHttp\Client $client) use ($url, $newPost) {
 			return $client->request('POST', $url, [GuzzleHttp\RequestOptions::MULTIPART => $newPost]);
 		});
 		return new Pay\XMLResponse($response->getContents());
@@ -83,7 +86,7 @@ class Queue implements IQueue
 		$file = fopen(self::safeProtocol($tempFile), 'w');
 		$i = 0;
 		do {
-			$next = FALSE;
+			$next = false;
 			++$i;
 			try {
 				$response = $fallback($request);
@@ -96,7 +99,7 @@ class Queue implements IQueue
 					throw new Fio\QueueLimitException('You have limit up requests to server ' . $this->limitLoop);
 				}
 				self::sleep($tempFile);
-				$next = TRUE;
+				$next = true;
 			}
 		} while ($next);
 		fclose($file);

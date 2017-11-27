@@ -15,7 +15,7 @@ class XMLFile
 	private $xml;
 
 	/** @var string */
-	private $content = TRUE;
+	private $content = true;
 
 	/** @var string */
 	private $temp;
@@ -37,12 +37,12 @@ class XMLFile
 		return $this->setBody($data);
 	}
 
-	/** @return string  */
+	/** @return string */
 	public function getPathname()
 	{
-		$filename = $this->temp . DIRECTORY_SEPARATOR . md5(microtime(TRUE)) . '.xml';
+		$filename = $this->temp . DIRECTORY_SEPARATOR . md5(microtime(true)) . '.xml';
 		file_put_contents($filename, $this->getXml());
-		register_shutdown_function(function() use ($filename) {
+		register_shutdown_function(function () use ($filename) {
 			@unlink($filename);
 		});
 		return $filename;
@@ -61,7 +61,7 @@ class XMLFile
 	/** @return bool */
 	public function isReady()
 	{
-		return $this->content === NULL;
+		return $this->content === null;
 	}
 
 	/**
@@ -76,14 +76,14 @@ class XMLFile
 		$this->xml->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
 		$this->xml->writeAttribute('xsi:noNamespaceSchemaLocation', 'http://www.fio.cz/schema/importIB.xsd');
 		$this->xml->startElement('Orders');
-		$this->content = NULL;
+		$this->content = null;
 	}
 
 	private function setBody(Payment\Property $data)
 	{
 		$this->xml->startElement($data->getStartXmlElement());
 		foreach ($data as $node => $value) {
-			if ($value === FALSE) {
+			if ($value === false) {
 				continue;
 			}
 

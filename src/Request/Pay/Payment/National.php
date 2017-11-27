@@ -18,13 +18,13 @@ class National extends Property
 		PAYMENT_COLLECTION = 431022;
 
 	/** @var int */
-	protected $bankCode = TRUE;
+	protected $bankCode = true;
 
 	/** @var string */
 	protected $messageForRecipient;
 
 	/** @var int */
-	protected $paymentType = FALSE;
+	protected $paymentType = false;
 
 	/**
 	 * @param int|string $type
@@ -51,7 +51,7 @@ class National extends Property
 		return $this;
 	}
 
-	public function setAccountTo($accountTo, $bankCode = NULL)
+	public function setAccountTo($accountTo, $bankCode = null)
 	{
 		$accountObject = Utils\Strings::createAccount($accountTo, $bankCode);
 		$this->accountTo = $accountObject->getAccount();

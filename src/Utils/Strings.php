@@ -20,7 +20,7 @@ final class Strings
 	 */
 	public static function substr($str, $limit)
 	{
-		return $str ? mb_substr($str, 0, $limit) : NULL; // max length from API
+		return $str ? mb_substr($str, 0, $limit) : null; // max length from API
 	}
 
 	/**
@@ -28,7 +28,7 @@ final class Strings
 	 * @param string|NULL $bankCode
 	 * @return Account\Bank
 	 */
-	public static function createAccount($account, $bankCode = NULL)
+	public static function createAccount($account, $bankCode = null)
 	{
 		if ($bankCode) {
 			$account .= '/';
@@ -52,7 +52,7 @@ final class Strings
 	 * @param bool $midnight
 	 * @return DateTime
 	 */
-	public static function createFromFormat($value, $format, $midnight = TRUE)
+	public static function createFromFormat($value, $format, $midnight = true)
 	{
 		$dt = date_create_from_format($format, $value);
 		if ($midnight) {

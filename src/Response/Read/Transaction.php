@@ -28,7 +28,6 @@ use DateTime;
  * @property-read int $moveId [22]
  * @property-read string|NULL $comment [25]
  * @property-read string $bic [*26]
- *
  */
 final class Transaction extends TransactionAbstract
 {

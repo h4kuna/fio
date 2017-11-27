@@ -13,19 +13,20 @@ use h4kuna\Fio,
  */
 abstract class Property implements Iterator
 {
+
 	/** XML PROPERTY MUST BE PROTECTED ************************************** */
 
 	/** @var Account\FioAccount */
-	protected $accountFrom = TRUE;
+	protected $accountFrom = true;
 
 	/** @var string */
 	protected $currency = 'CZK';
 
-	/** @var float  */
-	protected $amount = TRUE;
+	/** @var float */
+	protected $amount = true;
 
-	/** @var int  */
-	protected $accountTo = TRUE;
+	/** @var int */
+	protected $accountTo = true;
 
 	/** @var int */
 	protected $ks;
@@ -46,7 +47,7 @@ abstract class Property implements Iterator
 	 * Section in manual 7.2.3.1.
 	 * @var int
 	 */
-	protected $paymentReason = FALSE;
+	protected $paymentReason = false;
 
 	/** @var array */
 	private static $iterator = [];
@@ -97,7 +98,7 @@ abstract class Property implements Iterator
 	public function setConstantSymbol($ks)
 	{
 		if (!$ks) {
-			$ks = NULL;
+			$ks = null;
 		} elseif (!preg_match('~\d{1,4}~', $ks)) {
 			throw new Fio\InvalidArgumentException('Constant symbol must contain 1-4 digits.');
 		}
@@ -129,7 +130,7 @@ abstract class Property implements Iterator
 	public function setPaymentReason($code)
 	{
 		if (!$code) {
-			$code = NULL;
+			$code = null;
 		} elseif (!preg_match('~\d{3}~', $code)) {
 			throw new Fio\InvalidArgumentException('Payment reason must contain 3 digits.');
 		}
@@ -144,7 +145,7 @@ abstract class Property implements Iterator
 	public function setSpecificSymbol($ss)
 	{
 		if (!$ss) {
-			$ss = NULL;
+			$ss = null;
 		} elseif (!preg_match('~\d{1,10}~', $ss)) {
 			throw new Fio\InvalidArgumentException('Specific symbol must contain 1-10 digits.');
 		}
@@ -159,7 +160,7 @@ abstract class Property implements Iterator
 	public function setVariableSymbol($vs)
 	{
 		if (!$vs) {
-			$vs = NULL;
+			$vs = null;
 		} elseif (!preg_match('~\d{1,10}~', $vs)) {
 			throw new Fio\InvalidArgumentException('Variable symbol must contain 1-10 digits.');
 		}
@@ -177,7 +178,7 @@ abstract class Property implements Iterator
 
 	private function getProperties()
 	{
-		if ($this->key === NULL) {
+		if ($this->key === null) {
 			$this->key = get_called_class();
 		}
 		if (isset(self::$iterator[$this->key])) {

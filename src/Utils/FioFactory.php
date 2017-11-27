@@ -19,7 +19,7 @@ class FioFactory
 	/** @var string */
 	protected $temp;
 
-	public function __construct(array $accounts, $transactionClass = NULL, $temp = NULL)
+	public function __construct(array $accounts, $transactionClass = null, $temp = null)
 	{
 		$this->setTemp($temp);
 		$this->accountCollection = $this->createAccountCollection($accounts);
@@ -36,7 +36,7 @@ class FioFactory
 	 * @param string $name Configured account name from AccountCollection
 	 * @return Fio\FioRead
 	 */
-	public function createFioRead($name = NULL)
+	public function createFioRead($name = null)
 	{
 		return new Fio\FioRead($this->getQueue(), $this->getAccount($name), $this->createReader());
 	}
@@ -45,7 +45,7 @@ class FioFactory
 	 * @param string $name Configured account name from AccountCollection
 	 * @return Fio\FioPay
 	 */
-	public function createFioPay($name = NULL)
+	public function createFioPay($name = null)
 	{
 		return new Fio\FioPay(
 			$this->getQueue(), $this->getAccount($name), $this->createXmlFile()

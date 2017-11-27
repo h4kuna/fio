@@ -32,7 +32,7 @@ abstract class TransactionAbstract implements \Iterator
 
 	public function clearTemporaryValues()
 	{
-		$this->dateFormat = NULL;
+		$this->dateFormat = null;
 	}
 
 	public function bindProperty($name, $type, $value)
@@ -40,7 +40,7 @@ abstract class TransactionAbstract implements \Iterator
 		$method = 'set' . ucfirst($name);
 		if (method_exists($this, $method)) {
 			$value = $this->{$method}($value);
-		} elseif ($value !== NULL) {
+		} elseif ($value !== null) {
 			$value = $this->checkValue($value, $type);
 		}
 		$this->properties[$name] = $value;
@@ -80,7 +80,6 @@ abstract class TransactionAbstract implements \Iterator
 	protected function checkValue($value, $type)
 	{
 		switch ($type) {
-
 			case 'datetime':
 				return Utils\Strings::createFromFormat($value, $this->dateFormat);
 			case 'float':
@@ -93,7 +92,7 @@ abstract class TransactionAbstract implements \Iterator
 				}
 				return intval($value);
 			case 'string|null':
-				return trim($value) ?: NULL;
+				return trim($value) ?: null;
 		}
 		return $value;
 	}

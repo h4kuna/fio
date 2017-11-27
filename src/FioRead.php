@@ -41,9 +41,9 @@ class FioRead extends Fio
 	 * @param int|string|NULL $year format YYYY, NULL is current
 	 * @return IFile
 	 */
-	public function movementId($id, $year = NULL)
+	public function movementId($id, $year = null)
 	{
-		if ($year === NULL) {
+		if ($year === null) {
 			$year = date('Y');
 		}
 		$data = $this->download('by-id/%s/%s/%s/transactions.%s', $year, $id, $this->readerFactory->getExtension());
