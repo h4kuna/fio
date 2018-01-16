@@ -56,14 +56,24 @@ class Queue implements IQueue
 		$this->sleep = (bool) $sleep;
 	}
 
+	/**
+	 * @param $token
+	 * @param string $url
+	 * @return mixed|string
+	 * @throws Fio\QueueLimitException
+	 * @throws Fio\ServiceUnavailableException
+	 */
 	public function download($token, $url)
 	{
 		return $this->request($token, function (GuzzleHttp\Client $client) use ($url) {
 			return $client->request('GET', $url, $this->downloadOptions);
-		});
+		}, 'download');
 	}
 
-	/** @return Pay\IResponse */
+	/**
+	 * @return Pay\IResponse
+	 * @throws Fio\QueueLimitException
+	 */
 	public function upload($url, $token, array $post, $filename)
 	{
 		$newPost = [];
@@ -72,14 +82,21 @@ class Queue implements IQueue
 		}
 		$newPost[] = ['name' => 'file', 'contents' => fopen($filename, 'r')];
 
-		/* @var $response GuzzleHttp\Psr7\Stream */
 		$response = $this->request($token, function (GuzzleHttp\Client $client) use ($url, $newPost) {
 			return $client->request('POST', $url, [GuzzleHttp\RequestOptions::MULTIPART => $newPost]);
-		});
-		return new Pay\XMLResponse($response->getContents());
+		}, 'upload');
+		return self::createXmlResponse($response);
 	}
 
-	private function request($token, $fallback)
+	/**
+	 * @param $token
+	 * @param $fallback
+	 * @param string $action
+	 * @return GuzzleHttp\Psr7\Stream
+	 * @throws Fio\QueueLimitException
+	 * @throws Fio\ServiceUnavailableException
+	 */
+	private function request($token, $fallback, $action)
 	{
 		$request = new GuzzleHttp\Client(['headers' => ['X-Powered-By' => 'h4kuna/fio']]);
 		$tempFile = $this->loadFileName($token);
@@ -104,7 +121,25 @@ class Queue implements IQueue
 		} while ($next);
 		fclose($file);
 		touch($tempFile);
+
+		if ($action === 'download') {
+			self::detectDownloadResponse($response);
+		}
+
 		return $response->getBody();
+	}
+
+	private static function detectDownloadResponse($response)
+	{
+		/* @var $contentTypeHeaders array */
+		$contentTypeHeaders = $response->getHeader('Content-Type');
+		$contentType = array_shift($contentTypeHeaders);
+		if ($contentType === 'text/xml;charset=UTF-8') {
+			$xmlResponse = self::createXmlResponse($response);
+			if ($xmlResponse->getErrorCode() !== 0) {
+				throw new Fio\ServiceUnavailableException($xmlResponse->getError(), $xmlResponse->getErrorCode());
+			}
+		}
 	}
 
 	private static function sleep($filename)
@@ -132,6 +167,15 @@ class Queue implements IQueue
 	private static function safeProtocol($filename)
 	{
 		return Utils\SafeStream::PROTOCOL . '://' . $filename;
+	}
+
+	/**
+	 * @param $response
+	 * @return Pay\XMLResponse
+	 */
+	private static function createXmlResponse($response)
+	{
+		return new Pay\XMLResponse($response->getContents());
 	}
 
 }

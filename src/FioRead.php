@@ -28,6 +28,7 @@ class FioRead extends Fio
 	 * @param string|int|\DateTime $from
 	 * @param string|int|\DateTime $to
 	 * @return TransactionList
+	 * @throws ServiceUnavailableException
 	 */
 	public function movements($from = '-1 week', $to = 'now')
 	{
@@ -40,6 +41,7 @@ class FioRead extends Fio
 	 * @param int $id
 	 * @param int|string|NULL $year format YYYY, NULL is current
 	 * @return IFile
+	 * @throws ServiceUnavailableException
 	 */
 	public function movementId($id, $year = null)
 	{
@@ -53,6 +55,7 @@ class FioRead extends Fio
 	/**
 	 * Last movements from last breakpoint.
 	 * @return IFile
+	 * @throws ServiceUnavailableException
 	 */
 	public function lastDownload()
 	{
@@ -64,6 +67,7 @@ class FioRead extends Fio
 	 * Set break point to id.
 	 * @param int $moveId
 	 * @return void
+	 * @throws ServiceUnavailableException
 	 */
 	public function setLastId($moveId)
 	{
@@ -73,7 +77,7 @@ class FioRead extends Fio
 	/**
 	 * Set breakpoint to date.
 	 * @param mixed $date
-	 * @return void
+	 * @throws ServiceUnavailableException
 	 */
 	public function setLastDate($date)
 	{

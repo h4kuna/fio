@@ -21,7 +21,7 @@ class XMLResponse implements IResponse
 
 	public function isOk()
 	{
-		return $this->getError() == 'ok' && $this->getErrorCode() == 0;
+		return $this->getError() === 'ok' && $this->getErrorCode() === 0;
 	}
 
 	/**
@@ -38,7 +38,7 @@ class XMLResponse implements IResponse
 	/** @return int */
 	public function getErrorCode()
 	{
-		return $this->getValue('result/errorCode');
+		return (int) $this->getValue('result/errorCode');
 	}
 
 	public function getIdInstruction()
