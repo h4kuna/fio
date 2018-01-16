@@ -61,7 +61,10 @@ abstract class Property implements Iterator
 		$this->setDate('now');
 	}
 
-	/** @return self */
+    /**
+     * @return self
+     * @throws Fio\InvalidArgumentException
+     */
 	public function setAmount($val)
 	{
 		$this->amount = floatval($val);
@@ -77,11 +80,12 @@ abstract class Property implements Iterator
 	 */
 	abstract public function setAccountTo($accountTo);
 
-	/**
-	 * Currency code ISO 4217.
-	 * @param string $code case insensitive
-	 * @return self
-	 */
+    /**
+     * Currency code ISO 4217.
+     * @param string $code case insensitive
+     * @return self
+     * @throws Fio\InvalidArgumentException
+     */
 	public function setCurrency($code)
 	{
 		if (!preg_match('~[a-z]{3}~i', $code)) {
@@ -91,10 +95,11 @@ abstract class Property implements Iterator
 		return $this;
 	}
 
-	/**
-	 * @param string $ks
-	 * @return self
-	 */
+    /**
+     * @param string $ks
+     * @return self
+     * @throws Fio\InvalidArgumentException
+     */
 	public function setConstantSymbol($ks)
 	{
 		if (!$ks) {
@@ -126,7 +131,10 @@ abstract class Property implements Iterator
 		return $this;
 	}
 
-	/** @return self */
+    /**
+     * @return self
+     * @throws Fio\InvalidArgumentException
+     */
 	public function setPaymentReason($code)
 	{
 		if (!$code) {
@@ -138,10 +146,11 @@ abstract class Property implements Iterator
 		return $this;
 	}
 
-	/**
-	 * @param string $ss
-	 * @return self
-	 */
+    /**
+     * @param string $ss
+     * @return self
+     * @throws Fio\InvalidArgumentException
+     */
 	public function setSpecificSymbol($ss)
 	{
 		if (!$ss) {
@@ -153,10 +162,11 @@ abstract class Property implements Iterator
 		return $this;
 	}
 
-	/**
-	 * @param string|int $vs
-	 * @return self
-	 */
+    /**
+     * @param string|int $vs
+     * @return self
+     * @throws Fio\InvalidArgumentException
+     */
 	public function setVariableSymbol($vs)
 	{
 		if (!$vs) {

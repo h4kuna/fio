@@ -26,10 +26,11 @@ class Json implements Request\Read\IReader
 		return self::JSON;
 	}
 
-	/**
-	 * @param string $data
-	 * @return Read\TransactionList
-	 */
+    /**
+     * @param string $data
+     * @return Read\TransactionList
+     * @throws Nette\Utils\JsonException
+     */
 	public function create($data)
 	{
 		if (!$data) {

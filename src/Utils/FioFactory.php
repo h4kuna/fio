@@ -32,19 +32,21 @@ class FioFactory
 		$this->temp = $temp ?: sys_get_temp_dir();
 	}
 
-	/**
-	 * @param string $name Configured account name from AccountCollection
-	 * @return Fio\FioRead
-	 */
+    /**
+     * @param string $name Configured account name from AccountCollection
+     * @return Fio\FioRead
+     * @throws Fio\AccountException
+     */
 	public function createFioRead($name = null)
 	{
 		return new Fio\FioRead($this->getQueue(), $this->getAccount($name), $this->createReader());
 	}
 
-	/**
-	 * @param string $name Configured account name from AccountCollection
-	 * @return Fio\FioPay
-	 */
+    /**
+     * @param string $name Configured account name from AccountCollection
+     * @return Fio\FioPay
+     * @throws Fio\AccountException
+     */
 	public function createFioPay($name = null)
 	{
 		return new Fio\FioPay(
@@ -61,7 +63,12 @@ class FioFactory
 		return new Fio\Request\Queue($this->temp);
 	}
 
-	protected function createAccountCollection(array $accounts)
+    /**
+     * @param array $accounts
+     * @return Fio\Account\AccountCollection
+     * @throws Fio\AccountException
+     */
+    protected function createAccountCollection(array $accounts)
 	{
 		return Fio\Account\AccountCollectionFactory::create($accounts);
 	}
@@ -71,10 +78,11 @@ class FioFactory
 		return $this->accountCollection;
 	}
 
-	/**
-	 * @param string $name Configured account name from AccountCollection
-	 * @return Fio\Account\FioAccount
-	 */
+    /**
+     * @param string $name Configured account name from AccountCollection
+     * @return Fio\Account\FioAccount
+     * @throws Fio\AccountException
+     */
 	final protected function getAccount($name)
 	{
 		if ($name) {

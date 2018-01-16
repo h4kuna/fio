@@ -33,11 +33,12 @@ class AccountCollection implements \Countable, \IteratorAggregate
 		return reset($this->accounts);
 	}
 
-	/**
-	 * @param string $alias
-	 * @param FioAccount $account
-	 * @return self
-	 */
+    /**
+     * @param string $alias
+     * @param FioAccount $account
+     * @return self
+     * @throws \h4kuna\Fio\AccountException
+     */
 	public function addAccount($alias, FioAccount $account)
 	{
 		if (isset($this->accounts[$alias])) {

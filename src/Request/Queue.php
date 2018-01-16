@@ -70,10 +70,11 @@ class Queue implements IQueue
 		}, 'download');
 	}
 
-	/**
-	 * @return Pay\IResponse
-	 * @throws Fio\QueueLimitException
-	 */
+    /**
+     * @return Pay\IResponse
+     * @throws Fio\QueueLimitException
+     * @throws Fio\ServiceUnavailableException
+     */
 	public function upload($url, $token, array $post, $filename)
 	{
 		$newPost = [];
@@ -129,7 +130,11 @@ class Queue implements IQueue
 		return $response->getBody();
 	}
 
-	private static function detectDownloadResponse($response)
+    /**
+     * @param $response
+     * @throws Fio\ServiceUnavailableException
+     */
+    private static function detectDownloadResponse($response)
 	{
 		/* @var $contentTypeHeaders array */
 		$contentTypeHeaders = $response->getHeader('Content-Type');
