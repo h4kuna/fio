@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> <response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.fio.cz/schema/response.xsd"> <result> <errorCode>15</errorCode> <status>error</status> <message>Služba je momentálně nedostupná</message> </result> </response>
