@@ -185,7 +185,7 @@ class Queue implements IQueue
 	 */
 	private static function createXmlResponse($response)
 	{
-		return new Pay\XMLResponse($response->getContents());
+		return new Pay\XMLResponse($response->getBody()->getContents());
 	}
 
 }
