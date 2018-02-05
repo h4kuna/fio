@@ -180,7 +180,7 @@ class Queue implements IQueue
 	}
 
 	/**
-	 * @param $response
+	 * @param GuzzleHttp\Psr7\Response $response
 	 * @return Pay\XMLResponse
 	 */
 	private static function createXmlResponse($response)
