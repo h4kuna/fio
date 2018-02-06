@@ -49,11 +49,11 @@ class Euro extends Property
 		$this->setCurrency('EUR');
 	}
 
-    /**
-     * @param string $accountTo ISO 13616
-     * @return Euro
-     * @throws Fio\InvalidArgumentException
-     */
+	/**
+	 * @param string $accountTo ISO 13616
+	 * @return Euro
+	 * @throws Fio\InvalidArgumentException
+	 */
 	public function setAccountTo($accountTo)
 	{
 		if (strlen($accountTo) > 34) {
@@ -97,11 +97,11 @@ class Euro extends Property
 		return $this;
 	}
 
-    /**
-     * @param string $benefCountry
-     * @return self
-     * @throws Fio\InvalidArgumentException
-     */
+	/**
+	 * @param string $benefCountry
+	 * @return self
+	 * @throws Fio\InvalidArgumentException
+	 */
 	public function setCountry($benefCountry)
 	{
 		$country = strtoupper($benefCountry);

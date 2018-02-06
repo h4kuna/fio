@@ -28,10 +28,11 @@ class FioPay extends Fio
 		$this->xmlFile = $xmlFile;
 	}
 
-    /** @return Pay\Payment\Euro
-     * @throws InvalidArgumentException
-     * @throws InvalidArgumentException
-     */
+	/**
+	 * @return Pay\Payment\Euro
+	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException
+	 */
 	public function createEuro($amount, $accountTo, $name)
 	{
 		return (new Pay\Payment\Euro($this->account))
@@ -40,9 +41,10 @@ class FioPay extends Fio
 			->setAmount($amount);
 	}
 
-    /** @return Pay\Payment\National
-     * @throws InvalidArgumentException
-     */
+	/**
+	 * @return Pay\Payment\National
+	 * @throws InvalidArgumentException
+	 */
 	public function createNational($amount, $accountTo, $bankCode = null)
 	{
 		return (new Pay\Payment\National($this->account))
@@ -50,9 +52,10 @@ class FioPay extends Fio
 			->setAmount($amount);
 	}
 
-    /** @return Pay\Payment\International
-     * @throws InvalidArgumentException
-     */
+	/**
+	 * @return Pay\Payment\International
+	 * @throws InvalidArgumentException
+	 */
 	public function createInternational($amount, $accountTo, $bic, $name, $street, $city, $country, $info)
 	{
 		return (new Pay\Payment\International($this->account))

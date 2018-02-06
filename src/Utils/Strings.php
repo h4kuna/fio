@@ -23,12 +23,12 @@ final class Strings
 		return $str ? mb_substr($str, 0, $limit) : null; // max length from API
 	}
 
-    /**
-     * @param string $account
-     * @param string|NULL $bankCode
-     * @return Account\Bank
-     * @throws \h4kuna\Fio\AccountException
-     */
+	/**
+	 * @param string $account
+	 * @param string|NULL $bankCode
+	 * @return Account\Bank
+	 * @throws \h4kuna\Fio\AccountException
+	 */
 	public static function createAccount($account, $bankCode = null)
 	{
 		if ($bankCode) {

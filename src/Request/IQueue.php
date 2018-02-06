@@ -14,11 +14,11 @@ interface IQueue
 	const WAIT_TIME = 30;
 	const HEADER_CONFLICT = 409;
 
-    /**
-     * @param $token
-     * @param string $url
-     * @return string raw data
-     */
+	/**
+	 * @param $token
+	 * @param string $url
+	 * @return string raw data
+	 */
 	public function download($token, $url);
 
 	/**

@@ -38,15 +38,15 @@ class JsonTransactionFactory implements ITransactionListFactory
 		return $data;
 	}
 
-    /**
-     * @param $data
-     * @param $dateFormat
-     * @return TransactionAbstract|null|string
-     * @throws Fio\InvalidArgumentException
-     * @throws Fio\TransactionExtendException
-     * @throws Fio\TransactionPropertyException
-     */
-    public function createTransaction($data, $dateFormat)
+	/**
+	 * @param $data
+	 * @param $dateFormat
+	 * @return TransactionAbstract|null|string
+	 * @throws Fio\InvalidArgumentException
+	 * @throws Fio\TransactionExtendException
+	 * @throws Fio\TransactionPropertyException
+	 */
+	public function createTransaction($data, $dateFormat)
 	{
 		$transaction = $this->createTransactionObject($dateFormat);
 		foreach (self::metaProperty($transaction) as $id => $meta) {
@@ -62,13 +62,13 @@ class JsonTransactionFactory implements ITransactionListFactory
 		return new TransactionList($info);
 	}
 
-    /**
-     * @param $dateFormat
-     * @return TransactionAbstract|null|string
-     * @throws Fio\InvalidArgumentException
-     * @throws Fio\TransactionExtendException
-     */
-    protected function createTransactionObject($dateFormat)
+	/**
+	 * @param $dateFormat
+	 * @return TransactionAbstract|null|string
+	 * @throws Fio\InvalidArgumentException
+	 * @throws Fio\TransactionExtendException
+	 */
+	protected function createTransactionObject($dateFormat)
 	{
 		if ($this->transactionClassCheck === false) {
 			if (is_string($this->transactionClass)) {
@@ -87,12 +87,12 @@ class JsonTransactionFactory implements ITransactionListFactory
 		return clone $this->transactionClass;
 	}
 
-    /**
-     * @param $class
-     * @return array|string[]
-     * @throws Fio\TransactionPropertyException
-     */
-    private static function metaProperty($class)
+	/**
+	 * @param $class
+	 * @return array|string[]
+	 * @throws Fio\TransactionPropertyException
+	 */
+	private static function metaProperty($class)
 	{
 		if (self::$property !== null) {
 			return self::$property;
