@@ -123,6 +123,8 @@ class Queue implements IQueue
 			        self::detectDownloadResponse( $e->getResponse() );
                 }
                 throw new Fio\ServiceUnavailableException('Service is currently unavailable');
+            } catch (GuzzleHttp\Exception\ConnectException $e) {
+                throw new Fio\ServiceUnavailableException('Service is currently unavailable');
             }
 		} while ($next);
 		fclose($file);
