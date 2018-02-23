@@ -14,6 +14,12 @@ class FioAccount
 	/** @var string */
 	private $token;
 
+	/**
+	 * FioAccount constructor.
+	 * @param $account
+	 * @param $token
+	 * @throws \h4kuna\Fio\AccountException
+	 */
 	public function __construct($account, $token)
 	{
 		$this->account = new Bank($account);

@@ -15,6 +15,7 @@ interface IQueue
 	const HEADER_CONFLICT = 409;
 
 	/**
+	 * @param $token
 	 * @param string $url
 	 * @return string raw data
 	 */

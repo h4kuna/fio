@@ -37,7 +37,7 @@ class Bank
 
 		if (!empty($find['code'])) {
 			$this->bankCode = $find['code'];
-			if (strlen($this->getBankCode()) != 4) {
+			if (strlen($this->getBankCode()) !== 4) {
 				throw new AccountException('Code must have 4 chars length.');
 			}
 		}

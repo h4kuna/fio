@@ -73,6 +73,7 @@ class Queue implements IQueue
 	/**
 	 * @return Pay\IResponse
 	 * @throws Fio\QueueLimitException
+	 * @throws Fio\ServiceUnavailableException
 	 */
 	public function upload($url, $token, array $post, $filename)
 	{
@@ -117,6 +118,13 @@ class Queue implements IQueue
 				}
 				self::sleep($tempFile);
 				$next = true;
+			} catch (GuzzleHttp\Exception\ServerException $e) {
+				if($e->hasResponse()) {
+					self::detectDownloadResponse( $e->getResponse() );
+				}
+				throw new Fio\ServiceUnavailableException('Service is currently unavailable');
+			} catch (GuzzleHttp\Exception\ConnectException $e) {
+				throw new Fio\ServiceUnavailableException('Service is currently unavailable');
 			}
 		} while ($next);
 		fclose($file);
@@ -129,6 +137,10 @@ class Queue implements IQueue
 		return $response->getBody();
 	}
 
+	/**
+	 * @param $response
+	 * @throws Fio\ServiceUnavailableException
+	 */
 	private static function detectDownloadResponse($response)
 	{
 		/* @var $contentTypeHeaders array */
@@ -170,12 +182,12 @@ class Queue implements IQueue
 	}
 
 	/**
-	 * @param $response
+	 * @param GuzzleHttp\Psr7\Response $response
 	 * @return Pay\XMLResponse
 	 */
 	private static function createXmlResponse($response)
 	{
-		return new Pay\XMLResponse($response->getContents());
+		return new Pay\XMLResponse($response->getBody()->getContents());
 	}
 
 }

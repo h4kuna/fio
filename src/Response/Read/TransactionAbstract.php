@@ -22,6 +22,11 @@ abstract class TransactionAbstract implements \Iterator
 		$this->dateFormat = $dateFormat;
 	}
 
+	/**
+	 * @param $name
+	 * @return mixed
+	 * @throws Fio\TransactionPropertyException
+	 */
 	public function __get($name)
 	{
 		if (array_key_exists($name, $this->properties)) {

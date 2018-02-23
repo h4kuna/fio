@@ -29,6 +29,7 @@ class Json implements Request\Read\IReader
 	/**
 	 * @param string $data
 	 * @return Read\TransactionList
+	 * @throws Nette\Utils\JsonException
 	 */
 	public function create($data)
 	{

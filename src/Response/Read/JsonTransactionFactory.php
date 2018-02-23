@@ -38,6 +38,14 @@ class JsonTransactionFactory implements ITransactionListFactory
 		return $data;
 	}
 
+	/**
+	 * @param $data
+	 * @param $dateFormat
+	 * @return TransactionAbstract|null|string
+	 * @throws Fio\InvalidArgumentException
+	 * @throws Fio\TransactionExtendException
+	 * @throws Fio\TransactionPropertyException
+	 */
 	public function createTransaction($data, $dateFormat)
 	{
 		$transaction = $this->createTransactionObject($dateFormat);
@@ -54,6 +62,12 @@ class JsonTransactionFactory implements ITransactionListFactory
 		return new TransactionList($info);
 	}
 
+	/**
+	 * @param $dateFormat
+	 * @return TransactionAbstract|null|string
+	 * @throws Fio\InvalidArgumentException
+	 * @throws Fio\TransactionExtendException
+	 */
 	protected function createTransactionObject($dateFormat)
 	{
 		if ($this->transactionClassCheck === false) {
@@ -73,6 +87,11 @@ class JsonTransactionFactory implements ITransactionListFactory
 		return clone $this->transactionClass;
 	}
 
+	/**
+	 * @param $class
+	 * @return array|string[]
+	 * @throws Fio\TransactionPropertyException
+	 */
 	private static function metaProperty($class)
 	{
 		if (self::$property !== null) {

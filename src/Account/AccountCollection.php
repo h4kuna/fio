@@ -37,6 +37,7 @@ class AccountCollection implements \Countable, \IteratorAggregate
 	 * @param string $alias
 	 * @param FioAccount $account
 	 * @return self
+	 * @throws \h4kuna\Fio\AccountException
 	 */
 	public function addAccount($alias, FioAccount $account)
 	{

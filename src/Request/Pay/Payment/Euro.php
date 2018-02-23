@@ -51,6 +51,7 @@ class Euro extends Property
 
 	/**
 	 * @param string $accountTo ISO 13616
+	 * @return Euro
 	 * @throws Fio\InvalidArgumentException
 	 */
 	public function setAccountTo($accountTo)
@@ -99,11 +100,12 @@ class Euro extends Property
 	/**
 	 * @param string $benefCountry
 	 * @return self
+	 * @throws Fio\InvalidArgumentException
 	 */
 	public function setCountry($benefCountry)
 	{
 		$country = strtoupper($benefCountry);
-		if (strlen($country) != 2 && $country != 'TCH') {
+		if (strlen($country) !== 2 && $country !== 'TCH') {
 			throw new Fio\InvalidArgumentException('Look at to manual for country code section 6.3.3.');
 		}
 		$this->benefCountry = $country;
