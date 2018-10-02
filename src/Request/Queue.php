@@ -6,6 +6,7 @@ use GuzzleHttp,
 	h4kuna\Fio,
 	h4kuna\Fio\Response\Pay,
 	Nette\Utils;
+use Psr\Http\Message\ResponseInterface;
 
 class Queue implements IQueue
 {
@@ -117,6 +118,13 @@ class Queue implements IQueue
 				}
 				self::sleep($tempFile);
 				$next = true;
+			} catch (GuzzleHttp\Exception\ServerException $e) {
+				if($e->hasResponse()) {
+					self::detectDownloadResponse( $e->getResponse() );
+				}
+				throw new Fio\ServiceUnavailableException('Service is currently unavailable');
+			} catch (GuzzleHttp\Exception\ConnectException $e) {
+				throw new Fio\ServiceUnavailableException('Service is currently unavailable');
 			}
 		} while ($next);
 		fclose($file);
@@ -129,6 +137,10 @@ class Queue implements IQueue
 		return $response->getBody();
 	}
 
+	/**
+	 * @param ResponseInterface $response
+	 * @throws Fio\ServiceUnavailableException
+	 */
 	private static function detectDownloadResponse($response)
 	{
 		/* @var $contentTypeHeaders array */
@@ -170,12 +182,12 @@ class Queue implements IQueue
 	}
 
 	/**
-	 * @param $response
+	 * @param ResponseInterface|GuzzleHttp\Psr7\Stream $response
 	 * @return Pay\XMLResponse
 	 */
 	private static function createXmlResponse($response)
 	{
-		return new Pay\XMLResponse($response->getContents());
+		return new Pay\XMLResponse($response->getBody()->getContents());
 	}
 
 }
