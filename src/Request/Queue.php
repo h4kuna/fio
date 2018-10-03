@@ -66,9 +66,11 @@ class Queue implements IQueue
 	 */
 	public function download($token, $url)
 	{
-		return $this->request($token, function (GuzzleHttp\Client $client) use ($url) {
+		$response = $this->request($token, function (GuzzleHttp\Client $client) use ($url) {
 			return $client->request('GET', $url, $this->downloadOptions);
-		}, 'download');
+		});
+		self::detectDownloadResponse($response);
+		return $response->getBody();
 	}
 
 	/**
@@ -85,19 +87,18 @@ class Queue implements IQueue
 
 		$response = $this->request($token, function (GuzzleHttp\Client $client) use ($url, $newPost) {
 			return $client->request('POST', $url, [GuzzleHttp\RequestOptions::MULTIPART => $newPost]);
-		}, 'upload');
-		return self::createXmlResponse($response);
+		});
+		return self::createXmlResponse($response->getBody());
 	}
 
 	/**
 	 * @param $token
 	 * @param $fallback
-	 * @param string $action
-	 * @return GuzzleHttp\Psr7\Stream
+	 * @return ResponseInterface
 	 * @throws Fio\QueueLimitException
 	 * @throws Fio\ServiceUnavailableException
 	 */
-	private function request($token, $fallback, $action)
+	private function request($token, $fallback)
 	{
 		$request = new GuzzleHttp\Client(['headers' => ['X-Powered-By' => 'h4kuna/fio']]);
 		$tempFile = $this->loadFileName($token);
@@ -130,11 +131,7 @@ class Queue implements IQueue
 		fclose($file);
 		touch($tempFile);
 
-		if ($action === 'download') {
-			self::detectDownloadResponse($response);
-		}
-
-		return $response->getBody();
+		return $response;
 	}
 
 	/**
