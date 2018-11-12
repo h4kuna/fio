@@ -23,7 +23,6 @@ foreach ($fioRead->movements('-1 month') as $transaction) {
 
 // blocation is per token
 $fioPay = $fioFactory->createFioPay();
-$fioPay->setActive('pay');
 $national = $fioPay->createNational(100, '2000242017/2010');
 
 $response = $fioPay->send($national);
