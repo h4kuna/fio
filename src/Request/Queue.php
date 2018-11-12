@@ -88,7 +88,7 @@ class Queue implements IQueue
 		$response = $this->request($token, function (GuzzleHttp\Client $client) use ($url, $newPost) {
 			return $client->request('POST', $url, [GuzzleHttp\RequestOptions::MULTIPART => $newPost]);
 		});
-		return self::createXmlResponse($response->getBody());
+		return self::createXmlResponse($response);
 	}
 
 	/**
