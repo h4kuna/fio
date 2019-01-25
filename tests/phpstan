@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+DIR=`pwd`/`dirname $0`;
+
+$DIR/../vendor/bin/phpstan analyse -c $DIR/config/phpstan.neon --level max src tests

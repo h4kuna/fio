@@ -1,64 +1,46 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Utils;
 
-use h4kuna\Fio\Account,
-	Nette\Utils\DateTime;
+use h4kuna\Fio\Exceptions\InvalidArgument;
+use Nette\Utils\DateTime;
 
-/**
- * @author Milan Matějček
- */
 final class Strings
 {
 
 	private function __construct() {}
 
-	/**
-	 * @param string $str
-	 * @param int $limit
-	 * @return string|NULL
-	 */
-	public static function substr($str, $limit)
-	{
-		return $str ? mb_substr($str, 0, $limit) : null; // max length from API
-	}
 
 	/**
-	 * @param string $account
-	 * @param string|NULL $bankCode
-	 * @return Account\Bank
-	 */
-	public static function createAccount($account, $bankCode = null)
-	{
-		if ($bankCode) {
-			$account .= '/';
-		}
-		return new Account\Bank($account . $bankCode);
-	}
-
-	/**
-	 * @param mixed $date
+	 * @param int|string|\DateTimeInterface $date
 	 * @param string $format
 	 * @return string
 	 */
-	public static function date($date, $format = 'Y-m-d')
+	public static function date($date, string $format = 'Y-m-d'): string
 	{
 		return DateTime::from($date)->format($format);
 	}
 
+
 	/**
 	 * Convert string to DateTime.
-	 * @param string $value
-	 * @param bool $midnight
-	 * @return DateTime
 	 */
-	public static function createFromFormat($value, $format, $midnight = true)
+	public static function createFromFormat(string $value, string $format, bool $midnight = true): \DateTimeInterface
 	{
 		$dt = date_create_from_format($format, $value);
+		if ($dt === false) {
+			throw new InvalidArgument('Create DateTime from string faild. Probably you have bad format.');
+		}
 		if ($midnight) {
 			$dt->setTime(0, 0, 0);
 		}
 		return $dt;
+	}
+
+
+	public static function is32bitOS(): bool
+	{
+		return PHP_INT_SIZE === 4;
 	}
 
 }

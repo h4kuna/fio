@@ -1,17 +1,14 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Test;
 
-use h4kuna\Fio,
-	Salamium\Testinium;
+use h4kuna\Fio;
+use Salamium\Testinium;
 
-/**
- * @author Milan Matějček
- */
 class Queue implements Fio\Request\IQueue
 {
 
-	public function download($token, $url)
+	public function download(string $token, string $url): string
 	{
 		$file = '';
 		switch (basename($url, 'json')) {
@@ -26,9 +23,10 @@ class Queue implements Fio\Request\IQueue
 		return $file;
 	}
 
-	public function upload($url, $token, array $post, $filename)
+
+	public function upload(string $url, string $token, array $post, string $filename): Fio\Response\Pay\IResponse
 	{
-		return file_get_contents($filename);
+		return new Fio\Response\Pay\XMLResponse((string) file_get_contents($filename));
 	}
 
 }

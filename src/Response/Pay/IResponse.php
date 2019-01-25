@@ -1,19 +1,22 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Response\Pay;
 
-/**
- * @author Milan Matějček
- */
 interface IResponse
 {
 
-	/** @return bool */
-	public function isOk();
+	function isOk(): bool;
 
-	/** @return mixed */
-	public function getError();
 
-	/** @return int */
-	public function getErrorCode();
+	function status(): string;
+
+
+	function code(): int;
+
+
+	function errorMessages(): array;
+
+
+	function __toString();
+
 }

@@ -1,28 +1,20 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Account;
 
-use h4kuna\Fio\AccountException;
+use h4kuna\Fio\Exceptions;
 
-/**
- * @author Milan Matějček
- */
 class AccountCollectionFactory
 {
 
-	/**
-	 * @param array $accounts
-	 * @return AccountCollection
-	 * @throws AccountException
-	 */
-	public static function create(array $accounts)
+	public static function create(array $accounts): AccountCollection
 	{
 		$accountCollection = new AccountCollection;
 		foreach ($accounts as $alias => $info) {
 			if (!isset($info['token'])) {
-				throw new AccountException("Key 'token' is required for $alias.");
+				throw new Exceptions\InvalidArgument(sprintf('Key "token" is required for alias "%s".', $alias));
 			} elseif (!isset($info['account'])) {
-				throw new AccountException("Key 'account' is required for $alias.");
+				throw new Exceptions\InvalidArgument(sprintf('Key "account" is required for alias "%s".', $alias));
 			}
 			$accountCollection->addAccount($alias, new FioAccount($info['account'], $info['token']));
 		}

@@ -1,73 +1,66 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Request\Pay;
 
-use h4kuna\Fio\Request\Pay\Payment,
-	XMLWriter;
+use h4kuna\Fio\Exceptions\InvalidState;
+use h4kuna\Fio\Request\Pay\Payment;
+use XMLWriter;
 
-/**
- * @author Milan Matějček
- */
 class XMLFile
 {
 
-	/** @var XMLWriter */
+	/** @var XMLWriter|null */
 	private $xml;
-
-	/** @var string */
-	private $content = true;
 
 	/** @var string */
 	private $temp;
 
-	public function __construct($temp)
+
+	public function __construct(string $temp)
 	{
 		$this->temp = $temp;
 	}
 
-	/**
-	 * @param Payment\Property $data
-	 * @return self
-	 */
-	public function setData(Payment\Property $data)
+
+	public function setData(Payment\Property $data): self
 	{
-		if ($this->content) {
+		if ($this->isReady() === false) {
 			$this->createEmptyXml();
 		}
 		return $this->setBody($data);
 	}
 
-	/** @return string */
-	public function getPathname()
+
+	public function getPathname(bool $keepFile = false): string
 	{
-		$filename = $this->temp . DIRECTORY_SEPARATOR . md5(microtime(true)) . '.xml';
+		$filename = $this->temp . DIRECTORY_SEPARATOR . md5((string) microtime(true)) . '.xml';
 		file_put_contents($filename, $this->getXml());
-		register_shutdown_function(function () use ($filename) {
-			@unlink($filename);
-		});
+		if ($keepFile === false) {
+			register_shutdown_function(function () use ($filename) {
+				@unlink($filename);
+			});
+		}
 		return $filename;
 	}
 
-	/** @return string XML */
-	public function getXml()
+
+	public function getXml(): string
 	{
-		if ($this->content) {
-			return $this->content;
+		if ($this->isReady() === false) {
+			throw new InvalidState('You can read only onetime.');
 		}
 
-		return $this->content = $this->endDocument();
+		return $this->endDocument();
 	}
 
-	/** @return bool */
-	public function isReady()
+
+	public function isReady(): bool
 	{
-		return $this->content === null;
+		return $this->xml !== null;
 	}
 
-	/**
-	 * Prepare XML.
-	 */
-	private function createEmptyXml()
+
+	private function createEmptyXml(): void
 	{
 		$this->xml = new XMLWriter;
 		$this->xml->openMemory();
@@ -76,15 +69,22 @@ class XMLFile
 		$this->xml->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
 		$this->xml->writeAttribute('xsi:noNamespaceSchemaLocation', 'http://www.fio.cz/schema/importIB.xsd');
 		$this->xml->startElement('Orders');
-		$this->content = null;
 	}
 
-	private function setBody(Payment\Property $data)
+
+	private function setBody(Payment\Property $data): self
 	{
+		if ($this->xml === null) {
+			throw self::exceptionFirstCallSetData();
+		}
+		$elements = $data->getExpectedProperty();
 		$this->xml->startElement($data->getStartXmlElement());
 		foreach ($data as $node => $value) {
-			if ($value === false) {
-				continue;
+			if ($value == false) { // intentionally ==
+				if ($elements[$node] === false) {
+					continue;
+				}
+				$value = '';
 			}
 
 			$this->xml->startElement($node);
@@ -95,10 +95,22 @@ class XMLFile
 		return $this;
 	}
 
-	private function endDocument()
+
+	private function endDocument(): string
 	{
+		if ($this->xml === null) {
+			throw self::exceptionFirstCallSetData();
+		}
 		$this->xml->endDocument();
-		return $this->xml->outputMemory();
+		$xml = $this->xml->outputMemory();
+		$this->xml = null;
+		return $xml;
+	}
+
+
+	private static function exceptionFirstCallSetData(): InvalidState
+	{
+		return new InvalidState('First you must call setData().');
 	}
 
 }

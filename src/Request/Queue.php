@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Request;
 
-use GuzzleHttp,
-	h4kuna\Fio,
-	h4kuna\Fio\Response\Pay,
-	Nette\Utils;
+use GuzzleHttp;
+use h4kuna\Fio\Exceptions;
+use h4kuna\Fio\Response\Pay;
+use Nette\Utils;
 use Psr\Http\Message\ResponseInterface;
 
 class Queue implements IQueue
@@ -26,23 +26,20 @@ class Queue implements IQueue
 	/** @var string */
 	private $tempDir;
 
-	public function __construct($tempDir)
+
+	public function __construct(string $tempDir)
 	{
 		$this->tempDir = $tempDir;
 	}
 
-	/**
-	 * @param int $limitLoop
-	 */
-	public function setLimitLoop($limitLoop)
+
+	public function setLimitLoop(int $limitLoop): void
 	{
-		$this->limitLoop = (int) $limitLoop;
+		$this->limitLoop = $limitLoop;
 	}
 
-	/**
-	 * @param array|\Iterator $downloadOptions
-	 */
-	public function setDownloadOptions($downloadOptions)
+
+	public function setDownloadOptions(iterable $downloadOptions): void
 	{
 		foreach ($downloadOptions as $define => $value) {
 			if (is_string($define) && defined($define)) {
@@ -52,32 +49,32 @@ class Queue implements IQueue
 		}
 	}
 
-	public function setSleep($sleep)
+
+	public function setSleep(bool $sleep): void
 	{
-		$this->sleep = (bool) $sleep;
+		$this->sleep = $sleep;
 	}
 
+
 	/**
-	 * @param $token
-	 * @param string $url
-	 * @return mixed|string
-	 * @throws Fio\QueueLimitException
-	 * @throws Fio\ServiceUnavailableException
+	 * @throws Exceptions\QueueLimit
+	 * @throws Exceptions\ServiceUnavailable
 	 */
-	public function download($token, $url)
+	public function download(string $token, string $url): string
 	{
-		$response = $this->request($token, function (GuzzleHttp\Client $client) use ($url) {
+		$response = $this->request($token, function (GuzzleHttp\ClientInterface $client) use ($url) {
 			return $client->request('GET', $url, $this->downloadOptions);
 		});
-		self::detectDownloadResponse($response);
-		return $response->getBody();
+		$this->detectDownloadResponse($response);
+		return (string) $response->getBody();
 	}
 
+
 	/**
-	 * @return Pay\IResponse
-	 * @throws Fio\QueueLimitException
+	 * @throws Exceptions\QueueLimit
+	 * @throws Exceptions\ServiceUnavailable
 	 */
-	public function upload($url, $token, array $post, $filename)
+	public function upload(string $url, string $token, array $post, string $filename): Pay\IResponse
 	{
 		$newPost = [];
 		foreach ($post as $name => $value) {
@@ -85,85 +82,85 @@ class Queue implements IQueue
 		}
 		$newPost[] = ['name' => 'file', 'contents' => fopen($filename, 'r')];
 
-		$response = $this->request($token, function (GuzzleHttp\Client $client) use ($url, $newPost) {
+		$response = $this->request($token, function (GuzzleHttp\ClientInterface $client) use ($url, $newPost) {
 			return $client->request('POST', $url, [GuzzleHttp\RequestOptions::MULTIPART => $newPost]);
 		});
-		return self::createXmlResponse($response);
+		return $this->createXmlResponse($response);
 	}
 
+
 	/**
-	 * @param $token
-	 * @param $fallback
-	 * @return ResponseInterface
-	 * @throws Fio\QueueLimitException
-	 * @throws Fio\ServiceUnavailableException
+	 * @throws Exceptions\QueueLimit
+	 * @throws Exceptions\ServiceUnavailable()
 	 */
-	private function request($token, $fallback)
+	private function request(string $token, callable $fallback): ResponseInterface
 	{
-		$request = new GuzzleHttp\Client(['headers' => ['X-Powered-By' => 'h4kuna/fio']]);
+		$client = $this->createClient();
 		$tempFile = $this->loadFileName($token);
-		$file = fopen(self::safeProtocol($tempFile), 'w');
+		$file = self::createFileResource($tempFile);
 		$i = 0;
 		do {
 			$next = false;
 			++$i;
 			try {
-				$response = $fallback($request);
+				$response = $fallback($client);
+				fclose($file);
+				touch($tempFile);
+				return $response;
 			} catch (GuzzleHttp\Exception\ClientException $e) {
 				if ($e->getCode() !== self::HEADER_CONFLICT || !$this->sleep) {
 					fclose($file);
 					throw $e;
 				} elseif ($i >= $this->limitLoop) {
 					fclose($file);
-					throw new Fio\QueueLimitException('You have limit up requests to server ' . $this->limitLoop);
+					throw new Exceptions\QueueLimit('You have limit up requests to server ' . $this->limitLoop);
 				}
 				self::sleep($tempFile);
 				$next = true;
-			} catch (GuzzleHttp\Exception\ServerException $e) {
-				if($e->hasResponse()) {
-					self::detectDownloadResponse($e->getResponse());
-				}
-				throw self::createServiceUnavailableException();
-			} catch (GuzzleHttp\Exception\ConnectException $e) {
-				throw self::createServiceUnavailableException();
+			} catch (GuzzleHttp\Exception\BadResponseException $e) {
+				throw new Exceptions\ServiceUnavailable($e->getMessage(), $e->getCode(), $e);
 			}
 		} while ($next);
-		fclose($file);
-		touch($tempFile);
-
-		return $response;
 	}
 
+
+	private static function createFileResource(string $filePath)
+	{
+		$file = fopen(self::safeProtocol($filePath), 'w');
+		if ($file === false) {
+			throw new Exceptions\InvalidState('Open file is failed ' . $filePath);
+		}
+		return $file;
+	}
+
+
 	/**
-	 * @param ResponseInterface $response
-	 * @throws Fio\ServiceUnavailableException
+	 * @throws Exceptions\ServiceUnavailable()
 	 */
-	private static function detectDownloadResponse($response)
+	private function detectDownloadResponse(ResponseInterface $response): void
 	{
 		/* @var $contentTypeHeaders array */
 		$contentTypeHeaders = $response->getHeader('Content-Type');
 		$contentType = array_shift($contentTypeHeaders);
 		if ($contentType === 'text/xml;charset=UTF-8') {
-			$xmlResponse = self::createXmlResponse($response);
-			if ($xmlResponse->getErrorCode() !== 0) {
-				throw new Fio\ServiceUnavailableException($xmlResponse->getError(), $xmlResponse->getErrorCode());
+			$xmlResponse = $this->createXmlResponse($response);
+			if ($xmlResponse->code() !== 0) {
+				throw new Exceptions\ServiceUnavailable($xmlResponse->status(), $xmlResponse->code());
 			}
 		}
 	}
 
-	private static function sleep($filename)
+
+	private static function sleep(string $filename): void
 	{
 		$criticalTime = time() - filemtime($filename);
-		if ($criticalTime < self::WAIT_TIME) {
-			sleep(self::WAIT_TIME - $criticalTime);
+		if ($criticalTime < static::WAIT_TIME) {
+			sleep(static::WAIT_TIME - $criticalTime);
 		}
 	}
 
-	/**
-	 * @param string $token
-	 * @return string
-	 */
-	private function loadFileName($token)
+
+	private function loadFileName(string $token): string
 	{
 		$key = substr($token, 10, -10);
 		if (!isset(self::$tokens[$key])) {
@@ -173,24 +170,22 @@ class Queue implements IQueue
 		return self::$tokens[$key];
 	}
 
-	private static function safeProtocol($filename)
+
+	private static function safeProtocol(string $filename): string
 	{
 		return Utils\SafeStream::PROTOCOL . '://' . $filename;
 	}
 
-	/**
-	 * @param ResponseInterface|GuzzleHttp\Psr7\Stream $response
-	 * @return Pay\XMLResponse
-	 */
-	private static function createXmlResponse($response)
+
+	protected function createXmlResponse(ResponseInterface $response): Pay\IResponse
 	{
 		return new Pay\XMLResponse($response->getBody()->getContents());
 	}
 
 
-	private static function createServiceUnavailableException()
+	protected function createClient(): GuzzleHttp\ClientInterface
 	{
-		return new Fio\ServiceUnavailableException('Fio server does not response.');
+		return new GuzzleHttp\Client(['headers' => ['X-Powered-By' => 'h4kuna/fio']]);
 	}
 
 }

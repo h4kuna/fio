@@ -1,43 +1,28 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio,
-	h4kuna\Fio\Account,
-	h4kuna\Fio\Utils,
-	Iterator,
-	Nette\Utils\DateTime;
+use h4kuna\Fio\Account;
+use h4kuna\Fio\Exceptions\InvalidArgument;
+use Iterator;
+use Nette\Utils\DateTime;
 
-/**
- * @author Milan Matějček
- */
 abstract class Property implements Iterator
 {
 
-	/** XML PROPERTY MUST BE PROTECTED ************************************** */
-
 	/** @var Account\FioAccount */
-	protected $accountFrom = true;
+	protected $accountFrom;
 
 	/** @var string */
 	protected $currency = 'CZK';
 
 	/** @var float */
-	protected $amount = true;
+	protected $amount = 0.0;
 
-	/** @var int */
-	protected $accountTo = true;
+	/** @var string */
+	protected $accountTo = '';
 
-	/** @var int */
-	protected $ks;
-
-	/** @var int */
-	protected $vs;
-
-	/** @var int */
-	protected $ss;
-
-	/** @var DateTime */
+	/** @var string */
 	protected $date;
 
 	/** @var string */
@@ -47,7 +32,7 @@ abstract class Property implements Iterator
 	 * Section in manual 7.2.3.1.
 	 * @var int
 	 */
-	protected $paymentReason = false;
+	protected $paymentReason = 0;
 
 	/** @var array */
 	private static $iterator = [];
@@ -55,128 +40,89 @@ abstract class Property implements Iterator
 	/** @var string */
 	private $key;
 
+
 	public function __construct(Account\FioAccount $account)
 	{
-		$this->accountFrom = $account->getAccount();
+		$this->accountFrom = $account;
 		$this->setDate('now');
 	}
 
-	/** @return self */
-	public function setAmount($val)
+
+	/**
+	 * @return static
+	 */
+	public function setAmount(float $amount)
 	{
-		$this->amount = floatval($val);
-		if ($val <= 0) {
-			throw new Fio\InvalidArgumentException('Amount must by positive number.');
+		$this->amount = $amount;
+		if ($amount <= 0) {
+			throw new InvalidArgument('Amount must by positive number.');
 		}
 		return $this;
 	}
 
+
 	/**
-	 * @param string $accountTo
-	 * @return self
+	 * @return static
 	 */
-	abstract public function setAccountTo($accountTo);
+	abstract public function setAccountTo(string $accountTo);
+
 
 	/**
 	 * Currency code ISO 4217.
-	 * @param string $code case insensitive
-	 * @return self
+	 * @return static
 	 */
-	public function setCurrency($code)
+	public function setCurrency(string $code)
 	{
 		if (!preg_match('~[a-z]{3}~i', $code)) {
-			throw new Fio\InvalidArgumentException('Currency code must match ISO 4217.');
+			throw new InvalidArgument('Currency code must match ISO 4217.');
 		}
 		$this->currency = strtoupper($code);
 		return $this;
 	}
 
+
 	/**
-	 * @param string $ks
-	 * @return self
+	 * @return static
 	 */
-	public function setConstantSymbol($ks)
+	public function setMyComment(string $comment)
 	{
-		if (!$ks) {
-			$ks = null;
-		} elseif (!preg_match('~\d{1,4}~', $ks)) {
-			throw new Fio\InvalidArgumentException('Constant symbol must contain 1-4 digits.');
-		}
-		$this->ks = $ks;
+		$this->comment = InvalidArgument::check($comment, 255);
 		return $this;
 	}
 
+
 	/**
-	 * @param string $str
-	 * @return self
+	 * @param int|string|\DateTimeInterface $date
+	 * @return static
 	 */
-	public function setMyComment($str)
+	public function setDate($date)
 	{
-		$this->comment = Utils\Strings::substr($str, 255);
+		$this->date = DateTime::from($date)->format('Y-m-d');
 		return $this;
 	}
 
+
 	/**
-	 * @param string|DateTime $str
-	 * @return self
+	 * @return static
 	 */
-	public function setDate($str)
+	public function setPaymentReason(int $code)
 	{
-		$this->date = DateTime::from($str)->format('Y-m-d');
+		$this->paymentReason = InvalidArgument::checkRange($code, 999);
 		return $this;
 	}
 
-	/** @return self */
-	public function setPaymentReason($code)
-	{
-		if (!$code) {
-			$code = null;
-		} elseif (!preg_match('~\d{3}~', $code)) {
-			throw new Fio\InvalidArgumentException('Payment reason must contain 3 digits.');
-		}
-		$this->paymentReason = $code;
-		return $this;
-	}
-
-	/**
-	 * @param string $ss
-	 * @return self
-	 */
-	public function setSpecificSymbol($ss)
-	{
-		if (!$ss) {
-			$ss = null;
-		} elseif (!preg_match('~\d{1,10}~', $ss)) {
-			throw new Fio\InvalidArgumentException('Specific symbol must contain 1-10 digits.');
-		}
-		$this->ss = $ss;
-		return $this;
-	}
-
-	/**
-	 * @param string|int $vs
-	 * @return self
-	 */
-	public function setVariableSymbol($vs)
-	{
-		if (!$vs) {
-			$vs = null;
-		} elseif (!preg_match('~\d{1,10}~', $vs)) {
-			throw new Fio\InvalidArgumentException('Variable symbol must contain 1-10 digits.');
-		}
-		$this->vs = $vs;
-		return $this;
-	}
 
 	/**
 	 * Order is important.
-	 * @return string[]
+	 * @return array<string, bool>
 	 */
-	abstract protected function getExpectedProperty();
+	abstract public function getExpectedProperty(): array;
 
-	abstract public function getStartXmlElement();
 
-	private function getProperties()
+	abstract public function getStartXmlElement(): string;
+
+
+	private function getProperties(): array
 	{
 		if ($this->key === null) {
 			$this->key = get_called_class();
@@ -187,6 +133,7 @@ abstract class Property implements Iterator
 
 		return self::$iterator[$this->key] = $this->getExpectedProperty();
 	}
+
 
 	/**
 	 * ITERATOR INTERFACE ******************************************************
@@ -202,21 +149,25 @@ abstract class Property implements Iterator
 		return $this->{$property};
 	}
 
+
 	public function key()
 	{
-		return current(self::$iterator[$this->key]);
+		return key(self::$iterator[$this->key]);
 	}
+
 
 	public function next()
 	{
 		next(self::$iterator[$this->key]);
 	}
 
+
 	public function rewind()
 	{
 		$this->getProperties();
 		reset(self::$iterator[$this->key]);
 	}
+
 
 	public function valid()
 	{

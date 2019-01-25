@@ -1,38 +1,20 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio,
-	h4kuna\Fio\Utils;
+use h4kuna\Fio\Exceptions;
 
-/**
- * @author Milan Matějček
- */
-class International extends Euro
+class International extends Foreign
 {
 
-	const
-		CHARGES_OUR = 470501,
-		CHARGES_BEN = 470502,
-		CHARGES_SHA = 470503;
+	public const CHARGES_OUR = 470501;
+	public const CHARGES_BEN = 470502;
+	public const CHARGES_SHA = 470503;
+
+	private const TYPES_CHARGES = [self::CHARGES_BEN, self::CHARGES_OUR, self::CHARGES_SHA];
 
 	/** @var string */
-	protected $bic = true;
-
-	/** @var string */
-	protected $benefStreet = true;
-
-	/** @var string */
-	protected $benefCity = true;
-
-	/** @var string */
-	protected $benefCountry = true;
-
-	/** @var string */
-	protected $remittanceInfo1 = true;
-
-	/** @var string */
-	protected $remittanceInfo4;
+	protected $remittanceInfo4 = '';
 
 	/**
 	 * Default value is goods export.
@@ -44,65 +26,55 @@ class International extends Euro
 	protected $detailsOfCharges = self::CHARGES_BEN;
 
 	/**
+	 * Section in manual 6.3.4.
 	 * @param int $type
-	 * @return self
-	 * @throws Fio\InvalidArgumentException
+	 * @return static
+	 * @throws Exceptions\InvalidArgument
 	 */
-	public function setDetailsOfCharges($type)
+	public function setDetailsOfCharges(int $type)
 	{
-		static $types = [self::CHARGES_BEN, self::CHARGES_OUR, self::CHARGES_SHA];
-		if (!in_array($type, $types)) {
-			throw new Fio\InvalidArgumentException('Select one type from constatns. Section in manual 6.3.4.');
-		}
-		$this->detailsOfCharges = $type;
+		$this->detailsOfCharges = Exceptions\InvalidArgument::checkIsInList($type, self::TYPES_CHARGES);
 		return $this;
 	}
+
 
 	/**
-	 * @param string $str
-	 * @return self
+	 * @return static
 	 */
-	public function setRemittanceInfo4($str)
+	public function setRemittanceInfo4(string $info)
 	{
-		$this->remittanceInfo4 = Utils\Strings::substr($str, 35);
+		$this->remittanceInfo4 = Exceptions\InvalidArgument::check($info, 35);
 		return $this;
 	}
 
-	protected function getExpectedProperty()
+
+	public function getExpectedProperty(): array
 	{
-		return ['accountFrom', 'currency', 'amount', 'accountTo', 'bic', 'date',
-			'comment', 'benefName', 'benefStreet', 'benefCity', 'benefCountry',
-			'remittanceInfo1', 'remittanceInfo2', 'remittanceInfo3', 'remittanceInfo4',
-			'detailsOfCharges', 'paymentReason'];
+		return [
+			'accountFrom' => true,
+			'currency' => true,
+			'amount' => true,
+			'accountTo' => true,
+			'bic' => true,
+			'date' => true,
+			'comment' => false,
+			'benefName' => true,
+			'benefStreet' => true,
+			'benefCity' => true,
+			'benefCountry' => true,
+			'remittanceInfo1' => true,
+			'remittanceInfo2' => false,
+			'remittanceInfo3' => false,
+			'remittanceInfo4' => false,
+			'detailsOfCharges' => true,
+			'paymentReason' => true,
+		];
 	}
 
-	public function getStartXmlElement()
+
+	public function getStartXmlElement(): string
 	{
 		return 'ForeignTransaction';
-	}
-
-	/** @internal */
-	public function setConstantSymbol($ks)
-	{
-		throw new Fio\InvalidArgumentException('Not available.');
-	}
-
-	/** @internal */
-	public function setSpecificSymbol($ss)
-	{
-		throw new Fio\InvalidArgumentException('Not available.');
-	}
-
-	/** @internal */
-	public function setVariableSymbol($vs)
-	{
-		throw new Fio\InvalidArgumentException('Not available.');
-	}
-
-	/** @internal */
-	public function setPaymentType($type)
-	{
-		throw new Fio\InvalidArgumentException('Not available.');
 	}
 
 }

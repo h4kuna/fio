@@ -1,13 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Utils;
 
 use h4kuna\Fio;
+use h4kuna\Fio\Account;
+use h4kuna\Fio\Response\Read\Transaction;
 
 class FioFactory
 {
 
-	/** @var Fio\Account\AccountCollection */
+	/** @var Account\AccountCollection */
 	private $accountCollection;
 
 	/** @var Fio\Request\IQueue */
@@ -19,7 +21,8 @@ class FioFactory
 	/** @var string */
 	protected $temp;
 
-	public function __construct(array $accounts, $transactionClass = null, $temp = null)
+
+	public function __construct(array $accounts, string $transactionClass = Transaction::class, string $temp = '')
 	{
 		$this->setTemp($temp);
 		$this->accountCollection = $this->createAccountCollection($accounts);
@@ -27,92 +30,90 @@ class FioFactory
 		$this->transactionClass = $transactionClass;
 	}
 
-	private function setTemp($temp)
+
+	private function setTemp(string $temp): void
 	{
-		$this->temp = $temp ?: sys_get_temp_dir();
+		if ($temp === '') {
+			$temp = sys_get_temp_dir();
+		}
+
+		$this->temp = $temp;
 	}
 
-	/**
-	 * @param string $name Configured account name from AccountCollection
-	 * @return Fio\FioRead
-	 */
-	public function createFioRead($name = null)
+
+	public function createFioRead(string $name = ''): Fio\FioRead
 	{
-		return new Fio\FioRead($this->getQueue(), $this->getAccount($name), $this->createReader());
+		return new Fio\FioRead($this->queue(), $this->accountCollection()->account($name), $this->createReader());
 	}
+
 
 	/**
 	 * @param string $name Configured account name from AccountCollection
 	 * @return Fio\FioPay
 	 */
-	public function createFioPay($name = null)
+	public function createFioPay(string $name = ''): Fio\FioPay
 	{
 		return new Fio\FioPay(
-			$this->getQueue(), $this->getAccount($name), $this->createXmlFile()
+			$this->queue(), $this->accountCollection()->account($name), $this->createXmlFile()
 		);
 	}
+
 
 	/**
 	 * COMMON ******************************************************************
 	 * *************************************************************************
 	 */
-	protected function createQueue()
+	protected function createQueue(): Fio\Request\IQueue
 	{
 		return new Fio\Request\Queue($this->temp);
 	}
 
-	protected function createAccountCollection(array $accounts)
+
+	protected function createAccountCollection(array $accounts): Account\AccountCollection
 	{
-		return Fio\Account\AccountCollectionFactory::create($accounts);
+		return Account\AccountCollectionFactory::create($accounts);
 	}
 
-	final protected function getAccountCollection()
+
+	final protected function accountCollection(): Account\AccountCollection
 	{
 		return $this->accountCollection;
 	}
 
-	/**
-	 * @param string $name Configured account name from AccountCollection
-	 * @return Fio\Account\FioAccount
-	 */
-	final protected function getAccount($name)
-	{
-		if ($name) {
-			return $this->getAccountCollection()->get($name);
-		}
 
-		return $this->getAccountCollection()->getDefault();
-	}
-
-	final protected function getQueue()
+	final protected function queue(): Fio\Request\IQueue
 	{
 		return $this->queue;
 	}
 
-	final protected function getTransactionClass()
+
+	final protected function transactionClass(): string
 	{
 		return $this->transactionClass;
 	}
+
 
 	/**
 	 * READ ********************************************************************
 	 * *************************************************************************
 	 */
-	protected function createTransactionListFactory()
+	protected function createTransactionListFactory(): Fio\Response\Read\JsonTransactionFactory
 	{
-		return new Fio\Response\Read\JsonTransactionFactory($this->getTransactionClass());
+		return new Fio\Response\Read\JsonTransactionFactory($this->transactionClass());
 	}
 
-	protected function createReader()
+
+	protected function createReader(): Fio\Request\Read\Files\Json
 	{
 		return new Fio\Request\Read\Files\Json($this->createTransactionListFactory());
 	}
+
 
 	/**
 	 * PAY *********************************************************************
 	 * *************************************************************************
 	 */
-	protected function createXmlFile()
+	protected function createXmlFile(): Fio\Request\Pay\XMLFile
 	{
 		return new Fio\Request\Pay\XMLFile($this->temp);
 	}

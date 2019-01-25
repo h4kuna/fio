@@ -1,84 +1,116 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Account;
 
-use h4kuna\Fio\AccountException;
+use h4kuna\Fio\Exceptions\InvalidArgument;
 
-/**
- * @author Milan Matějček
- */
 class Bank
 {
 
-	/** @var int */
+	/** @var string */
 	private $account;
 
-	/** @var int */
+	/** @var string */
 	private $bankCode = '';
 
-	/** @var int */
+	/** @var string */
 	private $prefix = '';
 
-	/**
-	 * @param string $account [prefix-]account[/code] no whitespace
-	 * @throws AccountException
-	 */
-	public function __construct($account)
+
+	private function __construct(string $account, string $bankCode, string $prefix)
 	{
-		if (!preg_match('~^(?P<prefix>\d+-)?(?P<account>\d+)(?P<code>/\d+)?$~', $account, $find)) {
-			throw new AccountException('Account must have format [prefix-]account[/code].');
-		}
-
-		if (strlen($find['account']) > 16) {
-			throw new AccountException('Account max length is 16 chars.');
-		}
-
-		$this->account = $find['account'];
-
-		if (!empty($find['code'])) {
-			$this->bankCode = $find['code'];
-			if (strlen($this->getBankCode()) != 4) {
-				throw new AccountException('Code must have 4 chars length.');
-			}
-		}
-
-		if (!empty($find['prefix'])) {
-			$this->prefix = $find['prefix'];
-		}
+		$this->account = $account;
+		$this->bankCode = $bankCode;
+		$this->prefix = $prefix;
 	}
 
-	/** @return string */
-	public function getAccount()
+
+	public function getAccount(): string
 	{
-		return $this->prefix . $this->account;
+		return $this->prefix() . $this->account;
 	}
 
-	/** @return string */
-	public function getBankCode()
+
+	public function getBankCode(): string
 	{
-		if ($this->bankCode) {
-			return substr($this->bankCode, 1);
-		}
-		return '';
+		return $this->bankCode;
 	}
 
-	/** @return string */
-	public function getPrefix()
+
+	public function getPrefix(): string
 	{
-		if ($this->prefix) {
-			return substr($this->prefix, 0, -1);
-		}
-		return '';
+		return $this->prefix;
 	}
 
-	public function getAccountAndCode()
+
+	public function getAccountAndCode(): string
 	{
-		return $this->getAccount() . $this->bankCode;
+		return $this->getAccount() . $this->bankCode();
 	}
+
 
 	public function __toString()
 	{
 		return (string) $this->getAccount();
+	}
+
+
+	private function bankCode(): string
+	{
+		if ($this->bankCode !== '') {
+			return '/' . $this->bankCode;
+		}
+		return $this->bankCode;
+	}
+
+
+	private function prefix(): string
+	{
+		if ($this->prefix !== '') {
+			return $this->prefix . '-';
+		}
+		return $this->prefix;
+	}
+
+
+	public static function createInternational(string $account): self
+	{
+		if (!preg_match('~^(?P<account>[a-z0-9]{1,34})(?P<code>/[a-z0-9]{11})?$~i', $account, $find)) {
+			throw new InvalidArgument('Account must have format account[/code].');
+		}
+
+		$bankCode = '';
+		if (isset($find['code']) && $find['code'] !== '') {
+			$bankCode = substr($find['code'], 1);
+		}
+
+		return new self($find['account'], $bankCode, '');
+	}
+
+
+	public static function createNational(string $account): self
+	{
+		if (!preg_match('~^(?P<prefix>\d+-)?(?P<account>\d+)(?P<code>/\d+)?$~', $account, $find)) {
+			throw new InvalidArgument('Account must have format [prefix-]account[/code].');
+		}
+
+		if (strlen($find['account']) > 16) {
+			throw new InvalidArgument('Account max length is 16 chars.');
+		}
+
+		$account = $find['account'];
+		$prefix = $bankCode = '';
+		if (isset($find['code']) && $find['code'] !== '') {
+			$bankCode = substr($find['code'], 1);
+			if (strlen($bankCode) !== 4) {
+				throw new InvalidArgument('Code must have 4 chars length.');
+			}
+		}
+
+		if (isset($find['prefix']) && $find['prefix'] !== '') {
+			$prefix = substr($find['prefix'], 0, -1);
+		}
+		return new self($account, $bankCode, $prefix);
 	}
 
 }

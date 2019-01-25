@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Response\Read;
 
@@ -7,7 +7,6 @@ use DateTime;
 /**
  * Columns 11, 13, 15, 19, 20, 21, 23 and 24 does not exists
  * @todo advancedInformation and bic are not tested
- * @author Milan Matějček
  *
  * @property-read DateTime $moveDate [0]
  * @property-read float $volume [1]

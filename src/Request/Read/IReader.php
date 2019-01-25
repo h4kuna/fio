@@ -1,12 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Request\Read;
 
 use h4kuna\Fio\Response;
 
-/**
- * @author Milan Matějček
- */
 interface IReader
 {
 
@@ -14,26 +11,20 @@ interface IReader
 	const JSON = 'json';
 
 	/** not supported */
-	const
-		XML = 'xml',
-		OFX = 'ofx',
-		HTML = 'html',
-		STA = 'sta',
-		GPC = 'gpc',
-		CSV = 'csv';
+	const XML = 'xml';
+	const OFX = 'ofx';
+	const HTML = 'html';
+	const STA = 'sta';
+	const GPC = 'gpc';
+	const CSV = 'csv';
 
-	public function __construct(Response\Read\ITransactionListFactory $statement);
+	function __construct(Response\Read\ITransactionListFactory $statement);
 
-	/**
-	 * File extension.
-	 * @return string
-	 */
-	public function getExtension();
+	function getExtension(): string;
 
 	/**
 	 * Prepare downloaded data before append.
-	 * @param string $data
-	 * @return Response\Read\TransactionList
 	 */
-	public function create($data);
+	function create(string $data): Response\Read\TransactionList;
+
 }

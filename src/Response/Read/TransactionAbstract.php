@@ -1,13 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Response\Read;
 
-use h4kuna\Fio,
-	h4kuna\Fio\Utils;
+use h4kuna\Fio\Exceptions;
+use h4kuna\Fio\Utils;
 
-/**
- * @author Milan Matějček
- */
 abstract class TransactionAbstract implements \Iterator
 {
 
@@ -17,25 +14,32 @@ abstract class TransactionAbstract implements \Iterator
 	/** @var string */
 	protected $dateFormat;
 
-	public function __construct($dateFormat)
+
+	public function __construct(string $dateFormat)
 	{
 		$this->dateFormat = $dateFormat;
 	}
 
-	public function __get($name)
+
+	/**
+	 * @return mixed
+	 */
+	public function __get(string $name)
 	{
 		if (array_key_exists($name, $this->properties)) {
 			return $this->properties[$name];
 		}
-		throw new Fio\TransactionPropertyException('Property does not exists. ' . $name);
+		throw new Exceptions\Runtime('Property does not exists. ' . $name);
 	}
 
-	public function clearTemporaryValues()
+
+	public function clearTemporaryValues(): void
 	{
-		$this->dateFormat = null;
+		$this->dateFormat = '';
 	}
 
-	public function bindProperty($name, $type, $value)
+
+	public function bindProperty(string $name, string $type, $value): void
 	{
 		$method = 'set' . ucfirst($name);
 		if (method_exists($this, $method)) {
@@ -46,38 +50,47 @@ abstract class TransactionAbstract implements \Iterator
 		$this->properties[$name] = $value;
 	}
 
+
 	public function current()
 	{
 		return current($this->properties);
 	}
+
 
 	public function key()
 	{
 		return key($this->properties);
 	}
 
+
 	public function next()
 	{
 		next($this->properties);
 	}
+
 
 	public function rewind()
 	{
 		reset($this->properties);
 	}
 
+
 	public function valid()
 	{
 		return array_key_exists($this->key(), $this->properties);
 	}
 
-	/** @return array */
-	public function getProperties()
+
+	public function getProperties(): array
 	{
 		return $this->properties;
 	}
 
-	protected function checkValue($value, $type)
+
+	/**
+	 * @return mixed
+	 */
+	protected function checkValue($value, string $type)
 	{
 		switch ($type) {
 			case 'datetime':
@@ -86,20 +99,12 @@ abstract class TransactionAbstract implements \Iterator
 				return floatval($value);
 			case 'string':
 				return trim($value);
-			case 'int': // on 32bit platform works inval() bad with variable symbol
-				if (self::is32bitOS()) {
-					return trim($value);
-				}
+			case 'int':
 				return intval($value);
 			case 'string|null':
 				return trim($value) ?: null;
 		}
 		return $value;
-	}
-
-	private static function is32bitOS()
-	{
-		return PHP_INT_SIZE === 4;
 	}
 
 }

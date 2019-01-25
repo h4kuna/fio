@@ -1,7 +1,6 @@
-/.idea/
-/nbproject/
 /vendor/
 composer.lock
 *~
 /tests/**/output/
 /tests/origin/account.ini
+/coverage.html

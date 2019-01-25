@@ -1,73 +1,91 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Response\Pay;
 
 use SimpleXMLElement;
 
-/**
- * @author Milan Matějček
- */
 class XMLResponse implements IResponse
 {
 
 	/** @var SimpleXMLElement */
 	private $xml;
 
-	/** @param string $xml */
-	public function __construct($xml)
+
+	public function __construct(string $xml)
 	{
 		$this->xml = new SimpleXMLElement($xml);
 	}
 
-	public function isOk()
+
+	public function isOk(): bool
 	{
-		return $this->getError() === 'ok' && $this->getErrorCode() === 0;
+		return $this->status() === 'ok' && $this->code() === 0;
 	}
+
 
 	/**
 	 * READ XML ****************************************************************
 	 * *************************************************************************
 	 */
 
-	/** @return SimpleXMLElement */
-	public function getXml()
+	public function getXml(): SimpleXMLElement
 	{
 		return $this->xml;
 	}
 
-	/** @return int */
-	public function getErrorCode()
+
+	public function code(): int
 	{
 		return (int) $this->getValue('result/errorCode');
 	}
+
 
 	public function getIdInstruction()
 	{
 		return $this->getValue('result/idInstruction');
 	}
 
-	/** @return string */
-	public function getError()
+
+	public function status(): string
 	{
 		return $this->getValue('result/status');
 	}
 
-	/**
-	 * @param string $path
-	 * @return string
-	 */
-	private function getValue($path)
+
+	public function errorMessages(): array
 	{
-		$val = $this->xml->xpath($path . '/text()');
+		$errorMessages = [];
+		/** @var SimpleXMLElement[] $messages */
+		$messages = $this->getXml()->xpath('ordersDetails/detail/messages');
+		foreach ($messages as $message) {
+			foreach ($message as $item) {
+				if (isset($item['errorCode'])) {
+					$errorMessages[(string) $item['errorCode']] = (string) $item;
+				} else {
+					$errorMessages[] = (string) $item;
+				}
+			}
+		}
+		return $errorMessages;
+	}
+
+
+	private function getValue(string $path): string
+	{
+		$val = $this->getXml()->xpath($path . '/text()');
 		return (string) $val[0];
 	}
 
-	/**
-	 * @param string $fileName
-	 */
-	public function saveXML($fileName)
+
+	public function saveXML(string $fileName): void
 	{
-		$this->xml->saveXML($fileName);
+		$this->getXml()->saveXML($fileName);
+	}
+
+
+	public function __toString()
+	{
+		return (string) $this->xml->asXML();
 	}
 
 }

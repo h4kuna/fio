@@ -1,72 +1,84 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Request\Pay\Payment;
 
-use h4kuna\Fio,
-	h4kuna\Fio\Utils;
+use h4kuna\Fio\Exceptions;
 
-/**
- * @author Milan Matějček
- */
 class National extends Property
 {
 
-	const
-		PAYMENT_STANDARD = 431001,
-		PAYMENT_FAST = 431004,
-		PAYMENT_PRIORITY = 431005,
-		PAYMENT_COLLECTION = 431022;
+	use Symbols;
 
-	/** @var int */
-	protected $bankCode = true;
+	public const PAYMENT_STANDARD = 431001;
+	public const PAYMENT_PRIORITY = 431005;
+	public const PAYMENT_COLLECTION = 431022;
+
+	private const TYPES_PAYMENT = [self::PAYMENT_STANDARD, self::PAYMENT_PRIORITY, self::PAYMENT_COLLECTION];
 
 	/** @var string */
-	protected $messageForRecipient;
+	protected $bankCode = '';
+
+	/** @var string */
+	protected $messageForRecipient = '';
 
 	/** @var int */
-	protected $paymentType = false;
+	protected $paymentType = 0;
 
-	/**
-	 * @param int|string $type
-	 * @return self
-	 * @throws Fio\InvalidArgumentException
-	 */
-	public function setPaymentType($type)
+
+	/** @return static */
+	public function setPaymentType(int $type)
 	{
-		static $types = [self::PAYMENT_STANDARD, self::PAYMENT_FAST, self::PAYMENT_PRIORITY, self::PAYMENT_COLLECTION];
-		if (!in_array($type, $types)) {
-			throw new Fio\InvalidArgumentException('Unsupported payment type: ' . $type);
-		}
-		$this->paymentType = $type;
+		$this->paymentType = Exceptions\InvalidArgument::checkIsInList($type, self::TYPES_PAYMENT);;
 		return $this;
 	}
 
-	/**
-	 * @param string $str
-	 * @return self
-	 */
-	public function setMessage($str)
+
+	/** @return static */
+	public function setMessage(string $message)
 	{
-		$this->messageForRecipient = Utils\Strings::substr($str, 140);
+		$this->messageForRecipient = Exceptions\InvalidArgument::check($message, 140);
 		return $this;
 	}
 
-	public function setAccountTo($accountTo, $bankCode = null)
+
+	/** @return static */
+	public function setAccountTo(string $accountTo)
 	{
-		$accountObject = Utils\Strings::createAccount($accountTo, $bankCode);
-		$this->accountTo = $accountObject->getAccount();
-		$this->bankCode = $accountObject->getBankCode();
+		$this->accountTo = $accountTo;
 		return $this;
 	}
 
-	protected function getExpectedProperty()
+
+	/** @return static */
+	public function setBankCode(string $bankCode)
 	{
-		return ['accountFrom', 'currency', 'amount', 'accountTo', 'bankCode',
-			'ks', 'vs', 'ss', 'date', 'messageForRecipient', 'comment',
-			'paymentReason', 'paymentType'];
+		$this->bankCode = $bankCode;
+		return $this;
 	}
 
-	public function getStartXmlElement()
+
+	public function getExpectedProperty(): array
+	{
+		return [
+			// key => mandatory,
+			'accountFrom' => true,
+			'currency' => true,
+			'amount' => true,
+			'accountTo' => true,
+			'bankCode' => true,
+			'ks' => false,
+			'vs' => false,
+			'ss' => false,
+			'date' => true,
+			'messageForRecipient' => false,
+			'comment' => false,
+			'paymentReason' => false,
+			'paymentType' => false,
+		];
+	}
+
+
+	public function getStartXmlElement(): string
 	{
 		return 'DomesticTransaction';
 	}

@@ -1,10 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Account;
 
-/**
- * @author Milan Matějček
- */
 class FioAccount
 {
 
@@ -14,28 +11,35 @@ class FioAccount
 	/** @var string */
 	private $token;
 
-	public function __construct($account, $token)
+
+	public function __construct(string $account, string $token)
 	{
-		$this->account = new Bank($account);
+		$this->account = Bank::createNational($account);
 		$this->token = $token;
 	}
 
-	/** @return string */
-	public function getAccount()
+
+	public function getAccount(): string
 	{
 		return $this->account->getAccount();
 	}
 
-	/** @return string */
-	public function getBankCode()
+
+	public function getBankCode(): string
 	{
 		return $this->account->getBankCode();
 	}
 
-	/** @return string */
-	public function getToken()
+
+	public function getToken(): string
 	{
 		return $this->token;
+	}
+
+
+	public function __toString()
+	{
+		return $this->getAccount();
 	}
 
 }

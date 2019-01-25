@@ -1,12 +1,13 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio;
 
-use h4kuna\Fio\Response\Read\TransactionList,
-	h4kuna\Fio\Utils;
+use h4kuna\Fio\Exceptions\ServiceUnavailable;
+use h4kuna\Fio\Response\Read\TransactionList;
+use h4kuna\Fio\Utils;
 
 /**
- * Read from informtion Fio account
+ * Read from information Fio account
  */
 class FioRead extends Fio
 {
@@ -14,7 +15,7 @@ class FioRead extends Fio
 	/** @var string */
 	private $requestUrl;
 
-	/** @var Response\Read\IReader */
+	/** @var Request\Read\IReader */
 	private $readerFactory;
 
 	public function __construct(Request\IQueue $queue, Account\FioAccount $account, Request\Read\IReader $readerFactory)
@@ -25,12 +26,11 @@ class FioRead extends Fio
 
 	/**
 	 * Movements in date range.
-	 * @param string|int|\DateTime $from
-	 * @param string|int|\DateTime $to
-	 * @return TransactionList
-	 * @throws ServiceUnavailableException
+	 * @param int|string|\DateTimeInterface $from
+	 * @param int|string|\DateTimeInterface $to
+	 * @throws ServiceUnavailable
 	 */
-	public function movements($from = '-1 week', $to = 'now')
+	public function movements($from = '-1 week', $to = 'now'): TransactionList
 	{
 		$data = $this->download('periods/%s/%s/%s/transactions.%s', Utils\Strings::date($from), Utils\Strings::date($to), $this->readerFactory->getExtension());
 		return $this->readerFactory->create($data);
@@ -38,66 +38,68 @@ class FioRead extends Fio
 
 	/**
 	 * List of movemnts.
-	 * @param int $id
-	 * @param int|string|NULL $year format YYYY, NULL is current
-	 * @return IFile
-	 * @throws ServiceUnavailableException
+	 * @param int $moveId
+	 * @param int $year format YYYY, empty string is current
+	 * @throws ServiceUnavailable
 	 */
-	public function movementId($id, $year = null)
+	public function movementId(int $moveId, int $year = 0): TransactionList
 	{
-		if ($year === null) {
-			$year = date('Y');
+		if ($year === 0) {
+			$year = (int) date('Y');
 		}
-		$data = $this->download('by-id/%s/%s/%s/transactions.%s', $year, $id, $this->readerFactory->getExtension());
+		$data = $this->download('by-id/%s/%s/%s/transactions.%s', (string) $year, (string) $moveId, $this->readerFactory->getExtension());
 		return $this->readerFactory->create($data);
 	}
 
+
 	/**
 	 * Last movements from last breakpoint.
-	 * @return IFile
-	 * @throws ServiceUnavailableException
+	 * @throws ServiceUnavailable
 	 */
-	public function lastDownload()
+	public function lastDownload(): TransactionList
 	{
 		$data = $this->download('last/%s/transactions.%s', $this->readerFactory->getExtension());
 		return $this->readerFactory->create($data);
 	}
 
+
 	/**
 	 * Set break point to id.
-	 * @param int $moveId
-	 * @return void
-	 * @throws ServiceUnavailableException
+	 * @throws ServiceUnavailable
 	 */
-	public function setLastId($moveId)
+	public function setLastId(int $moveId): void
 	{
-		$this->download('set-last-id/%s/%s/', $moveId);
+		$this->download('set-last-id/%s/%s/', (string) $moveId);
 	}
+
 
 	/**
 	 * Set breakpoint to date.
-	 * @param mixed $date
-	 * @throws ServiceUnavailableException
+	 * @param int|string|\DateTimeInterface $date
+	 * @throws ServiceUnavailable
 	 */
 	public function setLastDate($date)
 	{
 		$this->download('set-last-date/%s/%s/', Utils\Strings::date($date));
 	}
 
+
 	/**
 	 * Last request url for read. This is for tests.
-	 * @return string
 	 */
-	public function getRequestUrl()
+	public function getRequestUrl(): string
 	{
 		return $this->requestUrl;
 	}
 
-	private function download($apiUrl /* ... params */)
+
+	/**
+	 * @throws ServiceUnavailable
+	 */
+	private function download(string $apiUrl, string ...$args): string
 	{
-		$args = func_get_args();
-		$args[0] = $token = $this->account->getToken();
-		$this->requestUrl = self::REST_URL . vsprintf($apiUrl, $args);
+		$token = $this->account->getToken();
+		$this->requestUrl = self::REST_URL . sprintf($apiUrl, $token, ...$args);
 		return $this->queue->download($token, $this->requestUrl);
 	}
 

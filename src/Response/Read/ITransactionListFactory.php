@@ -1,19 +1,16 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace h4kuna\Fio\Response\Read;
 
-/**
- * @author Milan Matějček
- */
 interface ITransactionListFactory
 {
 
-	/** @return TransactionAbstract */
-	public function createTransaction($data, $dateFormat);
+	function createTransaction(\stdClass $data, string $dateFormat): TransactionAbstract;
 
-	/** @return \stdClass */
-	public function createInfo($data, $dateFormat);
 
-	/** @return TransactionList */
-	public function createTransactionList($info);
+	function createInfo(\stdClass $data, string $dateFormat): \stdClass;
+
+
+	function createTransactionList(\stdClass $info): TransactionList;
+
 }
