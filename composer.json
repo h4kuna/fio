@@ -20,14 +20,25 @@
     "nette/safe-stream": "^2.4",
     "nette/utils": "^2.0 || ^3.0"
   },
-  "autoload": {
-    "psr-4": {
-      "h4kuna\\Fio\\": ["src/", "tests/src/"],
-      "h4kuna\\Fio\\Test\\": ["tests/data/"]
-    }
-  },
   "require-dev": {
     "salamium/testinium": "^0.1",
     "phpstan/phpstan": "^0.11.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "h4kuna\\Fio\\": [
+        "src/"
+      ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "h4kuna\\Fio\\": [
+        "tests/src/"
+      ],
+      "h4kuna\\Fio\\Test\\": [
+        "tests/data/"
+      ]
+    }
   }
 }
