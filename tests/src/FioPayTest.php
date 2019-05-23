@@ -27,10 +27,10 @@ class FioPayTest extends Tester\TestCase
 
 	public function testSend()
 	{
-		$payment1 = $this->fioPay->createNational(100, '24301556/12341234123')
+		$payment1 = $this->fioPay->createNational(100, '24301556/0654')
 			->setDate('2016-01-12');
 		$this->fioPay->addPayment($payment1);
-		$payment2 = $this->fioPay->createNational(200, '9865/09970997099')
+		$payment2 = $this->fioPay->createNational(200, '9865/0123')
 			->setDate('2016-01-12');
 		$xml = $this->fioPay->send($payment2);
 		// Testinium\File::save('payment/multi-pay.xml', $xml);

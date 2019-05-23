@@ -60,7 +60,7 @@ class FioPay extends Fio
 
 	public function createNational(float $amount, string $accountTo, string $bankCode = ''): Pay\Payment\National
 	{
-		$account = Bank::createInternational($accountTo);
+		$account = Bank::createNational($accountTo);
 		if ($bankCode === '') {
 			$bankCode = $account->getBankCode();
 		}

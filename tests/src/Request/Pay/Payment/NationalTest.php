@@ -31,7 +31,7 @@ class NationalTest extends Tester\TestCase
 
 	public function testMinimum()
 	{
-		$pay = $this->fioPay->createNational(500, '987654321/43214321432');
+		$pay = $this->fioPay->createNational(500, '987654321/0123');
 		$pay->setDate('2015-01-23');
 		$xml = $this->xmlFile->setData($pay)->getXml();
 
@@ -39,12 +39,12 @@ class NationalTest extends Tester\TestCase
 		Assert::equal(Testinium\File::load('payment/pay-minimum.xml'), $xml);
 
 		// same Property paymentFactory
-		$pay->setAccountTo('987654321')->setBankCode('43214321432');
+		$pay->setAccountTo('987654321')->setBankCode('0123');
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		Assert::equal(Testinium\File::load('payment/pay-minimum.xml'), $xml);
 
 		// cloned paymentFactory Property
-		$pay = $this->fioPay->createNational(500, '987654321', '43214321432');
+		$pay = $this->fioPay->createNational(500, '987654321', '0123');
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		$expectedXml = Testinium\File::load('payment/pay-minimum.xml');
 		Assert::same(str_replace('2015-01-23', date('Y-m-d'), $expectedXml, $count), $xml);
@@ -54,7 +54,7 @@ class NationalTest extends Tester\TestCase
 
 	public function testMaximum()
 	{
-		$pay = $this->fioPay->createNational(1000, '987654/98749874987')
+		$pay = $this->fioPay->createNational(1000, '987654/0123')
 			->setConstantSymbol(321)
 			->setCurrency('eur')
 			->setMyComment('Lorem ipsum')
@@ -65,6 +65,7 @@ class NationalTest extends Tester\TestCase
 			->setVariableSymbol(123456789)
 			->setPaymentType(National::PAYMENT_PRIORITY);
 		$xml = $this->xmlFile->setData($pay)->getXml();
+		// Testinium\File::save('payment/pay-maximum.xml', $xml);
 		Assert::same(Testinium\File::load('payment/pay-maximum.xml'), $xml);
 	}
 
