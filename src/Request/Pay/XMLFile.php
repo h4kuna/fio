@@ -64,6 +64,7 @@ class XMLFile
 	{
 		$this->xml = new XMLWriter;
 		$this->xml->openMemory();
+        $this->xml->setIndent(true);
 		$this->xml->startDocument('1.0', 'UTF-8');
 		$this->xml->startElement('Import');
 		$this->xml->writeAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
