@@ -96,6 +96,12 @@ class FioPay extends Fio
 	}
 
 
+	public function getXmlFile(): Pay\XMLFile
+    {
+        return $this->xmlFile;
+    }
+
+
 	/**
 	 * @return static
 	 */
