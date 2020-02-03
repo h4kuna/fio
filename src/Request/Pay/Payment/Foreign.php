@@ -50,11 +50,13 @@ abstract class Foreign extends Property
 
 
 	/**
-	 * @param string $bic ISO 9362
+	 * @param null|string $bic ISO 9362
+     * @return $this
 	 */
-	public function setBic(string $bic)
+	public function setBic(?string $bic)
 	{
-		$this->bic = InvalidArgument::checkLength($bic, 11);
+        # pri false bude hodnota preskocena
+	    $this->bic = (is_null($bic)) ? false : InvalidArgument::checkLength($bic, 11);
 		return $this;
 	}
 
