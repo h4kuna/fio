@@ -31,7 +31,7 @@ class InternationalTest extends TestCase
 
 	public function testMinimum()
 	{
-		$pay = $this->fioPay->createInternational(500, 'AT611904300234573201/ABAGATWWXXX', 'Milan', 'Street 44', 'Prague', 'jp', 'Info 1');
+		$pay = $this->fioPay->createInternational(500, 'AT611904300234573201', 'Milan', 'Street 44', 'Prague', 'jp', 'Info 1', 'ABAGATWWXXX');
 		$pay->setDate('2015-01-23');
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		Testinium\File::save('payment/international-minimum.xml', $xml);

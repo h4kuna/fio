@@ -46,15 +46,15 @@ class FioPay extends Fio
 	public function createEuro(float $amount, string $accountTo, string $name, string $bic = ''): Pay\Payment\Euro
 	{
 		$account = Bank::createInternational($accountTo);
-		if ($bic === '') {
-			$bic = $account->getBankCode();
-		}
 
-		return (new Pay\Payment\Euro($this->account))
+		$euro = (new Pay\Payment\Euro($this->account))
 			->setName($name)
 			->setAccountTo($account->getAccount())
-			->setAmount($amount)
-			->setBic($bic);
+			->setAmount($amount);
+		if ($bic !== '') {
+			$euro->setBic($bic);
+		}
+		return $euro;
 	}
 
 
@@ -71,12 +71,9 @@ class FioPay extends Fio
 	}
 
 
-	public function createInternational(float $amount, string $accountTo, string $name, string $street, string $city, string $country, string $info, string $bic = ''): Pay\Payment\International
+	public function createInternational(float $amount, string $accountTo, string $name, string $street, string $city, string $country, string $info, string $bic): Pay\Payment\International
 	{
 		$account = Bank::createInternational($accountTo);
-		if ($bic === '') {
-			$bic = $account->getBankCode();
-		}
 
 		return (new Pay\Payment\International($this->account))
 			->setBic($bic)

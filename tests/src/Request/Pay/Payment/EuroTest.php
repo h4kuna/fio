@@ -41,7 +41,7 @@ class EuroTest extends Tester\TestCase
 
 	public function testMaximum()
 	{
-		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201/ABAGATWWXXX', 'Milan')
+		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'Milan', 'ABAGATWWXXX')
 			->setCity('Prague')
 			->setRemittanceInfo1('info 1')
 			->setRemittanceInfo2('info 2')
