@@ -7,6 +7,9 @@ use h4kuna\Fio\Exceptions\InvalidArgument;
 use Iterator;
 use Nette\Utils\DateTime;
 
+/**
+ * @implements Iterator<string, mixed>
+ */
 abstract class Property implements Iterator
 {
 	/** @var Account\FioAccount */
@@ -33,7 +36,7 @@ abstract class Property implements Iterator
 	 */
 	protected $paymentReason = 0;
 
-	/** @var array */
+	/** @var array<string, array<string, bool>> */
 	private static $iterator = [];
 
 	/** @var string */
@@ -121,6 +124,9 @@ abstract class Property implements Iterator
 	abstract public function getStartXmlElement(): string;
 
 
+	/**
+	 * @return array<string, bool>
+	 */
 	private function getProperties(): array
 	{
 		if ($this->key === null) {
@@ -138,6 +144,10 @@ abstract class Property implements Iterator
 	 * ITERATOR INTERFACE ******************************************************
 	 * *************************************************************************
 	 */
+
+	/**
+	 * @return mixed
+	 */
 	public function current()
 	{
 		$property = $this->key();
@@ -149,9 +159,12 @@ abstract class Property implements Iterator
 	}
 
 
+	/**
+	 * @return string
+	 */
 	public function key()
 	{
-		return key(self::$iterator[$this->key]);
+		return (string) key(self::$iterator[$this->key]);
 	}
 
 
@@ -170,7 +183,7 @@ abstract class Property implements Iterator
 
 	public function valid()
 	{
-		return array_key_exists(key(self::$iterator[$this->key]), self::$iterator[$this->key]);
+		return array_key_exists($this->key(), self::$iterator[$this->key]);
 	}
 
 }

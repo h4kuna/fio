@@ -2,14 +2,18 @@
 
 namespace h4kuna\Fio\Exceptions;
 
+use h4kuna\Fio\Test;
 use Tester\Assert;
 
 require __DIR__ . '/../../bootstrap.php';
 
-class InvalidArgumentTest extends \Tester\TestCase
+/**
+ * @testCase
+ */
+class InvalidArgumentTest extends Test\TestCase
 {
 
-	public function testCheck()
+	public function testCheck(): void
 	{
 		Assert::same('Č', InvalidArgument::check('Č', 1));
 	}
@@ -18,13 +22,13 @@ class InvalidArgumentTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
 	 */
-	public function testCheckThrow()
+	public function testCheckThrow(): void
 	{
 		Assert::same('Č', InvalidArgument::check('Če', 1));
 	}
 
 
-	public function testCheckRange()
+	public function testCheckRange(): void
 	{
 		Assert::same(10, InvalidArgument::checkRange(10, 99));
 	}
@@ -33,13 +37,13 @@ class InvalidArgumentTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
 	 */
-	public function testCheckRangeThrow()
+	public function testCheckRangeThrow(): void
 	{
 		Assert::same(10, InvalidArgument::checkRange(10, 1));
 	}
 
 
-	public function testCheckIsInList()
+	public function testCheckIsInList(): void
 	{
 		Assert::same('foo', InvalidArgument::checkIsInList('foo', ['foo']));
 	}
@@ -48,13 +52,13 @@ class InvalidArgumentTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
 	 */
-	public function testCheckIsInListThrow()
+	public function testCheckIsInListThrow(): void
 	{
 		InvalidArgument::checkIsInList('bar', ['foo']);
 	}
 
 
-	public function testCheckLength()
+	public function testCheckLength(): void
 	{
 		Assert::same('foo', InvalidArgument::checkLength('foo', 3));
 	}
@@ -63,7 +67,7 @@ class InvalidArgumentTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
 	 */
-	public function testCheckLengthThrow()
+	public function testCheckLengthThrow(): void
 	{
 		InvalidArgument::checkLength('bar', 4);
 	}

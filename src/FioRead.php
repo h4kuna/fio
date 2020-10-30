@@ -80,7 +80,7 @@ class FioRead extends Fio
 	 * @param int|string|\DateTimeInterface $date
 	 * @throws ServiceUnavailable
 	 */
-	public function setLastDate($date)
+	public function setLastDate($date): void
 	{
 		$this->download('set-last-date/%s/%s/', Utils\Strings::date($date));
 	}

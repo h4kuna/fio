@@ -17,6 +17,9 @@ interface IQueue
 	function download(string $token, string $url): string;
 
 
+	/**
+	 * @param array<string, string> $post
+	 */
 	function upload(string $url, string $token, array $post, string $filename): Response\Pay\IResponse;
 
 }

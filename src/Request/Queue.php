@@ -19,7 +19,7 @@ class Queue implements IQueue
 	/** @var bool */
 	private $sleep = true;
 
-	/** @var array */
+	/** @var array<int, string> */
 	private $downloadOptions = [];
 
 	/** @var string */
@@ -38,13 +38,16 @@ class Queue implements IQueue
 	}
 
 
+	/**
+	 * @param iterable<int|string, int|string> $downloadOptions
+	 */
 	public function setDownloadOptions(iterable $downloadOptions): void
 	{
 		foreach ($downloadOptions as $define => $value) {
 			if (is_string($define) && defined($define)) {
 				$define = constant($define);
 			}
-			$this->downloadOptions[$define] = $value;
+			$this->downloadOptions[$define] = (string) $value;
 		}
 	}
 

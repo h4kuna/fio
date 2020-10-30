@@ -18,11 +18,11 @@
     "ext-simplexml": "*",
     "guzzlehttp/guzzle": "^6.0",
     "nette/safe-stream": "^2.4",
-    "nette/utils": "^2.0 || ^3.0"
+    "nette/utils": "^2.0 | ^3.0"
   },
   "require-dev": {
     "salamium/testinium": "^0.1",
-    "phpstan/phpstan": "^0.11.1"
+    "phpstan/phpstan": "^0.12"
   },
   "autoload": {
     "psr-4": {

@@ -14,6 +14,9 @@ interface IResponse
 	function code(): int;
 
 
+	/**
+	 * @return array<int, string>
+	 */
 	function errorMessages(): array;
 
 

@@ -6,11 +6,13 @@ use h4kuna\Fio;
 use h4kuna\Fio\Test;
 use Salamium\Testinium;
 use Tester\Assert;
-use Tester\TestCase;
 
 require __DIR__ . '/../../../../bootstrap.php';
 
-class InternationalTest extends TestCase
+/**
+ * @testCase
+ */
+class InternationalTest extends Test\TestCase
 {
 	/** @var Fio\FioPay */
 	private $fioPay;
@@ -28,7 +30,7 @@ class InternationalTest extends TestCase
 	}
 
 
-	public function testMinimum()
+	public function testMinimum(): void
 	{
 		$pay = $this->fioPay->createInternational(500, 'AT611904300234573201', 'Milan', 'Street 44', 'Prague', 'jp', 'Info 1', 'ABAGATWWXXX');
 		$pay->setDate('2015-01-23');
@@ -38,7 +40,7 @@ class InternationalTest extends TestCase
 	}
 
 
-	public function testMaximum()
+	public function testMaximum(): void
 	{
 		$pay = $this->fioPay->createInternational(500, 'AT611904300234573201', 'Milan', 'Street 44', 'Prague', 'jp', 'Info 1', 'ABAGATWWXXX')
 			->setDetailsOfCharges(International::CHARGES_SHA)

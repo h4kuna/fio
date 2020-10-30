@@ -23,6 +23,12 @@ final class InvalidArgument extends \InvalidArgumentException
 	}
 
 
+	/**
+	 * @template T
+	 * @param T $value
+	 * @param array<T> $list
+	 * @return T
+	 */
 	public static function checkIsInList($value, array $list)
 	{
 		if (!in_array($value, $list, true)) {

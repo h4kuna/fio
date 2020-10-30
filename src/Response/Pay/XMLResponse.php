@@ -39,7 +39,7 @@ class XMLResponse implements IResponse
 	}
 
 
-	public function getIdInstruction()
+	public function getIdInstruction(): string
 	{
 		return $this->getValue('result/idInstruction');
 	}
@@ -51,6 +51,9 @@ class XMLResponse implements IResponse
 	}
 
 
+	/**
+	 * @return array<string|int, string>
+	 */
 	public function errorMessages(): array
 	{
 		$errorMessages = [];
@@ -72,6 +75,9 @@ class XMLResponse implements IResponse
 	private function getValue(string $path): string
 	{
 		$val = $this->getXml()->xpath($path . '/text()');
+		if ($val === false || !isset($val[0])) {
+			return '';
+		}
 		return (string) $val[0];
 	}
 

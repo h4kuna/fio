@@ -4,12 +4,14 @@ namespace h4kuna\Fio;
 
 use h4kuna\Fio\Test;
 use Salamium\Testinium;
-use Tester;
 use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
 
-class FioReadTest extends Tester\TestCase
+/**
+ * @testCase
+ */
+class FioReadTest extends Test\TestCase
 {
 	/** @var Test\FioFactory */
 	private $fioFactory;
@@ -21,7 +23,7 @@ class FioReadTest extends Tester\TestCase
 	private $token;
 
 
-	public function testMovements()
+	public function testMovements(): void
 	{
 		$data = $this->fioRead->movements(1420070400, '2015-04-16');
 		$moveId = 7139752766;
@@ -52,7 +54,7 @@ class FioReadTest extends Tester\TestCase
 	}
 
 
-	public function testMovementsEmpty()
+	public function testMovementsEmpty(): void
 	{
 		$data = $this->fioRead->movements('2011-01-01', '2011-01-02');
 
@@ -64,7 +66,7 @@ class FioReadTest extends Tester\TestCase
 	}
 
 
-	public function testMovementId()
+	public function testMovementId(): void
 	{
 		$fioRead = $this->fioFactory->createFioRead('bar');
 		$token = $fioRead->getAccount()->getToken();
@@ -81,7 +83,7 @@ class FioReadTest extends Tester\TestCase
 	}
 
 
-	public function testLastDownload()
+	public function testLastDownload(): void
 	{
 		$data = $this->fioRead->lastDownload();
 		if (Request\Read\Files\Json::isJsonBug()) {
@@ -93,14 +95,14 @@ class FioReadTest extends Tester\TestCase
 	}
 
 
-	public function testSetLastId()
+	public function testSetLastId(): void
 	{
 		$this->fioRead->setLastId(7155451447);
 		Assert::equal(Fio::REST_URL . 'set-last-id/' . $this->token . "/7155451447/", $this->fioRead->getRequestUrl());
 	}
 
 
-	public function testSetLastDate()
+	public function testSetLastDate(): void
 	{
 		$dt = new \DateTime('-1 week');
 		$this->fioRead->setLastDate('-1 week');

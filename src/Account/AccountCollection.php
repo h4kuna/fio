@@ -6,6 +6,7 @@ use h4kuna\Fio\Exceptions;
 
 /**
  * @author Tomáš Jacík
+ * @implements \IteratorAggregate<int, FioAccount>
  */
 class AccountCollection implements \Countable, \IteratorAggregate
 {
@@ -57,6 +58,9 @@ class AccountCollection implements \Countable, \IteratorAggregate
 	}
 
 
+	/**
+	 * @return \ArrayIterator<int, FioAccount>
+	 */
 	public function getIterator(): \ArrayIterator
 	{
 		return new \ArrayIterator($this->accounts);

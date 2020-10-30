@@ -4,18 +4,19 @@ namespace h4kuna\Fio\Response\Read;
 
 use h4kuna\Fio\Response\Pay\XMLResponse;
 use Salamium\Testinium;
-use Tester;
+use h4kuna\Fio\Test;
 use Tester\Assert;
 
 require_once __DIR__ . '/../../../bootstrap.php';
 
 /**
  * @author Martin Pecha
+ * @testCase
  */
-class ServerExceptionTest extends Tester\TestCase
+final class ServerExceptionTest extends Test\TestCase
 {
 
-	public function testResponse()
+	public function testResponse(): void
 	{
 		$xml = Testinium\File::load('server-exception.xml');
 		$xmlResponse = new XMLResponse($xml);

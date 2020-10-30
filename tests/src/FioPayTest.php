@@ -9,7 +9,10 @@ use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
 
-class FioPayTest extends Tester\TestCase
+/**
+ * @testCase
+ */
+class FioPayTest extends Test\TestCase
 {
 	/** @var FioPay */
 	private $fioPay;
@@ -24,7 +27,7 @@ class FioPayTest extends Tester\TestCase
 	}
 
 
-	public function testSend()
+	public function testSend(): void
 	{
 		$payment1 = $this->fioPay->createNational(100, '24301556/0654')
 			->setDate('2016-01-12');

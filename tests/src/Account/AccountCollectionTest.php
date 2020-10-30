@@ -3,17 +3,19 @@
 namespace h4kuna\Fio\Account;
 
 use h4kuna\Fio\Exceptions\InvalidArgument;
+use h4kuna\Fio\Test;
 use Tester\Assert;
 
 require __DIR__ . '/../../bootstrap.php';
 
 /**
  * @author Tomáš Jacík
+ * @testCase
  */
-class AccountCollectionTest extends \Tester\TestCase
+class AccountCollectionTest extends Test\TestCase
 {
 
-	public function testAddAccount()
+	public function testAddAccount(): void
 	{
 		$account1 = new FioAccount('323536', 'foo');
 		Assert::equal('', $account1->getBankCode());
@@ -30,7 +32,7 @@ class AccountCollectionTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
 	 */
-	public function testInvalidAlias()
+	public function testInvalidAlias(): void
 	{
 		$account1 = new FioAccount('323536', 'foo');
 		$accounts = new AccountCollection;
@@ -39,7 +41,7 @@ class AccountCollectionTest extends \Tester\TestCase
 	}
 
 
-	public function testCount()
+	public function testCount(): void
 	{
 		$account1 = new FioAccount('323536', 'foo');
 		$account2 = new FioAccount('978654', 'bar');
@@ -52,7 +54,7 @@ class AccountCollectionTest extends \Tester\TestCase
 	}
 
 
-	public function testIteration()
+	public function testIteration(): void
 	{
 		$account1 = new FioAccount('323536', 'foo');
 		$account2 = new FioAccount('978654', 'bar');
@@ -70,7 +72,7 @@ class AccountCollectionTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\InvalidState
 	 */
-	public function testEmpty()
+	public function testEmpty(): void
 	{
 		(new AccountCollection)->account();
 	}
@@ -79,7 +81,7 @@ class AccountCollectionTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
 	 */
-	public function testDuplicity()
+	public function testDuplicity(): void
 	{
 		$account1 = new FioAccount('323536', 'foo');
 		$account2 = new FioAccount('978654', 'bar');
@@ -89,7 +91,7 @@ class AccountCollectionTest extends \Tester\TestCase
 	}
 
 
-	public function testAccounCollectionFactoryThrowAccount()
+	public function testAccounCollectionFactoryThrowAccount(): void
 	{
 		Assert::throws(function () {
 			AccountCollectionFactory::create([
@@ -101,7 +103,7 @@ class AccountCollectionTest extends \Tester\TestCase
 	}
 
 
-	public function testAccounCollectionFactoryThrowToken()
+	public function testAccounCollectionFactoryThrowToken(): void
 	{
 		Assert::throws(function () {
 			AccountCollectionFactory::create([
