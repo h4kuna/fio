@@ -6,7 +6,6 @@ use h4kuna\Fio\Exceptions;
 
 class International extends Foreign
 {
-
 	public const CHARGES_OUR = 470501;
 	public const CHARGES_BEN = 470502;
 	public const CHARGES_SHA = 470503;
@@ -25,9 +24,9 @@ class International extends Foreign
 	/** @var int */
 	protected $detailsOfCharges = self::CHARGES_BEN;
 
+
 	/**
 	 * Section in manual 6.3.4.
-	 * @param int $type
 	 * @return static
 	 * @throws Exceptions\InvalidArgument
 	 */

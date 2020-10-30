@@ -5,14 +5,15 @@ namespace h4kuna\Fio\Request\Pay\Payment;
 use h4kuna\Fio;
 use h4kuna\Fio\Test;
 use Salamium\Testinium;
-use Tester;
 use Tester\Assert;
 
 require __DIR__ . '/../../../../bootstrap.php';
 
-class NationalTest extends Tester\TestCase
+/**
+ * @testCase
+ */
+class NationalTest extends Test\TestCase
 {
-
 	/** @var Fio\FioPay */
 	private $fioPay;
 
@@ -29,7 +30,7 @@ class NationalTest extends Tester\TestCase
 	}
 
 
-	public function testMinimum()
+	public function testMinimum(): void
 	{
 		$pay = $this->fioPay->createNational(500, '987654321/0123');
 		$pay->setDate('2015-01-23');
@@ -52,7 +53,7 @@ class NationalTest extends Tester\TestCase
 	}
 
 
-	public function testMaximum()
+	public function testMaximum(): void
 	{
 		$pay = $this->fioPay->createNational(1000, '987654/0123')
 			->setConstantSymbol(321)

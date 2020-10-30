@@ -37,4 +37,4 @@ $response = $fioPay->send($euro);
 
 dump($log->getFilename());
 echo($log->getContent());
-dumpe($response->isOk(), $response->status(), $response->code(), $response->errorMessages());
+dumpe($response->status());

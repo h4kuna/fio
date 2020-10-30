@@ -5,10 +5,12 @@ namespace h4kuna\Fio\Response\Read;
 use h4kuna\Fio\Exceptions;
 use h4kuna\Fio\Utils;
 
+/**
+ * @implements \Iterator<string, mixed>
+ */
 abstract class TransactionAbstract implements \Iterator
 {
-
-	/** @var array */
+	/** @var array<string, mixed> */
 	private $properties = [];
 
 	/** @var string */
@@ -39,6 +41,9 @@ abstract class TransactionAbstract implements \Iterator
 	}
 
 
+	/**
+	 * @param mixed $value
+	 */
 	public function bindProperty(string $name, string $type, $value): void
 	{
 		$method = 'set' . ucfirst($name);
@@ -51,15 +56,25 @@ abstract class TransactionAbstract implements \Iterator
 	}
 
 
+	/**
+	 * @return mixed
+	 */
 	public function current()
 	{
 		return current($this->properties);
 	}
 
 
+	/**
+	 * @return string
+	 */
 	public function key()
 	{
-		return key($this->properties);
+		$key = key($this->properties);
+		if ($key === NULL) {
+			throw new Exceptions\InvalidState('Key cold\'nt be null.');
+		}
+		return $key;
 	}
 
 
@@ -81,6 +96,7 @@ abstract class TransactionAbstract implements \Iterator
 	}
 
 
+	/** @return array<string, mixed> */
 	public function getProperties(): array
 	{
 		return $this->properties;
@@ -88,6 +104,7 @@ abstract class TransactionAbstract implements \Iterator
 
 
 	/**
+	 * @param mixed $value
 	 * @return mixed
 	 */
 	protected function checkValue($value, string $type)

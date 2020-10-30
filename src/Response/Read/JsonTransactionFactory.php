@@ -7,7 +7,6 @@ use h4kuna\Fio\Utils;
 
 class JsonTransactionFactory implements ITransactionListFactory
 {
-
 	/** @var string[][] */
 	private $property;
 
@@ -65,7 +64,6 @@ class JsonTransactionFactory implements ITransactionListFactory
 
 
 	/**
-	 * @param TransactionAbstract $class
 	 * @return string[][]
 	 */
 	private function metaProperty(TransactionAbstract $class): array

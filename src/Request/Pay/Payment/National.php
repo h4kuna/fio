@@ -6,7 +6,6 @@ use h4kuna\Fio\Exceptions;
 
 class National extends Property
 {
-
 	use Symbols;
 
 	public const PAYMENT_STANDARD = 431001;

@@ -2,16 +2,19 @@
 
 namespace h4kuna\Fio\Response\Pay;
 
+use h4kuna\Fio\Test;
 use Salamium\Testinium;
-use Tester;
 use Tester\Assert;
 
 require __DIR__ . '/../../../bootstrap.php';
 
-class XMLResponseTest extends Tester\TestCase
+/**
+ * @testCase
+ */
+class XMLResponseTest extends Test\TestCase
 {
 
-	public function testResponse()
+	public function testResponse(): void
 	{
 		$xml = Testinium\File::load('payment/response.xml');
 		$xmlResponse = new XMLResponse($xml);
@@ -20,7 +23,7 @@ class XMLResponseTest extends Tester\TestCase
 	}
 
 
-	public function testErrorResponse()
+	public function testErrorResponse(): void
 	{
 		$xml = Testinium\File::load('payment/response-error.xml');
 		$xmlResponse = new XMLResponse($xml);

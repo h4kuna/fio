@@ -10,7 +10,6 @@ use h4kuna\Fio\Response\Pay\IResponse;
 
 class FioPay extends Fio
 {
-
 	private const LANGS = ['en', 'cs', 'sk'];
 	private const EXTENSIONS = ['xml', 'abo'];
 
@@ -71,7 +70,16 @@ class FioPay extends Fio
 	}
 
 
-	public function createInternational(float $amount, string $accountTo, string $name, string $street, string $city, string $country, string $info, string $bic): Pay\Payment\International
+	public function createInternational(
+		float $amount,
+		string $accountTo,
+		string $name,
+		string $street,
+		string $city,
+		string $country,
+		string $info,
+		string $bic
+	): Pay\Payment\International
 	{
 		$account = Bank::createInternational($accountTo);
 

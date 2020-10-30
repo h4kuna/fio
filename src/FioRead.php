@@ -11,18 +11,19 @@ use h4kuna\Fio\Utils;
  */
 class FioRead extends Fio
 {
-
 	/** @var string */
 	private $requestUrl;
 
 	/** @var Request\Read\IReader */
 	private $readerFactory;
 
+
 	public function __construct(Request\IQueue $queue, Account\FioAccount $account, Request\Read\IReader $readerFactory)
 	{
 		parent::__construct($queue, $account);
 		$this->readerFactory = $readerFactory;
 	}
+
 
 	/**
 	 * Movements in date range.
@@ -35,6 +36,7 @@ class FioRead extends Fio
 		$data = $this->download('periods/%s/%s/%s/transactions.%s', Utils\Strings::date($from), Utils\Strings::date($to), $this->readerFactory->getExtension());
 		return $this->readerFactory->create($data);
 	}
+
 
 	/**
 	 * List of movemnts.
@@ -78,7 +80,7 @@ class FioRead extends Fio
 	 * @param int|string|\DateTimeInterface $date
 	 * @throws ServiceUnavailable
 	 */
-	public function setLastDate($date)
+	public function setLastDate($date): void
 	{
 		$this->download('set-last-date/%s/%s/', Utils\Strings::date($date));
 	}

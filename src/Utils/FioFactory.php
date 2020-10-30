@@ -8,7 +8,6 @@ use h4kuna\Fio\Response\Read\Transaction;
 
 class FioFactory
 {
-
 	/** @var Account\AccountCollection */
 	private $accountCollection;
 
@@ -22,6 +21,9 @@ class FioFactory
 	protected $temp;
 
 
+	/**
+	 * @param array<array{token: string, account: string}> $accounts
+	 */
 	public function __construct(array $accounts, string $transactionClass = Transaction::class, string $temp = '')
 	{
 		$this->setTemp($temp);
@@ -69,6 +71,9 @@ class FioFactory
 	}
 
 
+	/**
+	 * @param array<array{token: string, account: string}> $accounts
+	 */
 	protected function createAccountCollection(array $accounts): Account\AccountCollection
 	{
 		return Account\AccountCollectionFactory::create($accounts);

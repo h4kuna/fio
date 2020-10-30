@@ -4,21 +4,27 @@ namespace h4kuna\Fio\Test;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
 
 class Response implements ResponseInterface
 {
-
 	public const RESPONSE_CODE = 1;
 	public const EXCEPTION_CLASS = 2;
 
+	/** @var string */
 	private $method;
 
+	/** @var string|UriInterface */
 	private $uri;
 
-	private $options;
+	/** @var array */
+	private $options = [];
 
 
-	public function __construct($method, $uri, $options)
+	/**
+	 * @param string|UriInterface $uri
+	 */
+	public function __construct(string $method, $uri, array $options)
 	{
 		$this->method = $method;
 		$this->uri = $uri;
@@ -58,6 +64,7 @@ class Response implements ResponseInterface
 			}
 			return ['text/xml;charset=UTF-8'];
 		}
+		return [];
 	}
 
 

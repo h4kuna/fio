@@ -7,7 +7,7 @@ use Salamium\Testinium\File;
 
 class Stream implements StreamInterface
 {
-
+	/** @var bool */
 	private $isOk;
 
 
@@ -59,13 +59,13 @@ class Stream implements StreamInterface
 	}
 
 
-	public function seek($offset, $whence = SEEK_SET)
+	public function seek($offset, $whence = SEEK_SET): void
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function rewind()
+	public function rewind(): void
 	{
 		throw new \RuntimeException('Not implemented.');
 	}

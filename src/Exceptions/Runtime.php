@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Exceptions;
 
-class Runtime extends \RuntimeException
+final class Runtime extends \RuntimeException
 {
 
 }

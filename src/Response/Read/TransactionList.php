@@ -2,12 +2,17 @@
 
 namespace h4kuna\Fio\Response\Read;
 
+/**
+ * @implements \Iterator<int, Transaction>
+ */
 final class TransactionList implements \Iterator, \Countable
 {
-
 	/** @var TransactionAbstract[] */
 	private $transactions = [];
 
+	/**
+	 * @var \stdClass
+	 */
 	private $info;
 
 
@@ -36,9 +41,12 @@ final class TransactionList implements \Iterator, \Countable
 	}
 
 
+	/**
+	 * @return int
+	 */
 	public function key()
 	{
-		return key($this->transactions);
+		return (int) key($this->transactions);
 	}
 
 

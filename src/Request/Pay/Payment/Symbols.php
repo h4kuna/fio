@@ -6,7 +6,6 @@ use h4kuna\Fio\Exceptions\InvalidArgument;
 
 trait Symbols
 {
-
 	/** @var int */
 	protected $ks = 0;
 
@@ -18,7 +17,6 @@ trait Symbols
 
 
 	/**
-	 * @param int $ks
 	 * @return static
 	 */
 	public function setConstantSymbol(int $ks)

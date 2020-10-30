@@ -3,6 +3,7 @@
 namespace h4kuna\Fio\Request;
 
 use GuzzleHttp;
+use h4kuna\Fio\Test;
 use h4kuna\Fio\Test\ClientMock;
 use h4kuna\Fio\Test\Response;
 use Salamium\Testinium\File;
@@ -10,16 +11,18 @@ use Tester\Assert;
 
 require __DIR__ . '/../../bootstrap.php';
 
-class QueueTest extends \Tester\TestCase
+/**
+ * @testCase
+ */
+class QueueTest extends Test\TestCase
 {
-
 	private const TOKEN = 'test_test_test_test_test_test_test';
 
 
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\ServiceUnavailable
 	 */
-	public function testDownloadThrowServiceUnavailable()
+	public function testDownloadThrowServiceUnavailable(): void
 	{
 		$queue = self::createQueue();
 		$queue->setDownloadOptions([
@@ -32,7 +35,7 @@ class QueueTest extends \Tester\TestCase
 	/**
 	 * @throws GuzzleHttp\Exception\ClientException
 	 */
-	public function testDownloadThrowClientException()
+	public function testDownloadThrowClientException(): void
 	{
 		$queue = self::createQueue();
 		$queue->setDownloadOptions([
@@ -45,7 +48,7 @@ class QueueTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\ServiceUnavailable
 	 */
-	public function testDownloadThrowServerException()
+	public function testDownloadThrowServerException(): void
 	{
 		$queue = self::createQueue();
 		$queue->setDownloadOptions([
@@ -55,7 +58,7 @@ class QueueTest extends \Tester\TestCase
 	}
 
 
-	public function testDownloadOk()
+	public function testDownloadOk(): void
 	{
 		$queue = self::createQueue();
 		$xml = $queue->download(self::TOKEN, 'http://www.example.com/');
@@ -66,7 +69,7 @@ class QueueTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\QueueLimit
 	 */
-	public function testDownloadThrowQueueLimit()
+	public function testDownloadThrowQueueLimit(): void
 	{
 		$queue = self::createQueue();
 		$queue->setSleep(true);
@@ -78,7 +81,7 @@ class QueueTest extends \Tester\TestCase
 	}
 
 
-	public function testUpload()
+	public function testUpload(): void
 	{
 		$queue = self::createQueue();
 		$xml = $queue->upload('http://www.example.com/', self::TOKEN, [

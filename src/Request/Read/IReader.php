@@ -6,7 +6,6 @@ use h4kuna\Fio\Response;
 
 interface IReader
 {
-
 	/** supported */
 	const JSON = 'json';
 
@@ -18,9 +17,12 @@ interface IReader
 	const GPC = 'gpc';
 	const CSV = 'csv';
 
+
 	function __construct(Response\Read\ITransactionListFactory $statement);
 
+
 	function getExtension(): string;
+
 
 	/**
 	 * Prepare downloaded data before append.

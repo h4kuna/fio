@@ -4,9 +4,7 @@ namespace h4kuna\Fio\Request\Pay\Payment;
 
 class Euro extends Foreign
 {
-
 	use Symbols;
-
 
 	public function getExpectedProperty(): array
 	{

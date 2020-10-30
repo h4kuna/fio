@@ -3,13 +3,17 @@
 namespace h4kuna\Fio\Account;
 
 use Tester\Assert;
+use h4kuna\Fio\Test;
 
 require __DIR__ . '/../../bootstrap.php';
 
-class BankTest extends \Tester\TestCase
+/**
+ * @testCase
+ */
+class BankTest extends Test\TestCase
 {
 
-	public function testFull()
+	public function testFull(): void
 	{
 		$account = Bank::createNational('123-123456789/0987');
 		Assert::same('123', $account->getPrefix());
@@ -19,7 +23,7 @@ class BankTest extends \Tester\TestCase
 	}
 
 
-	public function testCode()
+	public function testCode(): void
 	{
 		$account = Bank::createNational('123456789/0987');
 		Assert::same('', $account->getPrefix());
@@ -28,7 +32,7 @@ class BankTest extends \Tester\TestCase
 	}
 
 
-	public function testPrefix()
+	public function testPrefix(): void
 	{
 		$account = Bank::createNational('123-123456789');
 		Assert::same('123', $account->getPrefix());
@@ -38,7 +42,7 @@ class BankTest extends \Tester\TestCase
 	}
 
 
-	public function testMinimum()
+	public function testMinimum(): void
 	{
 		$account = Bank::createNational('123456789');
 		Assert::same('', $account->getPrefix());
@@ -49,7 +53,7 @@ class BankTest extends \Tester\TestCase
 	}
 
 
-	public function testEuroFull()
+	public function testEuroFull(): void
 	{
 		$account = Bank::createInternational('EE123745671789355096/LAVBDD33XXX');
 		Assert::same('EE123745671789355096', $account->getAccount());
@@ -58,7 +62,7 @@ class BankTest extends \Tester\TestCase
 	}
 
 
-	public function testEuroMinimum()
+	public function testEuroMinimum(): void
 	{
 		$account = Bank::createInternational('EE123745671789355096');
 		Assert::same('EE123745671789355096', $account->getAccount());
@@ -71,7 +75,7 @@ class BankTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
 	 */
-	public function testEuroThrowBadAccount()
+	public function testEuroThrowBadAccount(): void
 	{
 		Bank::createInternational('EE1237456717-9355096');
 	}
@@ -81,7 +85,7 @@ class BankTest extends \Tester\TestCase
 	 * @dataProvider bad-accounts.ini
 	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
 	 */
-	public function testBadAccount($account)
+	public function testBadAccount(string $account): void
 	{
 		Bank::createNational($account);
 	}

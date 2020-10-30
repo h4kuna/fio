@@ -9,10 +9,13 @@ use Tester\Assert;
 
 require __DIR__ . '/../../../bootstrap.php';
 
-class JsonStatementFactoryTest extends \Tester\TestCase
+/**
+ * @testCase
+ */
+final class JsonStatementFactoryTest extends Test\TestCase
 {
 
-	public function testCustonTransactionClass()
+	public function testCustonTransactionClass(): void
 	{
 		$fioFactory = new Test\FioFactory(MyTransaction::class);
 		$json = $fioFactory->getReader();
@@ -29,7 +32,7 @@ class JsonStatementFactoryTest extends \Tester\TestCase
 	/**
 	 * @throws \h4kuna\Fio\Exceptions\Runtime
 	 */
-	public function testThrow()
+	public function testThrow(): void
 	{
 		$factory = new JsonTransactionFactory(WrongTransaction::class);
 		$factory->createTransaction(new \stdClass(), 'Y');
@@ -37,7 +40,7 @@ class JsonStatementFactoryTest extends \Tester\TestCase
 
 }
 
-class WrongTransaction extends \stdClass
+final class WrongTransaction extends \stdClass
 {
 
 }
@@ -47,19 +50,19 @@ class WrongTransaction extends \stdClass
  * @property-read string $to_account [2]
  * @property-read string $bank_code [3]
  */
-class MyTransaction extends TransactionAbstract
+final class MyTransaction extends TransactionAbstract
 {
 
 	/** custom method */
-	public function setBank_code($value)
+	public function setBank_code(?string $value): string
 	{
 		return str_pad((string) $value, 4, '0', STR_PAD_LEFT);
 	}
 
 
-	public function setTo_account($value)
+	public function setTo_account(?string $value): string
 	{
-		if (!$value) {
+		if ($value === null) {
 			return '';
 		}
 		return $value;

@@ -8,13 +8,13 @@ use Nette\Utils\DateTime;
 final class Strings
 {
 
-	private function __construct() {}
+	private function __construct()
+	{
+	}
 
 
 	/**
 	 * @param int|string|\DateTimeInterface $date
-	 * @param string $format
-	 * @return string
 	 */
 	public static function date($date, string $format = 'Y-m-d'): string
 	{

@@ -6,10 +6,10 @@ use h4kuna\Fio\Response;
 
 interface IQueue
 {
-
 	/** @var int [s] */
 	const WAIT_TIME = 30;
 	const HEADER_CONFLICT = 409;
+
 
 	/**
 	 * Return raw data from source.
@@ -17,6 +17,9 @@ interface IQueue
 	function download(string $token, string $url): string;
 
 
+	/**
+	 * @param array<string, string> $post
+	 */
 	function upload(string $url, string $token, array $post, string $filename): Response\Pay\IResponse;
 
 }

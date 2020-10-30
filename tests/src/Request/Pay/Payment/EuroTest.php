@@ -10,9 +10,11 @@ use Tester;
 
 require __DIR__ . '/../../../../bootstrap.php';
 
-class EuroTest extends Tester\TestCase
+/**
+ * @testCase
+ */
+class EuroTest extends Test\TestCase
 {
-
 	/** @var Fio\FioPay */
 	private $fioPay;
 
@@ -29,7 +31,7 @@ class EuroTest extends Tester\TestCase
 	}
 
 
-	public function testMinimum()
+	public function testMinimum(): void
 	{
 		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'Milan', 'LAVBDD33XXX');
 		$pay->setDate('2015-01-23');
@@ -39,7 +41,7 @@ class EuroTest extends Tester\TestCase
 	}
 
 
-	public function testMaximum()
+	public function testMaximum(): void
 	{
 		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'Milan', 'ABAGATWWXXX')
 			->setCity('Prague')
