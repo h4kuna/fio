@@ -4,7 +4,6 @@ namespace h4kuna\Fio\Response\Read;
 
 final class TransactionList implements \Iterator, \Countable
 {
-
 	/** @var TransactionAbstract[] */
 	private $transactions = [];
 

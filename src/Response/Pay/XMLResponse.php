@@ -6,7 +6,6 @@ use SimpleXMLElement;
 
 class XMLResponse implements IResponse
 {
-
 	/** @var SimpleXMLElement */
 	private $xml;
 

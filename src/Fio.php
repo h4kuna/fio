@@ -10,7 +10,6 @@ if (Utils\Strings::is32bitOS()) {
 
 class Fio
 {
-
 	/** @var string url Fio REST API */
 	public const REST_URL = 'https://www.fio.cz/ib_api/rest/';
 

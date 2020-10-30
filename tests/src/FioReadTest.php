@@ -11,7 +11,6 @@ require __DIR__ . '/../bootstrap.php';
 
 class FioReadTest extends Tester\TestCase
 {
-
 	/** @var Test\FioFactory */
 	private $fioFactory;
 

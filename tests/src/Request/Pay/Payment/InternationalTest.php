@@ -12,7 +12,6 @@ require __DIR__ . '/../../../../bootstrap.php';
 
 class InternationalTest extends TestCase
 {
-
 	/** @var Fio\FioPay */
 	private $fioPay;
 

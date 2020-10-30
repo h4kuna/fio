@@ -12,7 +12,6 @@ require __DIR__ . '/../../bootstrap.php';
 
 class QueueTest extends \Tester\TestCase
 {
-
 	private const TOKEN = 'test_test_test_test_test_test_test';
 
 

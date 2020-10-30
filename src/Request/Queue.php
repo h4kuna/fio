@@ -10,7 +10,6 @@ use Psr\Http\Message\ResponseInterface;
 
 class Queue implements IQueue
 {
-
 	/** @var string[] */
 	private static $tokens = [];
 
@@ -124,6 +123,9 @@ class Queue implements IQueue
 	}
 
 
+	/**
+	 * @return resource
+	 */
 	private static function createFileResource(string $filePath)
 	{
 		$file = fopen(self::safeProtocol($filePath), 'w');

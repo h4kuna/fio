@@ -9,8 +9,7 @@ use h4kuna\Fio\Exceptions;
  */
 class AccountCollection implements \Countable, \IteratorAggregate
 {
-
-	/** @var FioAccount[] */
+	/** @var array<FioAccount> */
 	private $accounts = [];
 
 

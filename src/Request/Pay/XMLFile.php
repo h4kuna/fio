@@ -8,7 +8,6 @@ use XMLWriter;
 
 class XMLFile
 {
-
 	/** @var XMLWriter|null */
 	private $xml;
 

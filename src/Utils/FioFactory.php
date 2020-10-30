@@ -8,7 +8,6 @@ use h4kuna\Fio\Response\Read\Transaction;
 
 class FioFactory
 {
-
 	/** @var Account\AccountCollection */
 	private $accountCollection;
 

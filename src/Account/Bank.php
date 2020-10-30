@@ -6,7 +6,6 @@ use h4kuna\Fio\Exceptions\InvalidArgument;
 
 class Bank
 {
-
 	/** @var string */
 	private $account;
 

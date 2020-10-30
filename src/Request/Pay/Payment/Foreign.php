@@ -7,7 +7,6 @@ use h4kuna\Fio\Exceptions\InvalidArgument;
 
 abstract class Foreign extends Property
 {
-
 	public const PAYMENT_STANDARD = 431008;
 	public const PAYMENT_PRIORITY = 431009;
 

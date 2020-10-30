@@ -7,8 +7,7 @@ use h4kuna\Fio\Utils;
 
 abstract class TransactionAbstract implements \Iterator
 {
-
-	/** @var array */
+	/** @var array<string, mixed> */
 	private $properties = [];
 
 	/** @var string */

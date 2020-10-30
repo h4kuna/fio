@@ -7,7 +7,6 @@ use Psr\Http\Message\StreamInterface;
 
 class Response implements ResponseInterface
 {
-
 	public const RESPONSE_CODE = 1;
 	public const EXCEPTION_CLASS = 2;
 

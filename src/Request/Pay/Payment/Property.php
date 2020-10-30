@@ -9,7 +9,6 @@ use Nette\Utils\DateTime;
 
 abstract class Property implements Iterator
 {
-
 	/** @var Account\FioAccount */
 	protected $accountFrom;
 

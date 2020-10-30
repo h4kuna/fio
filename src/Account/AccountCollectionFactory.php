@@ -7,6 +7,9 @@ use h4kuna\Fio\Exceptions;
 class AccountCollectionFactory
 {
 
+	/**
+	 * @param array<array{token: string, account: string}> $accounts
+	 */
 	public static function create(array $accounts): AccountCollection
 	{
 		$accountCollection = new AccountCollection;

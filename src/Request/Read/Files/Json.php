@@ -9,7 +9,6 @@ use Nette\Utils;
 
 class Json implements Request\Read\IReader
 {
-
 	/** @var Read\ITransactionListFactory */
 	private $transactionListFactory;
 
@@ -20,7 +19,6 @@ class Json implements Request\Read\IReader
 	}
 
 
-	/** @return string */
 	public function getExtension(): string
 	{
 		return self::JSON;
@@ -69,7 +67,6 @@ class Json implements Request\Read\IReader
 
 	/**
 	 * @internal
-	 * @return bool
 	 */
 	public static function isJsonBug(): bool
 	{

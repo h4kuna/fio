@@ -12,7 +12,6 @@ require __DIR__ . '/../../../../bootstrap.php';
 
 class EuroTest extends Tester\TestCase
 {
-
 	/** @var Fio\FioPay */
 	private $fioPay;
 
