@@ -25,6 +25,11 @@ class Queue implements IQueue
 	/** @var string */
 	private $tempDir;
 
+	/**
+	 * @var GuzzleHttp\Client|null
+	 */
+	private $client;
+
 
 	public function __construct(string $tempDir)
 	{
@@ -57,6 +62,10 @@ class Queue implements IQueue
 		$this->sleep = $sleep;
 	}
 
+	public function setClient(GuzzleHttp\Client $client)
+	{
+		$this->client = $client;
+	}
 
 	/**
 	 * @throws Exceptions\QueueLimit
@@ -184,13 +193,13 @@ class Queue implements IQueue
 
 	protected function createXmlResponse(ResponseInterface $response): Pay\IResponse
 	{
-		return new Pay\XMLResponse($response->getBody()->getContents());
+		return new Pay\XMLResponse((string) $response->getBody());
 	}
 
 
 	protected function createClient(): GuzzleHttp\ClientInterface
 	{
-		return new GuzzleHttp\Client(['headers' => ['X-Powered-By' => 'h4kuna/fio']]);
+		return $this->client ?: new GuzzleHttp\Client(['headers' => ['X-Powered-By' => 'h4kuna/fio']]);
 	}
 
 }

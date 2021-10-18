@@ -32,6 +32,10 @@ class Fio
 		$this->account = $account;
 	}
 
+	public function getQueue(): Request\IQueue
+	{
+		return $this->queue;
+	}
 
 	public function getAccount(): Account\FioAccount
 	{
