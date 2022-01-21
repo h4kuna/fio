@@ -2,6 +2,7 @@
 
 namespace h4kuna\Fio;
 
+use h4kuna\Fio\Response\Read\Transaction;
 use h4kuna\Fio\Test;
 use Salamium\Testinium;
 use Tester\Assert;
@@ -31,7 +32,7 @@ class FioReadTest extends Test\TestCase
 			if ($key === 0) {
 				continue;
 			}
-			/* @var $transaction Response\Read\Transaction */
+			assert($transaction instanceof Response\Read\Transaction);
 			Assert::equal($moveId, $transaction->moveId);
 			foreach ($transaction as $property => $value) {
 				if ($property === 'moveId') {
@@ -92,6 +93,12 @@ class FioReadTest extends Test\TestCase
 			Assert::equal(unserialize(Testinium\File::load('last-transactions.srlz')), $data);
 		}
 		Assert::equal(Fio::REST_URL . 'last/' . $this->token . '/transactions.json', $this->fioRead->getRequestUrl());
+
+		$i = 0;
+		foreach ($data as $i => $transaction) {
+			Assert::type(Transaction::class, $transaction);
+		}
+		Assert::same(3, $i);
 	}
 
 

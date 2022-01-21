@@ -7,7 +7,7 @@ namespace h4kuna\Fio\Response\Read;
  */
 final class TransactionList implements \Iterator, \Countable
 {
-	/** @var TransactionAbstract[] */
+	/** @var array<TransactionAbstract> */
 	private $transactions = [];
 
 	/**
@@ -34,10 +34,12 @@ final class TransactionList implements \Iterator, \Countable
 	}
 
 
-	/** @return Transaction */
+	/** @return TransactionAbstract */
 	public function current()
 	{
-		return current($this->transactions);
+		$current = current($this->transactions);
+		assert($current !== false);
+		return $current;
 	}
 
 
@@ -64,7 +66,8 @@ final class TransactionList implements \Iterator, \Countable
 
 	public function valid()
 	{
-		return array_key_exists($this->key(), $this->transactions);
+		$key = key($this->transactions);
+		return $key === null ? false : array_key_exists($key, $this->transactions);
 	}
 
 
