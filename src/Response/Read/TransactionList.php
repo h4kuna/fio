@@ -67,7 +67,7 @@ final class TransactionList implements \Iterator, \Countable
 	public function valid()
 	{
 		$key = key($this->transactions);
-		return $key === null ? false : array_key_exists($key, $this->transactions);
+		return $key !== null && isset($this->transactions[$key]);
 	}
 
 
