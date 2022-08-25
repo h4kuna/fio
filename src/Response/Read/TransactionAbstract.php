@@ -59,6 +59,7 @@ abstract class TransactionAbstract implements \Iterator
 	/**
 	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function current()
 	{
 		return current($this->properties);
@@ -68,6 +69,7 @@ abstract class TransactionAbstract implements \Iterator
 	/**
 	 * @return string
 	 */
+	#[\ReturnTypeWillChange]
 	public function key()
 	{
 		$key = key($this->properties);
@@ -78,18 +80,21 @@ abstract class TransactionAbstract implements \Iterator
 	}
 
 
+	#[\ReturnTypeWillChange]
 	public function next()
 	{
 		next($this->properties);
 	}
 
 
+	#[\ReturnTypeWillChange]
 	public function rewind()
 	{
 		reset($this->properties);
 	}
 
 
+	#[\ReturnTypeWillChange]
 	public function valid()
 	{
 		return array_key_exists($this->key(), $this->properties);
