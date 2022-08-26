@@ -35,6 +35,7 @@ final class TransactionList implements \Iterator, \Countable
 
 
 	/** @return TransactionAbstract */
+	#[\ReturnTypeWillChange]
 	public function current()
 	{
 		$current = current($this->transactions);
@@ -46,24 +47,28 @@ final class TransactionList implements \Iterator, \Countable
 	/**
 	 * @return int
 	 */
+	#[\ReturnTypeWillChange]
 	public function key()
 	{
 		return (int) key($this->transactions);
 	}
 
 
+	#[\ReturnTypeWillChange]
 	public function next()
 	{
 		next($this->transactions);
 	}
 
 
+	#[\ReturnTypeWillChange]
 	public function rewind()
 	{
 		reset($this->transactions);
 	}
 
 
+	#[\ReturnTypeWillChange]
 	public function valid()
 	{
 		$key = key($this->transactions);
@@ -71,6 +76,7 @@ final class TransactionList implements \Iterator, \Countable
 	}
 
 
+	#[\ReturnTypeWillChange]
 	public function count()
 	{
 		return count($this->transactions);
