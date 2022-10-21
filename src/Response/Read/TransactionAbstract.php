@@ -97,7 +97,12 @@ abstract class TransactionAbstract implements \Iterator
 	#[\ReturnTypeWillChange]
 	public function valid()
 	{
-		return array_key_exists($this->key(), $this->properties);
+		$key = key($this->properties);
+		if ($key === null) {
+			return false;
+		}
+
+		return array_key_exists($key, $this->properties);
 	}
 
 
