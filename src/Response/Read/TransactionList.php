@@ -8,12 +8,9 @@ namespace h4kuna\Fio\Response\Read;
 final class TransactionList implements \Iterator, \Countable
 {
 	/** @var array<TransactionAbstract> */
-	private $transactions = [];
+	private array $transactions = [];
 
-	/**
-	 * @var \stdClass
-	 */
-	private $info;
+	private \stdClass $info;
 
 
 	public function __construct(\stdClass $info)
@@ -44,11 +41,7 @@ final class TransactionList implements \Iterator, \Countable
 	}
 
 
-	/**
-	 * @return int
-	 */
-	#[\ReturnTypeWillChange]
-	public function key()
+	public function key(): int
 	{
 		return (int) key($this->transactions);
 	}
@@ -68,16 +61,14 @@ final class TransactionList implements \Iterator, \Countable
 	}
 
 
-	#[\ReturnTypeWillChange]
-	public function valid()
+	public function valid(): bool
 	{
 		$key = key($this->transactions);
 		return $key !== null && isset($this->transactions[$key]);
 	}
 
 
-	#[\ReturnTypeWillChange]
-	public function count()
+	public function count(): int
 	{
 		return count($this->transactions);
 	}

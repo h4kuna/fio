@@ -3,12 +3,3 @@ parameters:
 		- PHP_INT_SIZE
 	ignoreErrors:
 		# ignore for tests
-		-
-			message: "#^Parameter \\#1 \\$accounts of static method h4kuna\\\\Fio\\\\Account\\\\AccountCollectionFactory\\:\\:create\\(\\) expects array\\<array\\('token' \\=\\> string, 'account' \\=\\> string\\)\\>, array\\('foo' \\=\\> array\\('token' \\=\\> 'bar'\\)\\) given\\.$#"
-			count: 1
-			path: %rootDir%/../../../tests/src/Account/AccountCollectionTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$accounts of static method h4kuna\\\\Fio\\\\Account\\\\AccountCollectionFactory\\:\\:create\\(\\) expects array\\<array\\('token' \\=\\> string, 'account' \\=\\> string\\)\\>, array\\('foo' \\=\\> array\\('account' \\=\\> 'bar'\\)\\) given\\.$#"
-			count: 1
-			path: %rootDir%/../../../tests/src/Account/AccountCollectionTest.php

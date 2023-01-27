@@ -8,11 +8,9 @@ use XMLWriter;
 
 class XMLFile
 {
-	/** @var XMLWriter|null */
-	private $xml;
+	private ?XMLWriter $xml = null;
 
-	/** @var string */
-	private $temp;
+	private string $temp;
 
 
 	public function __construct(string $temp)
@@ -87,7 +85,7 @@ class XMLFile
 			}
 
 			$this->xml->startElement($node);
-			$this->xml->text((string) $value);
+			$this->xml->text((string) $value); /** @phpstan-ignore-line */
 			$this->xml->endElement();
 		}
 		$this->xml->endElement();

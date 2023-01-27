@@ -7,8 +7,7 @@ use Salamium\Testinium\File;
 
 class Stream implements StreamInterface
 {
-	/** @var bool */
-	private $isOk;
+	private bool $isOk;
 
 
 	public function __construct(bool $failed)
@@ -35,25 +34,25 @@ class Stream implements StreamInterface
 	}
 
 
-	public function getSize()
+	public function getSize(): ?int
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function tell()
+	public function tell(): int
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function eof()
+	public function eof(): bool
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function isSeekable()
+	public function isSeekable(): bool
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
@@ -71,31 +70,31 @@ class Stream implements StreamInterface
 	}
 
 
-	public function isWritable()
+	public function isWritable(): bool
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function write($string)
+	public function write($string): int
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function isReadable()
+	public function isReadable(): bool
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function read($length)
+	public function read($length): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getContents()
+	public function getContents(): bool|string
 	{
 		return File::load(sprintf('payment/response%s.xml', $this->isOk ? '' : '-error'));
 	}

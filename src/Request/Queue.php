@@ -10,20 +10,21 @@ use Psr\Http\Message\ResponseInterface;
 
 class Queue implements IQueue
 {
+
+	/** @var int [s] */
+	public const WAIT_TIME = 30;
+
 	/** @var string[] */
 	private static $tokens = [];
 
-	/** @var int */
-	private $limitLoop = 5;
+	private int $limitLoop = 5;
 
-	/** @var bool */
-	private $sleep = true;
+	private bool $sleep = true;
 
-	/** @var array<int, string> */
-	private $downloadOptions = [];
+	/** @var array<int|string, string> */
+	private array $downloadOptions = [];
 
-	/** @var string */
-	private $tempDir;
+	private string $tempDir;
 
 
 	public function __construct(string $tempDir)

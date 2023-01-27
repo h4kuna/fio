@@ -12,32 +12,23 @@ abstract class Foreign extends Property
 
 	private const TYPES_PAYMENT = [self::PAYMENT_STANDARD, self::PAYMENT_PRIORITY];
 
-	/** @var string */
-	protected $bic = '';
+	protected string $bic = '';
 
-	/** @var string */
-	protected $benefName = '';
+	protected string $benefName = '';
 
-	/** @var string */
-	protected $benefStreet = '';
+	protected string $benefStreet = '';
 
-	/** @var string */
-	protected $benefCity = '';
+	protected string $benefCity = '';
 
-	/** @var string */
-	protected $benefCountry = '';
+	protected string $benefCountry = '';
 
-	/** @var string */
-	protected $remittanceInfo1 = '';
+	protected string $remittanceInfo1 = '';
 
-	/** @var string */
-	protected $remittanceInfo2 = '';
+	protected string $remittanceInfo2 = '';
 
-	/** @var string */
-	protected $remittanceInfo3 = '';
+	protected string $remittanceInfo3 = '';
 
-	/** @var int */
-	protected $paymentType = 0;
+	protected int $paymentType = 0;
 
 
 	public function __construct(Account\FioAccount $account)
@@ -49,9 +40,8 @@ abstract class Foreign extends Property
 
 	/**
 	 * @param string $accountTo ISO 13616
-	 * @return static
 	 */
-	public function setAccountTo(string $accountTo)
+	public function setAccountTo(string $accountTo): static
 	{
 		$this->accountTo = InvalidArgument::check($accountTo, 34);
 		return $this;
@@ -60,39 +50,29 @@ abstract class Foreign extends Property
 
 	/**
 	 * @param string $bic ISO 9362
-	 * @return static
 	 */
-	public function setBic(string $bic)
+	public function setBic(string $bic): static
 	{
 		$this->bic = InvalidArgument::checkLength($bic, 11);
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setStreet(string $street)
+	public function setStreet(string $street): static
 	{
 		$this->benefStreet = InvalidArgument::check($street, 35);
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setCity(string $city)
+	public function setCity(string $city): static
 	{
 		$this->benefCity = InvalidArgument::check($city, 35);
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setCountry(string $benefCountry)
+	public function setCountry(string $benefCountry): static
 	{
 		$country = strtoupper($benefCountry);
 		if (strlen($country) !== 2 && $country !== 'TCH') {
@@ -103,50 +83,35 @@ abstract class Foreign extends Property
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setName(string $name)
+	public function setName(string $name): static
 	{
 		$this->benefName = InvalidArgument::check($name, 35);
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setRemittanceInfo1(string $info)
+	public function setRemittanceInfo1(string $info): static
 	{
 		$this->remittanceInfo1 = InvalidArgument::check($info, 35);
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setRemittanceInfo2(string $info)
+	public function setRemittanceInfo2(string $info): static
 	{
 		$this->remittanceInfo2 = InvalidArgument::check($info, 35);
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setRemittanceInfo3(string $str)
+	public function setRemittanceInfo3(string $str): static
 	{
 		$this->remittanceInfo3 = InvalidArgument::check($str, 35);
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setPaymentType(int $type)
+	public function setPaymentType(int $type): static
 	{
 		$this->paymentType = InvalidArgument::checkIsInList($type, self::TYPES_PAYMENT);
 		return $this;

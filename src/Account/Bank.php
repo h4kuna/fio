@@ -6,14 +6,11 @@ use h4kuna\Fio\Exceptions\InvalidArgument;
 
 class Bank
 {
-	/** @var string */
-	private $account;
+	private string $account;
 
-	/** @var string */
-	private $bankCode = '';
+	private string $bankCode;
 
-	/** @var string */
-	private $prefix = '';
+	private string $prefix;
 
 
 	private function __construct(string $account, string $bankCode, string $prefix)
@@ -50,7 +47,7 @@ class Bank
 
 	public function __toString()
 	{
-		return (string) $this->getAccount();
+		return $this->getAccount();
 	}
 
 

@@ -14,9 +14,9 @@ class AccountCollectionFactory
 	{
 		$accountCollection = new AccountCollection;
 		foreach ($accounts as $alias => $info) {
-			if (!isset($info['token'])) {
+			if (!isset($info['token'])) { /* @phpstan-ignore-line */
 				throw new Exceptions\InvalidArgument(sprintf('Key "token" is required for alias "%s".', $alias));
-			} elseif (!isset($info['account'])) {
+			} elseif (!isset($info['account'])) { /* @phpstan-ignore-line */
 				throw new Exceptions\InvalidArgument(sprintf('Key "account" is required for alias "%s".', $alias));
 			}
 			$accountCollection->addAccount($alias, new FioAccount($info['account'], $info['token']));

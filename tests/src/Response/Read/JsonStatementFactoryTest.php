@@ -28,16 +28,6 @@ final class JsonStatementFactoryTest extends Test\TestCase
 		}
 	}
 
-
-	/**
-	 * @throws \h4kuna\Fio\Exceptions\Runtime
-	 */
-	public function testThrow(): void
-	{
-		$factory = new JsonTransactionFactory(WrongTransaction::class);
-		$factory->createTransaction(new \stdClass(), 'Y');
-	}
-
 }
 
 final class WrongTransaction extends \stdClass

@@ -6,8 +6,7 @@ use h4kuna\Fio\Response;
 
 interface IQueue
 {
-	/** @var int [s] */
-	const WAIT_TIME = 30;
+
 	const HEADER_CONFLICT = 409;
 
 

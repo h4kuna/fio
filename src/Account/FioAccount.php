@@ -4,11 +4,9 @@ namespace h4kuna\Fio\Account;
 
 class FioAccount
 {
-	/** @var Bank */
-	private $account;
+	private Bank $account;
 
-	/** @var string */
-	private $token;
+	private string $token;
 
 
 	public function __construct(string $account, string $token)

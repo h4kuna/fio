@@ -5,17 +5,16 @@ namespace h4kuna\Fio\Utils;
 use h4kuna\Fio;
 use h4kuna\Fio\Account;
 use h4kuna\Fio\Response\Read\Transaction;
+use h4kuna\Fio\Response\Read\TransactionAbstract;
 
 class FioFactory
 {
-	/** @var Account\AccountCollection */
-	private $accountCollection;
+	private Account\AccountCollection $accountCollection;
 
-	/** @var Fio\Request\IQueue */
-	private $queue;
+	private Fio\Request\IQueue $queue;
 
-	/** @var string */
-	private $transactionClass;
+	/** @var class-string<TransactionAbstract> */
+	private string $transactionClass;
 
 	/** @var string */
 	protected $temp;
@@ -23,6 +22,7 @@ class FioFactory
 
 	/**
 	 * @param array<array{token: string, account: string}> $accounts
+	 * @param class-string<TransactionAbstract> $transactionClass
 	 */
 	public function __construct(array $accounts, string $transactionClass = Transaction::class, string $temp = '')
 	{
@@ -92,6 +92,7 @@ class FioFactory
 	}
 
 
+	/** @return class-string<TransactionAbstract> */
 	final protected function transactionClass(): string
 	{
 		return $this->transactionClass;

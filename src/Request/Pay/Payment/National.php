@@ -14,48 +14,43 @@ class National extends Property
 
 	private const TYPES_PAYMENT = [self::PAYMENT_STANDARD, self::PAYMENT_PRIORITY, self::PAYMENT_COLLECTION];
 
-	/** @var string */
-	protected $bankCode = '';
+	protected string $bankCode = '';
 
-	/** @var string */
-	protected $messageForRecipient = '';
+	protected string $messageForRecipient = '';
 
 	/** @var int */
 	protected $paymentType = 0;
 
 
-	/** @return static */
-	public function setPaymentType(int $type)
+	public function setPaymentType(int $type): static
 	{
 		$this->paymentType = Exceptions\InvalidArgument::checkIsInList($type, self::TYPES_PAYMENT);;
 		return $this;
 	}
 
 
-	/** @return static */
-	public function setMessage(string $message)
+	public function setMessage(string $message): static
 	{
 		$this->messageForRecipient = Exceptions\InvalidArgument::check($message, 140);
 		return $this;
 	}
 
 
-	/** @return static */
-	public function setAccountTo(string $accountTo)
+	public function setAccountTo(string $accountTo): static
 	{
 		$this->accountTo = $accountTo;
 		return $this;
 	}
 
 
-	/** @return static */
-	public function setBankCode(string $bankCode)
+	public function setBankCode(string $bankCode): static
 	{
 		$this->bankCode = $bankCode;
 		return $this;
 	}
 
 
+	/** @return array<string, bool> */
 	public function getExpectedProperty(): array
 	{
 		return [

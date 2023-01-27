@@ -7,16 +7,16 @@ use h4kuna\Fio\Utils;
 
 class JsonTransactionFactory implements ITransactionListFactory
 {
-	/** @var string[][] */
-	private $property;
+	/** @var string[][]|null */
+	private ?array $property = null;
 
-	/** @var string */
-	private $transactionClass;
+	/** @var class-string<TransactionAbstract> */
+	private string $transactionClass;
 
-	/** @var TransactionAbstract */
-	private $transactionObject;
+	private ?TransactionAbstract $transactionObject = null;
 
 
+	/** @param class-string<TransactionAbstract> $transactionClass */
 	public function __construct(string $transactionClass)
 	{
 		$this->transactionClass = $transactionClass;
@@ -51,12 +51,7 @@ class JsonTransactionFactory implements ITransactionListFactory
 	protected function createTransactionObject(string $dateFormat): TransactionAbstract
 	{
 		if ($this->transactionObject === null) {
-			$class = $this->transactionClass;
-			$this->transactionObject = new $class($dateFormat);
-
-			if (!$this->transactionObject instanceof TransactionAbstract) {
-				throw new Exceptions\Runtime(sprintf('Transaction class must extends "%s".', TransactionAbstract::class));
-			}
+			$this->transactionObject = new $this->transactionClass($dateFormat);
 		}
 
 		return clone $this->transactionObject;

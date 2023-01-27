@@ -6,8 +6,7 @@ use SimpleXMLElement;
 
 class XMLResponse implements IResponse
 {
-	/** @var SimpleXMLElement */
-	private $xml;
+	private SimpleXMLElement $xml;
 
 
 	public function __construct(string $xml)

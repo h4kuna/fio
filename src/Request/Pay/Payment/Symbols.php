@@ -6,40 +6,28 @@ use h4kuna\Fio\Exceptions\InvalidArgument;
 
 trait Symbols
 {
-	/** @var int */
-	protected $ks = 0;
+	protected int $ks = 0;
 
-	/** @var int */
-	protected $vs = 0;
+	protected int $vs = 0;
 
-	/** @var int */
-	protected $ss = 0;
+	protected int $ss = 0;
 
 
-	/**
-	 * @return static
-	 */
-	public function setConstantSymbol(int $ks)
+	public function setConstantSymbol(int $ks): static
 	{
 		$this->ks = InvalidArgument::checkRange($ks, 9999);
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setVariableSymbol(int $vs)
+	public function setVariableSymbol(int $vs): static
 	{
 		$this->vs = InvalidArgument::checkRange($vs, 9999999999);
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setSpecificSymbol(int $ss)
+	public function setSpecificSymbol(int $ss): static
 	{
 		$this->ss = InvalidArgument::checkRange($ss, 9999999999);
 		return $this;

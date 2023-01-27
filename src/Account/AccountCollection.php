@@ -11,7 +11,7 @@ use h4kuna\Fio\Exceptions;
 class AccountCollection implements \Countable, \IteratorAggregate
 {
 	/** @var array<FioAccount> */
-	private $accounts = [];
+	private array $accounts = [];
 
 
 	public function account(string $alias = ''): FioAccount

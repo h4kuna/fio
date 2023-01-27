@@ -14,8 +14,7 @@ class FioRead extends Fio
 	/** @var string */
 	private $requestUrl;
 
-	/** @var Request\Read\IReader */
-	private $readerFactory;
+	private Request\Read\IReader $readerFactory;
 
 
 	public function __construct(Request\IQueue $queue, Account\FioAccount $account, Request\Read\IReader $readerFactory)

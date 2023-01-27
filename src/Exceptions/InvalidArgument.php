@@ -24,7 +24,7 @@ final class InvalidArgument extends \InvalidArgumentException
 
 
 	/**
-	 * @template T
+	 * @template T of string|int
 	 * @param T $value
 	 * @param array<T> $list
 	 * @return T

@@ -12,7 +12,7 @@
     }
   ],
   "require": {
-    "php-64bit": ">=7.1",
+    "php-64bit": ">=8.0",
     "ext-mbstring": "*",
     "ext-xmlwriter": "*",
     "ext-simplexml": "*",
@@ -22,7 +22,7 @@
   },
   "require-dev": {
     "salamium/testinium": "^0.1",
-    "phpstan/phpstan": "^0.12"
+    "phpstan/phpstan": "^1.9"
   },
   "autoload": {
     "psr-4": {

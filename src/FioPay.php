@@ -16,14 +16,12 @@ class FioPay extends Fio
 	/** @var string */
 	private $uploadExtension;
 
-	/** @var string */
-	private $language = 'cs';
+	private string $language = 'cs';
 
 	/** @var IResponse */
 	private $response;
 
-	/** @var Pay\XMLFile */
-	private $xmlFile;
+	private Pay\XMLFile $xmlFile;
 
 	/** @var Log */
 	private $log;

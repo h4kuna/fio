@@ -9,103 +9,103 @@ use Psr\Http\Message\UriInterface;
 class Request implements RequestInterface
 {
 
-	public function getProtocolVersion()
+	public function getProtocolVersion(): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withProtocolVersion($version)
+	public function withProtocolVersion($version): Request
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getHeaders()
+	public function getHeaders(): array
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function hasHeader($name)
+	public function hasHeader($name): bool
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getHeader($name)
+	public function getHeader($name): array
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getHeaderLine($name)
+	public function getHeaderLine($name): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withHeader($name, $value)
+	public function withHeader($name, $value): Request
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withAddedHeader($name, $value)
+	public function withAddedHeader($name, $value): Request
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withoutHeader($name)
+	public function withoutHeader($name): Request
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getBody()
+	public function getBody(): StreamInterface
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withBody(StreamInterface $body)
+	public function withBody(StreamInterface $body): Request
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getRequestTarget()
+	public function getRequestTarget(): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withRequestTarget($requestTarget)
+	public function withRequestTarget($requestTarget): Request
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getMethod()
+	public function getMethod(): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withMethod($method)
+	public function withMethod($method): Request
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getUri()
+	public function getUri(): UriInterface
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withUri(UriInterface $uri, $preserveHost = false)
+	public function withUri(UriInterface $uri, $preserveHost = false): Request
 	{
 		throw new \RuntimeException('Not implemented.');
 	}

@@ -12,6 +12,7 @@ Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Read is provi
 
 Here is [changlog](changelog.md)
 
+- PHP 8.0+ let's use version 3.0+
 - PHP 7.1+ let's use version 2.0+
 - PHP 5.5 - 7.0 let's use stable [version 1.3.5](https://github.com/h4kuna/fio/releases/tag/v1.3.5).
 - PHP 5.3 - 5.4 let's use stable [version 1.2.1](https://github.com/h4kuna/fio/releases/tag/v1.2.1).

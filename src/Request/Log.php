@@ -6,8 +6,7 @@ use h4kuna\Fio\Exceptions\InvalidState;
 
 class Log
 {
-	/** @var string */
-	private $filename = '';
+	private string $filename = '';
 
 
 	public function setFilename(string $filename): void

@@ -19,11 +19,9 @@ class Fio
 	 */
 	const FIO_API_VERSION = '1.5.1';
 
-	/** @var Request\IQueue */
-	protected $queue;
+	protected Request\IQueue $queue;
 
-	/** @var Account\FioAccount */
-	protected $account;
+	protected Account\FioAccount $account;
 
 
 	public function __construct(Request\IQueue $queue, Account\FioAccount $account)

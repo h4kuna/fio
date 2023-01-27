@@ -12,17 +12,13 @@ use Nette\Utils\DateTime;
  */
 abstract class Property implements Iterator
 {
-	/** @var Account\FioAccount */
-	protected $accountFrom;
+	protected Account\FioAccount $accountFrom;
 
-	/** @var string */
-	protected $currency = 'CZK';
+	protected string $currency = 'CZK';
 
-	/** @var float */
-	protected $amount = 0.0;
+	protected float $amount = 0.0;
 
-	/** @var string */
-	protected $accountTo = '';
+	protected string $accountTo = '';
 
 	/** @var string */
 	protected $date;
@@ -34,13 +30,12 @@ abstract class Property implements Iterator
 	 * Section in manual 7.2.3.1.
 	 * @var int
 	 */
-	protected $paymentReason = 0;
+	protected int $paymentReason = 0;
 
 	/** @var array<string, array<string, bool>> */
-	private static $iterator = [];
+	private static array $iterator = [];
 
-	/** @var string */
-	private $key;
+	private ?string $key = null;
 
 
 	public function __construct(Account\FioAccount $account)
@@ -71,9 +66,8 @@ abstract class Property implements Iterator
 
 	/**
 	 * Currency code ISO 4217.
-	 * @return static
 	 */
-	public function setCurrency(string $code)
+	public function setCurrency(string $code): static
 	{
 		if (!preg_match('~[a-z]{3}~i', $code)) {
 			throw new InvalidArgument('Currency code must match ISO 4217.');
@@ -83,10 +77,7 @@ abstract class Property implements Iterator
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setMyComment(string $comment)
+	public function setMyComment(string $comment): static
 	{
 		$this->comment = InvalidArgument::check($comment, 255);
 		return $this;
@@ -95,19 +86,15 @@ abstract class Property implements Iterator
 
 	/**
 	 * @param int|string|\DateTimeInterface $date
-	 * @return static
 	 */
-	public function setDate($date)
+	public function setDate($date): static
 	{
 		$this->date = DateTime::from($date)->format('Y-m-d');
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setPaymentReason(int $code)
+	public function setPaymentReason(int $code): static
 	{
 		$this->paymentReason = InvalidArgument::checkRange($code, 999);
 		return $this;
@@ -145,10 +132,7 @@ abstract class Property implements Iterator
 	 * *************************************************************************
 	 */
 
-	/**
-	 * @return mixed
-	 */
-	public function current()
+	public function current(): mixed
 	{
 		$property = $this->key();
 		$method = 'get' . ucfirst($property);
@@ -159,29 +143,26 @@ abstract class Property implements Iterator
 	}
 
 
-	/**
-	 * @return string
-	 */
-	public function key()
+	public function key(): string
 	{
 		return (string) key(self::$iterator[$this->key]);
 	}
 
 
-	public function next()
+	public function next(): void
 	{
 		next(self::$iterator[$this->key]);
 	}
 
 
-	public function rewind()
+	public function rewind(): void
 	{
 		$this->getProperties();
 		reset(self::$iterator[$this->key]);
 	}
 
 
-	public function valid()
+	public function valid(): bool
 	{
 		return array_key_exists($this->key(), self::$iterator[$this->key]);
 	}

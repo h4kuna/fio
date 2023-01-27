@@ -11,18 +11,18 @@ class Response implements ResponseInterface
 	public const RESPONSE_CODE = 1;
 	public const EXCEPTION_CLASS = 2;
 
-	/** @var string */
-	private $method;
+	private string $method;
 
 	/** @var string|UriInterface */
 	private $uri;
 
-	/** @var array */
-	private $options = [];
+	/** @var mixed[] */
+	private array $options = [];
 
 
 	/**
 	 * @param string|UriInterface $uri
+	 * @param mixed[] $options
 	 */
 	public function __construct(string $method, $uri, array $options)
 	{
@@ -32,31 +32,31 @@ class Response implements ResponseInterface
 	}
 
 
-	public function getProtocolVersion()
+	public function getProtocolVersion(): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withProtocolVersion($version)
+	public function withProtocolVersion($version): Response
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getHeaders()
+	public function getHeaders(): array
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function hasHeader($name)
+	public function hasHeader($name): bool
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getHeader($name)
+	public function getHeader($name): array
 	{
 		if ('Content-Type' === $name) {
 			if ($this->isOk()) {
@@ -68,37 +68,37 @@ class Response implements ResponseInterface
 	}
 
 
-	public function getHeaderLine($name)
+	public function getHeaderLine($name): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withHeader($name, $value)
+	public function withHeader($name, $value): Response
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withAddedHeader($name, $value)
+	public function withAddedHeader($name, $value): Response
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withoutHeader($name)
+	public function withoutHeader($name): Response
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getBody()
+	public function getBody(): Stream
 	{
 		return new Stream($this->isOk());
 	}
 
 
-	public function withBody(StreamInterface $body)
+	public function withBody(StreamInterface $body): Response
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
@@ -117,13 +117,13 @@ class Response implements ResponseInterface
 	}
 
 
-	public function withStatus($code, $reasonPhrase = '')
+	public function withStatus($code, $reasonPhrase = ''): Response
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getReasonPhrase()
+	public function getReasonPhrase(): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}

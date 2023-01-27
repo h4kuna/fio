@@ -9,8 +9,7 @@ use Nette\Utils;
 
 class Json implements Request\Read\IReader
 {
-	/** @var Read\ITransactionListFactory */
-	private $transactionListFactory;
+	private Read\ITransactionListFactory $transactionListFactory;
 
 
 	public function __construct(Read\ITransactionListFactory $transactionListFactory)
@@ -47,13 +46,15 @@ class Json implements Request\Read\IReader
 			throw new Exceptions\ServiceUnavailable($e->getMessage(), 0, $e);
 		}
 
-		if (isset($json->accountStatement->info)) {
+		\assert($json instanceof \stdClass);
+
+		if (isset($json->accountStatement?->info)) {
 			$info = $this->transactionListFactory->createInfo($json->accountStatement->info, $dateFormat);
 		} else {
 			$info = new \stdClass();
 		}
 		$transactionList = $this->transactionListFactory->createTransactionList($info);
-		if (!isset($json->accountStatement->transactionList)) {
+		if (!isset($json->accountStatement?->transactionList)) {
 			return $transactionList;
 		}
 		foreach ($json->accountStatement->transactionList->transaction as $transactionData) {

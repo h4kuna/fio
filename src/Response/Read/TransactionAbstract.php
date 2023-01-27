@@ -11,10 +11,9 @@ use h4kuna\Fio\Utils;
 abstract class TransactionAbstract implements \Iterator
 {
 	/** @var array<string, mixed> */
-	private $properties = [];
+	private array $properties = [];
 
-	/** @var string */
-	protected $dateFormat;
+	protected string $dateFormat;
 
 
 	public function __construct(string $dateFormat)
@@ -41,10 +40,7 @@ abstract class TransactionAbstract implements \Iterator
 	}
 
 
-	/**
-	 * @param mixed $value
-	 */
-	public function bindProperty(string $name, string $type, $value): void
+	public function bindProperty(string $name, string $type, mixed $value): void
 	{
 		$method = 'set' . ucfirst($name);
 		if (method_exists($this, $method)) {
@@ -56,11 +52,8 @@ abstract class TransactionAbstract implements \Iterator
 	}
 
 
-	/**
-	 * @return mixed
-	 */
 	#[\ReturnTypeWillChange]
-	public function current()
+	public function current(): mixed
 	{
 		return current($this->properties);
 	}
@@ -113,25 +106,16 @@ abstract class TransactionAbstract implements \Iterator
 	}
 
 
-	/**
-	 * @param mixed $value
-	 * @return mixed
-	 */
-	protected function checkValue($value, string $type)
+	protected function checkValue(mixed $value, string $type): mixed
 	{
-		switch ($type) {
-			case 'datetime':
-				return Utils\Strings::createFromFormat($value, $this->dateFormat);
-			case 'float':
-				return floatval($value);
-			case 'string':
-				return trim($value);
-			case 'int':
-				return intval($value);
-			case 'string|null':
-				return trim($value) ?: null;
-		}
-		return $value;
+		return match ($type) {
+			'datetime' => is_string($value) ? Utils\Strings::createFromFormat($value, $this->dateFormat) : $value,
+			'float' => floatval($value),
+			'string' => is_string($value) ? trim($value) : $value,
+			'int' => intval($value),
+			'string|null' => is_string($value) ? (trim($value) ?: null) : $value,
+			default => $value,
+		};
 	}
 
 }

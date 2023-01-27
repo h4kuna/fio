@@ -94,6 +94,7 @@ class AccountCollectionTest extends Test\TestCase
 	public function testAccounCollectionFactoryThrowAccount(): void
 	{
 		Assert::throws(function () {
+			/** @phpstan-ignore-next-line */
 			AccountCollectionFactory::create([
 				'foo' => [
 					'token' => 'bar',
@@ -106,6 +107,7 @@ class AccountCollectionTest extends Test\TestCase
 	public function testAccounCollectionFactoryThrowToken(): void
 	{
 		Assert::throws(function () {
+			/** @phpstan-ignore-next-line */
 			AccountCollectionFactory::create([
 				'foo' => [
 					'account' => 'bar',

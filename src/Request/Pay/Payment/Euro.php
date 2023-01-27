@@ -6,6 +6,7 @@ class Euro extends Foreign
 {
 	use Symbols;
 
+	/** @return array<string, bool> */
 	public function getExpectedProperty(): array
 	{
 		return [

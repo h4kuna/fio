@@ -12,14 +12,13 @@ class International extends Foreign
 
 	private const TYPES_CHARGES = [self::CHARGES_BEN, self::CHARGES_OUR, self::CHARGES_SHA];
 
-	/** @var string */
-	protected $remittanceInfo4 = '';
+	protected string $remittanceInfo4 = '';
 
 	/**
 	 * Default value is goods export.
 	 * @see Property
 	 */
-	protected $paymentReason = 110;
+	protected int $paymentReason = 110;
 
 	/** @var int */
 	protected $detailsOfCharges = self::CHARGES_BEN;
@@ -27,26 +26,23 @@ class International extends Foreign
 
 	/**
 	 * Section in manual 6.3.4.
-	 * @return static
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public function setDetailsOfCharges(int $type)
+	public function setDetailsOfCharges(int $type): static
 	{
 		$this->detailsOfCharges = Exceptions\InvalidArgument::checkIsInList($type, self::TYPES_CHARGES);
 		return $this;
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function setRemittanceInfo4(string $info)
+	public function setRemittanceInfo4(string $info): static
 	{
 		$this->remittanceInfo4 = Exceptions\InvalidArgument::check($info, 35);
 		return $this;
 	}
 
 
+	/** @return array<string, bool> */
 	public function getExpectedProperty(): array
 	{
 		return [
