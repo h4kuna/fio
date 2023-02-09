@@ -4,6 +4,7 @@ namespace h4kuna\Fio\Utils;
 
 use GuzzleHttp\Psr7\HttpFactory;
 use GuzzleHttp\Psr7\MultipartStream;
+use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\Utils;
 use Psr\Http\Message\RequestInterface;
 
@@ -29,7 +30,11 @@ class GuzzleRequestFactory implements RequestFactory
 			$contents = Utils::tryFopen($content, 'r');
 		} else {
 			$filename = 'h4kuna.memory.xml';
-			$contents = Utils::streamFor($content);
+
+			$stream = Utils::tryFopen('php://memory', 'r+');
+			fwrite($stream, $content);
+			fseek($stream, 0);
+			$contents = new Stream($stream);
 		}
 
 		$newPost = [
