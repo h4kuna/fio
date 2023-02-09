@@ -3,21 +3,13 @@
 namespace h4kuna\Fio\Account;
 
 use h4kuna\Fio\Exceptions\InvalidArgument;
+use Nette\Utils\Strings;
 
 class Bank
 {
-	private string $account;
 
-	private string $bankCode;
-
-	private string $prefix;
-
-
-	private function __construct(string $account, string $bankCode, string $prefix)
+	private function __construct(private string $account, private string $bankCode, private string $prefix)
 	{
-		$this->account = $account;
-		$this->bankCode = $bankCode;
-		$this->prefix = $prefix;
 	}
 
 
@@ -56,6 +48,7 @@ class Bank
 		if ($this->bankCode !== '') {
 			return '/' . $this->bankCode;
 		}
+
 		return $this->bankCode;
 	}
 
@@ -65,13 +58,15 @@ class Bank
 		if ($this->prefix !== '') {
 			return $this->prefix . '-';
 		}
+
 		return $this->prefix;
 	}
 
 
 	public static function createInternational(string $account): self
 	{
-		if (!preg_match('~^(?P<account>[a-z0-9]{1,34})(?P<code>/[a-z0-9]{11})?$~i', $account, $find)) {
+		$find = Strings::match($account, '~^(?P<account>[a-z0-9]{1,34})(?P<code>/[a-z0-9]{11})?$~i');
+		if ($find === null) {
 			throw new InvalidArgument('Account must have format account[/code].');
 		}
 
@@ -86,7 +81,8 @@ class Bank
 
 	public static function createNational(string $account): self
 	{
-		if (!preg_match('~^(?P<prefix>\d+-)?(?P<account>\d+)(?P<code>/\d+)?$~', $account, $find)) {
+		$find = Strings::match($account, '~^(?P<prefix>\d+-)?(?P<account>\d+)(?P<code>/\d+)?$~');
+		if ($find === null) {
 			throw new InvalidArgument('Account must have format [prefix-]account[/code].');
 		}
 
@@ -106,6 +102,7 @@ class Bank
 		if (isset($find['prefix']) && $find['prefix'] !== '') {
 			$prefix = substr($find['prefix'], 0, -1);
 		}
+
 		return new self($account, $bankCode, $prefix);
 	}
 

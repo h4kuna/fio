@@ -1,7 +1,7 @@
 {
   "name": "h4kuna/fio",
   "type": "library",
-  "description": "Read JSON file from Fio bank and can send request.",
+  "description": "Read movements by json file from Fio bank and send payments.",
   "homepage": "https://github.com/h4kuna/fio",
   "license": "MIT",
   "authors": [
@@ -12,33 +12,46 @@
     }
   ],
   "require": {
-    "php-64bit": ">=8.0",
+    "php": ">=8.0",
+    "ext-curl": "*",
     "ext-mbstring": "*",
-    "ext-xmlwriter": "*",
     "ext-simplexml": "*",
-    "guzzlehttp/guzzle": "^6.0 | ^7.0",
-    "nette/safe-stream": "^2.4",
-    "nette/utils": "^2.0 | ^3.0"
+    "ext-xmlwriter": "*",
+    "h4kuna/dir": "^0.1.2",
+    "h4kuna/memoize": "^0.1.3",
+    "nette/safe-stream": "^3.0",
+    "nette/utils": "^3.0 || ^4.0",
+    "psr/http-client": "^1.0",
+    "psr/http-factory": "^1.0",
+    "psr/http-message": "^1.0"
   },
   "require-dev": {
-    "salamium/testinium": "^0.1",
-    "phpstan/phpstan": "^1.9"
+    "guzzlehttp/guzzle": "^7.5",
+    "nette/tester": "^2.4",
+    "phpstan/phpstan": "^1.8",
+    "phpstan/phpstan-strict-rules": "^1.4",
+    "tracy/tracy": "^2.9"
   },
   "autoload": {
     "psr-4": {
-      "h4kuna\\Fio\\": [
-        "src/"
-      ]
+      "h4kuna\\Fio\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "h4kuna\\Fio\\": [
-        "tests/src/"
-      ],
-      "h4kuna\\Fio\\Test\\": [
-        "tests/data/"
+      "h4kuna\\Fio\\Tests\\": [
+        "tests/src"
       ]
     }
+  },
+  "suggest": {
+    "guzzlehttp/guzzle": "As default implementation for PSR-7, PSR-17 and PSR-18 standards."
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "scripts": {
+    "phpstan": "vendor/bin/phpstan analyse",
+    "tests": "vendor/bin/tester -s -j 4 --colors 1 -s -C tests/src"
   }
 }

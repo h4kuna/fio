@@ -4,39 +4,30 @@ namespace h4kuna\Fio;
 
 use h4kuna\Fio\Account\Bank;
 use h4kuna\Fio\Exceptions\InvalidArgument;
-use h4kuna\Fio\Request\Log;
-use h4kuna\Fio\Request\Pay;
-use h4kuna\Fio\Response\Pay\IResponse;
+use h4kuna\Fio\Pay;
+use h4kuna\Fio\Utils;
 
-class FioPay extends Fio
+class FioPay
 {
-	private const LANGS = ['en', 'cs', 'sk'];
-	private const EXTENSIONS = ['xml', 'abo'];
+	private const LANGUAGES = ['en', 'cs', 'sk'];
 
-	/** @var string */
-	private $uploadExtension;
+	private const XML = 'xml';
+	private const EXTENSIONS = [self::XML, 'abo'];
 
 	private string $language = 'cs';
 
-	/** @var IResponse */
-	private $response;
-
-	private Pay\XMLFile $xmlFile;
-
-	/** @var Log */
-	private $log;
+	/**
+	 * @var array<Pay\Payment\Property>
+	 */
+	private array $payments = [];
 
 
-	public function __construct(Request\IQueue $queue, Account\FioAccount $account, Pay\XMLFile $xmlFile)
+	public function __construct(
+		private Utils\Queue $queue,
+		private Account\FioAccount $account,
+		private Pay\XMLFile $xmlFile,
+	)
 	{
-		parent::__construct($queue, $account);
-		$this->xmlFile = $xmlFile;
-	}
-
-
-	public function enableLog(): Log
-	{
-		return $this->log = new Log();
 	}
 
 
@@ -51,6 +42,9 @@ class FioPay extends Fio
 		if ($bic !== '') {
 			$euro->setBic($bic);
 		}
+
+		$this->payments[] = $euro;
+
 		return $euro;
 	}
 
@@ -61,10 +55,14 @@ class FioPay extends Fio
 		if ($bankCode === '') {
 			$bankCode = $account->getBankCode();
 		}
-		return (new Pay\Payment\National($this->account))
+
+		$payment = (new Pay\Payment\National($this->account))
 			->setAccountTo($account->getAccount())
 			->setBankCode($bankCode)
 			->setAmount($amount);
+		$this->addPayment($payment);
+
+		return $payment;
 	}
 
 
@@ -76,12 +74,12 @@ class FioPay extends Fio
 		string $city,
 		string $country,
 		string $info,
-		string $bic
+		string $bic,
 	): Pay\Payment\International
 	{
 		$account = Bank::createInternational($accountTo);
 
-		return (new Pay\Payment\International($this->account))
+		$payment = (new Pay\Payment\International($this->account))
 			->setBic($bic)
 			->setName($name)
 			->setCountry($country)
@@ -90,77 +88,71 @@ class FioPay extends Fio
 			->setCity($city)
 			->setRemittanceInfo1($info)
 			->setAmount($amount);
+		$this->addPayment($payment);
+
+		return $payment;
 	}
 
 
-	public function getUploadResponse(): IResponse
+	public function getXml(): string
 	{
-		return $this->response;
+		foreach ($this->payments as $property) {
+			$this->xmlFile->setData($property);
+		}
+		$this->payments = [];
+
+		return $this->xmlFile->getXml();
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function addPayment(Pay\Payment\Property $property)
+	public function addPayment(Pay\Payment\Property $property): static
 	{
-		$this->xmlFile->setData($property);
+		$this->payments[] = $property;
+
 		return $this;
 	}
 
 
 	/**
-	 * @param string|Pay\Payment\Property $filename
+	 * @param ?string $filename string is filepath or xml content
 	 */
-	public function send($filename = null): IResponse
+	public function send(?string $filename = null): Pay\Response
 	{
-		if ($filename instanceof Pay\Payment\Property) {
-			$this->xmlFile->setData($filename);
-		}
-
-		if ($this->xmlFile->isReady()) {
-			$this->setUploadExtension('xml');
-			$filename = $this->xmlFile->getPathname($this->log !== null);
-			if ($this->log !== null) {
-				$this->log->setFilename($filename);
-			}
-		} elseif (is_string($filename) && is_file($filename)) {
-			$this->setUploadExtension(pathinfo($filename, PATHINFO_EXTENSION));
+		if ($filename === null && $this->payments !== []) {
+			$content = $this->getXml();
+			$extension = self::XML;
+		} elseif ($filename !== null && $filename !== '') {
+			$content = $filename;
+			$extension = str_starts_with($filename, '<') ? self::XML : InvalidArgument::checkIsInList(strtolower(pathinfo($filename, PATHINFO_EXTENSION)), self::EXTENSIONS);
 		} else {
-			throw new InvalidArgument('Is supported only filepath or Property object.');
+			throw new InvalidArgument('Is supported only filepath or file content. Or missing payments.');
 		}
 
 		$token = $this->getAccount()->getToken();
 		$post = [
-			'type' => $this->uploadExtension,
+			'type' => $extension,
 			'token' => $token,
 			'lng' => $this->language,
 		];
 
-		return $this->response = $this->queue->upload(self::getUrl(), $token, $post, $filename);
+		return $this->queue->import($post, $content);
 	}
 
 
 	/**
 	 * Response language.
-	 * @return static
 	 */
-	public function setLanguage(string $lang)
+	public function setLanguage(string $lang): static
 	{
-		$this->language = InvalidArgument::checkIsInList(strtolower($lang), self::LANGS);
+		$this->language = InvalidArgument::checkIsInList(strtolower($lang), self::LANGUAGES);
+
 		return $this;
 	}
 
 
-	private static function getUrl(): string
+	public function getAccount(): Account\FioAccount
 	{
-		return self::REST_URL . 'import/';
-	}
-
-
-	private function setUploadExtension(string $extension): void
-	{
-		$this->uploadExtension = InvalidArgument::checkIsInList(strtolower($extension), self::EXTENSIONS);
+		return $this->account;
 	}
 
 }

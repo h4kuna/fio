@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-DIR="$(dirname $(readlink -f "$0"))"
-
-$DIR/../vendor/bin/phpstan analyse -c $DIR/config/phpstan.neon --level max $@ $DIR/../src $DIR/src

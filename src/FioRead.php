@@ -2,106 +2,95 @@
 
 namespace h4kuna\Fio;
 
-use h4kuna\Fio\Exceptions\ServiceUnavailable;
-use h4kuna\Fio\Response\Read\TransactionList;
+use h4kuna\Fio\Read\TransactionList;
 use h4kuna\Fio\Utils;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Read from information Fio account
  */
-class FioRead extends Fio
+class FioRead
 {
-	/** @var string */
-	private $requestUrl;
 
-	private Request\Read\IReader $readerFactory;
-
-
-	public function __construct(Request\IQueue $queue, Account\FioAccount $account, Request\Read\IReader $readerFactory)
+	public function __construct(
+		private Utils\Queue $queue,
+		private Account\FioAccount $account,
+		private Read\Reader $reader,
+	)
 	{
-		parent::__construct($queue, $account);
-		$this->readerFactory = $readerFactory;
 	}
 
 
 	/**
 	 * Movements in date range.
-	 * @param int|string|\DateTimeInterface $from
-	 * @param int|string|\DateTimeInterface $to
-	 * @throws ServiceUnavailable
 	 */
-	public function movements($from = '-1 week', $to = 'now'): TransactionList
+	public function movements(
+		int|string|\DateTimeInterface $from = '-1 week',
+		int|string|\DateTimeInterface $to = 'now',
+	): TransactionList
 	{
-		$data = $this->download('periods/%s/%s/%s/transactions.%s', Utils\Strings::date($from), Utils\Strings::date($to), $this->readerFactory->getExtension());
-		return $this->readerFactory->create($data);
+		$data = $this->download('periods/%s/%s/%s/transactions.%s', Utils\Fio::date($from), Utils\Fio::date($to), $this->reader->getExtension());
+
+		return $this->reader->create($data);
 	}
 
 
 	/**
-	 * List of movemnts.
-	 * @param int $moveId
+	 * List of movements.
 	 * @param int $year format YYYY, empty string is current
-	 * @throws ServiceUnavailable
 	 */
 	public function movementId(int $moveId, int $year = 0): TransactionList
 	{
 		if ($year === 0) {
 			$year = (int) date('Y');
 		}
-		$data = $this->download('by-id/%s/%s/%s/transactions.%s', (string) $year, (string) $moveId, $this->readerFactory->getExtension());
-		return $this->readerFactory->create($data);
+		$data = $this->download('by-id/%s/%s/%s/transactions.%s', (string) $year, (string) $moveId, $this->reader->getExtension());
+
+		return $this->reader->create($data);
 	}
 
 
 	/**
 	 * Last movements from last breakpoint.
-	 * @throws ServiceUnavailable
 	 */
 	public function lastDownload(): TransactionList
 	{
-		$data = $this->download('last/%s/transactions.%s', $this->readerFactory->getExtension());
-		return $this->readerFactory->create($data);
+		$data = $this->download('last/%s/transactions.%s', $this->reader->getExtension());
+
+		return $this->reader->create($data);
 	}
 
 
 	/**
 	 * Set break point to id.
-	 * @throws ServiceUnavailable
 	 */
-	public function setLastId(int $moveId): void
+	public function setLastId(int $moveId): ResponseInterface
 	{
-		$this->download('set-last-id/%s/%s/', (string) $moveId);
+		return $this->download('set-last-id/%s/%s/', (string) $moveId);
 	}
 
 
 	/**
 	 * Set breakpoint to date.
-	 * @param int|string|\DateTimeInterface $date
-	 * @throws ServiceUnavailable
 	 */
-	public function setLastDate($date): void
+	public function setLastDate(int|string|\DateTimeInterface $date): ResponseInterface
 	{
-		$this->download('set-last-date/%s/%s/', Utils\Strings::date($date));
+		return $this->download('set-last-date/%s/%s/', Utils\Fio::date($date));
 	}
 
 
-	/**
-	 * Last request url for read. This is for tests.
-	 */
-	public function getRequestUrl(): string
+	public function getAccount(): Account\FioAccount
 	{
-		return $this->requestUrl;
+		return $this->account;
 	}
 
 
-	/**
-	 * @throws ServiceUnavailable
-	 */
-	private function download(string $apiUrl, string ...$args): string
+	private function download(string $apiUrl, string ...$args): ResponseInterface
 	{
 		$token = $this->account->getToken();
-		$this->requestUrl = self::REST_URL . sprintf($apiUrl, $token, ...$args);
-		return $this->queue->download($token, $this->requestUrl);
+		$requestUrl = Utils\Fio::REST_URL . sprintf($apiUrl, $token, ...$args);
+
+		return $this->queue->download($token, $requestUrl);
 	}
 
 }

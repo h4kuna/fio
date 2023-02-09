@@ -5,7 +5,6 @@ namespace h4kuna\Fio\Account;
 use h4kuna\Fio\Exceptions;
 
 /**
- * @author Tomáš Jacík
  * @implements \IteratorAggregate<int, FioAccount>
  */
 class AccountCollection implements \Countable, \IteratorAggregate
@@ -19,6 +18,7 @@ class AccountCollection implements \Countable, \IteratorAggregate
 		if ($alias === '') {
 			return $this->getDefault();
 		}
+
 		return $this->get($alias);
 	}
 
@@ -37,6 +37,7 @@ class AccountCollection implements \Countable, \IteratorAggregate
 		if ($this->accounts === []) {
 			throw new Exceptions\InvalidState('Missing account, let\'s fill in configuration.');
 		}
+
 		return reset($this->accounts);
 	}
 
@@ -48,6 +49,7 @@ class AccountCollection implements \Countable, \IteratorAggregate
 		}
 
 		$this->accounts[$alias] = $account;
+
 		return $this;
 	}
 

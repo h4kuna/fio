@@ -2,5 +2,5 @@
 composer.lock
 *~
 /tests/**/output/
-/tests/origin/account.ini
+tests/src/E2E/account.ini
 /coverage.html

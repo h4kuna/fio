@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Exceptions;
 
-final class QueueLimit extends Fio
+final class QueueLimit extends \RuntimeException
 {
 
 }

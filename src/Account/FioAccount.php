@@ -6,13 +6,10 @@ class FioAccount
 {
 	private Bank $account;
 
-	private string $token;
 
-
-	public function __construct(string $account, string $token)
+	public function __construct(string $account, private string $token)
 	{
 		$this->account = Bank::createNational($account);
-		$this->token = $token;
 	}
 
 

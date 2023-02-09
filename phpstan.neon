@@ -1,0 +1,16 @@
+parameters:
+	level: max
+	paths:
+		- src
+		- tests/src
+	strictRules:
+		noVariableVariables: false
+	checkGenericClassInNonGenericObjectType: false
+	ignoreErrors:
+		-
+			message: "#^h4kuna\\\\Fio\\\\Tests\\\\Fixtures\\\\Queue\\:\\:__construct\\(\\) does not call parent constructor from h4kuna\\\\Fio\\\\Utils\\\\Queue\\.$#"
+			count: 1
+			path: tests/src/Fixtures/Queue.php
+
+includes:
+	- vendor/phpstan/phpstan-strict-rules/rules.neon

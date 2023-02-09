@@ -1,5 +1,0 @@
-parameters:
-	dynamicConstantNames:
-		- PHP_INT_SIZE
-	ignoreErrors:
-		# ignore for tests
