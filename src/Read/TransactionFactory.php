@@ -31,14 +31,14 @@ class TransactionFactory
 			$method = 'set' . ucfirst($propertyName);
 			if (method_exists($transaction, $method)) {
 				$transaction->$method($value);
-			} elseif(property_exists($transaction, $propertyName)) {
+			} elseif (property_exists($transaction, $propertyName)) {
 				$transaction->$propertyName = $this->castValue($value, $type);
 			} else {
 				throw new InvalidArgument(sprintf('Missing property "%s" or method "%s" for set value.', $propertyName, $method));
 			}
 		}
 
-		return $transaction;
+		return $this->backCompatibility($transaction);
 	}
 
 
@@ -93,6 +93,20 @@ class TransactionFactory
 	protected function customFormat(mixed $value, \ReflectionNamedType $type): mixed
 	{
 		throw new InvalidArgument(sprintf('Values "%s" does not have support type "%s".', strval($value), $type->getName()));
+	}
+
+
+	/**
+	 * @template T of object
+	 * @param T $transaction
+	 * @return T
+	 */
+	protected function backCompatibility(object $transaction): object
+	{
+		assert($transaction instanceof Transaction);
+		$transaction->volume = $transaction->amount;
+
+		return $transaction;
 	}
 
 }

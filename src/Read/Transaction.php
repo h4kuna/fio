@@ -8,12 +8,12 @@ class Transaction
 	#[Column(id: 0)]
 	public \DateTimeImmutable $moveDate;
 
-	#[Column(id: 1)]
-	public float $amount;
-
 	/** @deprecated use amount */
 	#[Column(id: 1)]
 	public float $volume;
+
+	#[Column(id: 1)]
+	public float $amount;
 
 	#[Column(id: 2)]
 	public string $toAccount;

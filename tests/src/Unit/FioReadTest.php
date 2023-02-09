@@ -69,14 +69,14 @@ class FioReadTest extends TestCase
 		Assert::same('hgfedcba', $token);
 		$data = $fioRead->movementId(2, 2015);
 
-		Assert::equal(loadResult('raw://2015-2-transactions.srlz', $data), serialize($data));
+		Assert::equal(loadResult('raw://2015-2-transactions.srlz'), serialize($data));
 	}
 
 
 	public function testLastDownload(): void
 	{
 		$data = $this->fioRead->lastDownload();
-		Assert::equal(loadResult('raw://last-transactions.srlz', $data), serialize($data));
+		Assert::equal(loadResult('raw://last-transactions.srlz'), serialize($data));
 
 		foreach ($data as $transaction) {
 			Assert::type(Transaction::class, $transaction);
