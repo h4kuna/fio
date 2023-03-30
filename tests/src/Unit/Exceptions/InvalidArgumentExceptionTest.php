@@ -2,6 +2,7 @@
 
 namespace h4kuna\Fio\Tests\Unit\Exceptions;
 
+use h4kuna;
 use h4kuna\Fio\Exceptions\InvalidArgument;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
 use Tester\Assert;
@@ -21,7 +22,7 @@ class InvalidArgumentExceptionTest extends TestCase
 
 
 	/**
-	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
+	 * @throws h4kuna\Fio\Exceptions\InvalidArgument
 	 */
 	public function testCheckThrow(): void
 	{
@@ -31,16 +32,17 @@ class InvalidArgumentExceptionTest extends TestCase
 
 	public function testCheckRange(): void
 	{
-		Assert::same(10, InvalidArgument::checkRange(10, 99));
+		InvalidArgument::checkRange(10, 99);
+		Assert::true(true);
 	}
 
 
 	/**
-	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
+	 * @throws h4kuna\Fio\Exceptions\InvalidArgument
 	 */
 	public function testCheckRangeThrow(): void
 	{
-		Assert::same(10, InvalidArgument::checkRange(10, 1));
+		InvalidArgument::checkRange(10, 1);
 	}
 
 
@@ -51,7 +53,7 @@ class InvalidArgumentExceptionTest extends TestCase
 
 
 	/**
-	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
+	 * @throws h4kuna\Fio\Exceptions\InvalidArgument
 	 */
 	public function testCheckIsInListThrow(): void
 	{
@@ -66,7 +68,7 @@ class InvalidArgumentExceptionTest extends TestCase
 
 
 	/**
-	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
+	 * @throws h4kuna\Fio\Exceptions\InvalidArgument
 	 */
 	public function testCheckLengthThrow(): void
 	{

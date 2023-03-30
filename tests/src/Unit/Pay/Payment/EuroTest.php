@@ -36,13 +36,13 @@ class EuroTest extends Fio\Tests\Fixtures\TestCase
 			->setRemittanceInfo3('info 3')
 			->setStreet('Street 44')
 			->setCountry('jp')
-			->setConstantSymbol(321)
+			->setConstantSymbol('0321')
 			->setCurrency('Usd')
 			->setMyComment('Lorem ipsum')
 			->setDate('2014-01-23')
 			->setPaymentReason(110)
-			->setSpecificSymbol(378)
-			->setVariableSymbol(123456789)
+			->setSpecificSymbol('0378')
+			->setVariableSymbol('0123456789')
 			->setPaymentType(Fio\Pay\Payment\Euro::PAYMENT_PRIORITY);
 		$xml = $this->xmlFile->setData($pay)->getXml();
 		Tester\Assert::equal(Fio\Tests\loadResult('payment/euro-maximum.xml'), $xml);

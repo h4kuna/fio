@@ -15,13 +15,12 @@ final class InvalidArgument extends \InvalidArgumentException
 	}
 
 
-	public static function checkRange(int $number, int $limit): int
+	public static function checkRange(int|string $number, int $limit): void
 	{
-		if ($number < 0 || $number > $limit) {
-			throw new self(sprintf('Value is out of range "%s" must contain 1-%s positive digits.', $number, strlen((string) $limit)));
+		$check = intval($number);
+		if ($check < 0 || $check > $limit) {
+			throw new self(sprintf('Value is out of range "%s" must contain 1-%s positive digits.', $check, $limit));
 		}
-
-		return $number;
 	}
 
 

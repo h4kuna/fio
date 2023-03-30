@@ -91,7 +91,8 @@ abstract class Property implements Iterator
 
 	public function setPaymentReason(int $code): static
 	{
-		$this->paymentReason = InvalidArgument::checkRange($code, 999);
+		InvalidArgument::checkRange($code, 999);
+		$this->paymentReason = $code;
 
 		return $this;
 	}

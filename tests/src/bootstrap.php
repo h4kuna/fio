@@ -4,7 +4,6 @@ namespace h4kuna\Fio\Tests;
 
 use Nette\Utils\FileSystem;
 use Nette\Utils\Json;
-use Nette\Utils\Strings;
 use Tracy;
 use Tester;
 
@@ -25,7 +24,7 @@ Tester\Environment::setup();
 function loadResult(string $name, $save = null)
 {
 	$raw = false;
-	if (Strings::startsWith($name, 'raw://')) {
+	if (str_starts_with($name, 'raw://')) {
 		$name = substr($name, 6);
 		$raw = true;
 	}

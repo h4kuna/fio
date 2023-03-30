@@ -28,6 +28,7 @@ $fioPay->createEuro();
 $fioPay->createEuro();
 $fioPay->send();
 ```
+- variable, constant and specific symbols are type string, integer is deprecated 
 
 ### v 2.0
 - support only php 7.1+

@@ -44,14 +44,14 @@ class NationalTest extends Fio\Tests\Fixtures\TestCase
 	public function testMaximum(): void
 	{
 		$pay = $this->fioPay->createNational(1000, '987654/0123')
-			->setConstantSymbol(321)
+			->setConstantSymbol('321')
 			->setCurrency('eur')
 			->setMyComment('Lorem ipsum')
 			->setDate('2014-01-23')
 			->setPaymentReason(333)
 			->setMessage('Hello Mr. Joe')
-			->setSpecificSymbol(378)
-			->setVariableSymbol(123456789)
+			->setSpecificSymbol('378')
+			->setVariableSymbol('0123456789')
 			->setPaymentType(Fio\Pay\Payment\National::PAYMENT_PRIORITY);
 		$xml = $this->xmlFile->setData($pay)->getXml();
 
