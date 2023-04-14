@@ -3,6 +3,7 @@
 namespace h4kuna\Fio\Exceptions;
 
 use GuzzleHttp\Client;
+use Psr\Http\Client\ClientInterface;
 
 final class MissingDependency extends \RuntimeException
 {
@@ -11,6 +12,10 @@ final class MissingDependency extends \RuntimeException
 	{
 		if (class_exists(Client::class) === false) {
 			throw self::create(Client::class, 'guzzlehttp/guzzle');
+		}
+
+		if (is_a(Client::class, ClientInterface::class) === false) {
+			throw new self("Supported only guzzlehttp/guzzle 7.0+.");
 		}
 	}
 
