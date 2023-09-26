@@ -14,7 +14,7 @@ final class MissingDependency extends \RuntimeException
 			throw self::create(Client::class, 'guzzlehttp/guzzle');
 		}
 
-		if (is_a(Client::class, ClientInterface::class) === false) {
+		if (is_a(Client::class, ClientInterface::class, true) === false) {
 			throw new self("Supported only guzzlehttp/guzzle 7.0+.");
 		}
 	}
