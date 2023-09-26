@@ -24,7 +24,7 @@
     "nette/utils": "^3.0 || ^4.0",
     "psr/http-client": "^1.0",
     "psr/http-factory": "^1.0",
-    "psr/http-message": "^1.0"
+    "psr/http-message": "^1.0 || ^2.0"
   },
   "require-dev": {
     "guzzlehttp/guzzle": "^7.5",
@@ -53,6 +53,7 @@
   },
   "scripts": {
     "phpstan": "vendor/bin/phpstan analyse",
-    "tests": "vendor/bin/tester -s -j 4 --colors 1 -s -C tests/src"
+    "tests": "vendor/bin/tester -s --colors 1 -s -C tests/src",
+    "coverage": "vendor/bin/tester --coverage coverage.html --coverage-src src/ -s --colors 1 -s -C tests/src"
   }
 }

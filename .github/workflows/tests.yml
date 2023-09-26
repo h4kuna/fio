@@ -17,7 +17,6 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: curl, simplexml, json
           coverage: none
 
       - run: composer install --no-progress --prefer-dist
@@ -28,21 +27,32 @@ jobs:
           name: output
           path: tests/**/output
 
+  lowest_dependencies:
+    name: Lowest Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          coverage: none
 
-#  code_coverage:
-#    name: Code Coverage
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: shivammathur/setup-php@v2
-#        with:
-#          php-version: 8.0
-#          extensions: json, mbstring, tokenizer, fileinfo
-#          coverage: none
-#
-#      - run: composer install --no-progress --prefer-dist
-#      - run: vendor/bin/tester -p phpdbg tests -s -C --coverage ./coverage.xml --coverage-src ./src
-#      - run: wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.4.3/php-coveralls.phar
-#      - env:
-#          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        run: php php-coveralls.phar --verbose --config tests/.coveralls.yml
+      - run: composer update --no-progress --prefer-dist --prefer-lowest --prefer-stable
+      - run: composer tests
+
+  code_coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          coverage: none
+
+      - run: composer install --no-progress --prefer-dist
+      - run: vendor/bin/tester -p phpdbg tests -s -C --coverage ./coverage.xml --coverage-src ./src
+      - run: wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.4.3/php-coveralls.phar
+      - env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: php php-coveralls.phar --verbose --config tests/.coveralls.yml
