@@ -83,11 +83,12 @@ class FioFactory
 	}
 
 
-	private function createRequestFactory(): Utils\GuzzleRequestFactory
+	private function createRequestFactory(): Utils\FioRequestFactory
 	{
 		Fio\Exceptions\MissingDependency::checkGuzzlehttp();
 
-		return new Utils\GuzzleRequestFactory(new HttpFactory());
+		$httpFactory = new HttpFactory();
+		return new Utils\FioRequestFactory($httpFactory, $httpFactory);
 	}
 
 }

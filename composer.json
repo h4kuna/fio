@@ -17,6 +17,7 @@
     "ext-mbstring": "*",
     "ext-simplexml": "*",
     "ext-xmlwriter": "*",
+    "guzzlehttp/psr7": "^2.4",
     "h4kuna/dir": "^0.1.2",
     "h4kuna/memoize": "^0.1.3",
     "nette/safe-stream": "^3.0",

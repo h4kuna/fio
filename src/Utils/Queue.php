@@ -4,6 +4,7 @@ namespace h4kuna\Fio\Utils;
 
 use h4kuna\Dir\TempDir;
 use h4kuna\Fio\Exceptions;
+use h4kuna\Fio\FioRead;
 use h4kuna\Fio\Pay\Response;
 use h4kuna\Fio\Pay\XMLResponse;
 use Nette\SafeStream;
@@ -27,7 +28,7 @@ class Queue
 	public function __construct(
 		private TempDir $tempDir,
 		private ClientInterface $client,
-		private RequestFactory $requestFactory,
+		private FioRequestFactory $requestFactory,
 	)
 	{
 	}
