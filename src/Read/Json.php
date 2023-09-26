@@ -27,6 +27,10 @@ use Psr\Http\Message\ResponseInterface;
 	{
 		$content = $response->getBody()->getContents();
 
+		if ($response->getStatusCode() === 422) {
+			throw new Exceptions\LowAuthorization($content, $response->getStatusCode());
+		}
+
 		if ($content === '') {
 			$content = '{}';
 		}

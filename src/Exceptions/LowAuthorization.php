@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Exceptions;
 
-class ServiceUnavailable extends \RuntimeException
+final class LowAuthorization extends ServiceUnavailable
 {
 
 }
