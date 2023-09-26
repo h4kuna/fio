@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 class Queue extends Fio\Utils\Queue
 {
 
-	public function __construct()
+	public function __construct() // @phpstan-ignore-line
 	{
 	}
 

@@ -63,6 +63,7 @@ class XMLFile
 				$value = '';
 			}
 
+			assert(is_scalar($value));
 			$this->xml->startElement($node);
 			$this->xml->text(strval($value));
 			$this->xml->endElement();

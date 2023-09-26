@@ -2,11 +2,16 @@
 
 namespace h4kuna\Fio\Tests\Fixtures;
 
-use h4kuna\Fio\Utils\RequestFactory;
+use h4kuna\Fio\Utils\FioRequestFactory;
 use Psr\Http\Message\RequestInterface;
 
-final class RequestFactoryMock implements RequestFactory
+final class RequestFactoryMock extends FioRequestFactory
 {
+	public function __construct() // @phpstan-ignore-line
+	{
+	}
+
+
 	public function get(string $uri): RequestInterface
 	{
 		return new Request($uri);

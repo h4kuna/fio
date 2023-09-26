@@ -14,9 +14,10 @@ class ClientMock implements ClientInterface
 	{
 		$uri = $request->getUri();
 		parse_str($uri->getQuery(), $output);
-		$file = strval($output['file'] ?? '2015-2-transactions.json');
+		/** @var array{file?: string, exception?: string, status?: string} $output */
+		$file = $output['file'] ?? '2015-2-transactions.json';
 		$status = intval($output['status'] ?? 200);
-		$exception = strval($output['exception'] ?? '');
+		$exception = $output['exception'] ?? '';
 
 		$headers = [];
 		$content = '';

@@ -22,7 +22,7 @@ $fioFactory = new Fio\FioFactory($accounts);
 $fioRead = $fioFactory->createFioRead();
 Tester\Assert::same($accounts['my-fio-account']['account'], $fioRead->getAccount()->getAccount());
 
-$movements = $fioRead->movements('2023-01-01', '2023-01-31');
+$movements = $fioRead->movements('2023-09-15', '2023-09-21');
 Tester\Assert::same(5, count($movements));
 
 Tester\Assert::type(\stdClass::class, $movements->getInfo());

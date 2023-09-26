@@ -14,7 +14,7 @@ class Response implements ResponseInterface
 
 
 	/**
-	 * @param array<mixed> $options
+	 * @param array<int, bool> $options
 	 */
 	public function __construct(private string $method, private string|UriInterface $uri, private array $options)
 	{

@@ -6,7 +6,7 @@ use h4kuna\Fio\Exceptions;
 use Nette\Utils;
 use Psr\Http\Message\ResponseInterface;
 
-class /* readonly */ Json implements Reader
+/* readonly */ class Json implements Reader
 {
 
 	public function __construct(private ?TransactionFactory $transactionFactory = null)
@@ -34,7 +34,7 @@ class /* readonly */ Json implements Reader
 		try {
 			$json = Utils\Json::decode($content);
 		} catch (Utils\JsonException $e) {
-			throw new Exceptions\ServiceUnavailable($e->getMessage(), 0, $e);
+			throw new Exceptions\ServiceUnavailable(sprintf('%s: %s', $e->getMessage(), $content), 0, $e);
 		}
 		assert($json instanceof \stdClass);
 

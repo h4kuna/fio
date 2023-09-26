@@ -70,7 +70,10 @@ class TransactionFactory
 	}
 
 
-	private function castValue(mixed $value, \ReflectionNamedType $type): mixed
+	/**
+	 * @param scalar|null $value
+	 */
+	private function castValue($value, \ReflectionNamedType $type): mixed
 	{
 		if ($type->allowsNull() && $value === null) {
 			return null;
@@ -90,7 +93,10 @@ class TransactionFactory
 	}
 
 
-	protected function customFormat(mixed $value, \ReflectionNamedType $type): mixed
+	/**
+	 * @param scalar|null $value
+	 */
+	protected function customFormat($value, \ReflectionNamedType $type): mixed
 	{
 		throw new InvalidArgument(sprintf('Values "%s" does not have support type "%s".', strval($value), $type->getName()));
 	}

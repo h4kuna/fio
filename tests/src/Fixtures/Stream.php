@@ -13,13 +13,13 @@ class Stream implements StreamInterface
 	}
 
 
-	public function __toString()
+	public function __toString(): string
 	{
 		return $this->getContents();
 	}
 
 
-	public function close()
+	public function close(): void
 	{
 		throw new \RuntimeException('Not implemented.');
 	}

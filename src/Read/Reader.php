@@ -24,6 +24,6 @@ interface Reader
 	/**
 	 * Prepare downloaded data before append.
 	 */
-	function create(ResponseInterface $content): TransactionList;
+	function create(ResponseInterface $response): TransactionList;
 
 }
