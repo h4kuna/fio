@@ -4,10 +4,10 @@ namespace h4kuna\Fio\Utils;
 
 use h4kuna\Dir\TempDir;
 use h4kuna\Fio\Exceptions;
-use h4kuna\Fio\FioRead;
 use h4kuna\Fio\Pay\Response;
 use h4kuna\Fio\Pay\XMLResponse;
 use Nette\SafeStream;
+use Nette\Utils\Strings;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -103,7 +103,8 @@ class Queue
 
 			return $response;
 		} catch (ClientExceptionInterface $e) {
-			throw new Exceptions\ServiceUnavailable($e->getMessage(), $e->getCode(), $e);
+			$message = str_replace($token, Strings::truncate($token, 10), $e->getMessage());
+			throw new Exceptions\ServiceUnavailable($message, $e->getCode(), $e);
 		} finally {
 			fclose($file);
 		}
