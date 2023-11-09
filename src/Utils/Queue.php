@@ -57,7 +57,7 @@ class Queue
 		/* @var $contentTypeHeaders array */
 		$contentTypeHeaders = $response->getHeader('Content-Type');
 		$contentType = array_shift($contentTypeHeaders);
-		if ($contentType === 'text/xml;charset=UTF-8') {
+		if (str_contains($contentType, 'text/xml')) {
 			$xmlResponse = $this->createXmlResponse($response);
 
 			throw new Exceptions\ServiceUnavailable($xmlResponse->status(), $xmlResponse->code());
