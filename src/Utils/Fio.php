@@ -11,7 +11,7 @@ if (Fio::is32bitOS()) {
 
 /**
  * @see doc https://www.fio.sk/docs/cz/API_Bankovnictvi.pdf
- * @support 1.7.4
+ * @support 1.7.7
  */
 final class Fio
 {
