@@ -104,7 +104,7 @@ class Queue
 			return $response;
 		} catch (ClientExceptionInterface $e) {
 			$message = str_replace($token, Strings::truncate($token, 10), $e->getMessage());
-			throw new Exceptions\ServiceUnavailable($message, $e->getCode(), $e);
+			throw new Exceptions\ServiceUnavailable($message, $e->getCode()); // in url is token, don't need keep previous exception
 		} finally {
 			fclose($file);
 		}
