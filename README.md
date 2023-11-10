@@ -71,6 +71,8 @@ You can use different config bud keep structure of php array
 
 ## Reading
 
+> Keep on mind, all items like variable symbol, constant symbol and specific symbol can to have zeros from left side.
+
 #### Read range between date.
 
 ```php
