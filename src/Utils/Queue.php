@@ -54,7 +54,6 @@ class Queue
 
 	private function detectDownloadResponse(ResponseInterface $response): void
 	{
-		/* @var $contentTypeHeaders array */
 		$contentTypeHeaders = $response->getHeader('Content-Type');
 		$contentType = array_shift($contentTypeHeaders);
 		if ($contentType !== null && str_contains($contentType, 'text/xml')) {
