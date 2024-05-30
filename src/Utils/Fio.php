@@ -10,13 +10,13 @@ if (Fio::is32bitOS()) {
 }
 
 /**
- * @see doc https://www.fio.sk/docs/cz/API_Bankovnictvi.pdf
- * @support 1.7.7
+ * @see doc https://www.fio.cz/docs/cz/API_Bankovnictvi.pdf
+ * @support 1.8
  */
 final class Fio
 {
 	/** @var string url Fio REST API */
-	public const REST_URL = 'https://www.fio.cz/ib_api/rest/';
+	public const REST_URL = 'https://fioapi.fio.cz/v1/rest/';
 
 	private function __construct()
 	{
