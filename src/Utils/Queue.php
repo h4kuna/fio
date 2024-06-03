@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Utils;
 
-use h4kuna\Dir\TempDir;
+use h4kuna\Dir\Dir;
 use h4kuna\Fio\Exceptions;
 use h4kuna\Fio\Pay\Response;
 use h4kuna\Fio\Pay\XMLResponse;
@@ -26,11 +26,10 @@ class Queue
 
 
 	public function __construct(
-		private TempDir $tempDir,
+		private Dir $tempDir,
 		private ClientInterface $client,
 		private FioRequestFactory $requestFactory,
-	)
-	{
+	) {
 	}
 
 
