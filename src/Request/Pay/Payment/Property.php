@@ -148,6 +148,7 @@ abstract class Property implements Iterator
 	/**
 	 * @return mixed
 	 */
+	#[\ReturnTypeWillChange]
 	public function current()
 	{
 		$property = $this->key();
@@ -162,18 +163,21 @@ abstract class Property implements Iterator
 	/**
 	 * @return string
 	 */
+	#[\ReturnTypeWillChange]
 	public function key()
 	{
 		return (string) key(self::$iterator[$this->key]);
 	}
 
 
+	#[\ReturnTypeWillChange]
 	public function next()
 	{
 		next(self::$iterator[$this->key]);
 	}
 
 
+	#[\ReturnTypeWillChange]
 	public function rewind()
 	{
 		$this->getProperties();
@@ -181,6 +185,7 @@ abstract class Property implements Iterator
 	}
 
 
+	#[\ReturnTypeWillChange]
 	public function valid()
 	{
 		return array_key_exists($this->key(), self::$iterator[$this->key]);

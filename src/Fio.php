@@ -11,7 +11,7 @@ if (Utils\Strings::is32bitOS()) {
 class Fio
 {
 	/** @var string url Fio REST API */
-	public const REST_URL = 'https://www.fio.cz/ib_api/rest/';
+	public const REST_URL = 'https://fioapi.fio.cz/v1/rest/';
 
 	/**
 	 * @todo INKASO does not work
