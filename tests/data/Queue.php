@@ -3,7 +3,6 @@
 namespace h4kuna\Fio\Test;
 
 use h4kuna\Fio;
-use Salamium\Testinium;
 
 class Queue implements Fio\Request\IQueue
 {
@@ -18,7 +17,7 @@ class Queue implements Fio\Request\IQueue
 				break;
 		}
 		if ($file) {
-			return Testinium\File::load($file);
+			return file_get_contents(__DIR__ . '/../data/tests/' . $file);
 		}
 		return $file;
 	}

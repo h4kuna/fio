@@ -3,8 +3,6 @@
 namespace h4kuna\Fio;
 
 use h4kuna\Fio\Response\Read\Transaction;
-use h4kuna\Fio\Test;
-use Salamium\Testinium;
 use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
@@ -48,9 +46,9 @@ class FioReadTest extends Test\TestCase
 		Assert::equal(Fio::REST_URL . 'periods/' . $this->token . '/2015-01-01/2015-04-16/transactions.json', $this->fioRead->getRequestUrl());
 
 		if (Request\Read\Files\Json::isJsonBug()) {
-			Assert::equal(unserialize(Testinium\File::load('php7.1/2015-01-01-2015-04-16-transactions.srlz')), $data);
+			Assert::equal(unserialize(file_get_contents(__DIR__ . '/../data/tests/php7.1/2015-01-01-2015-04-16-transactions.srlz')), $data);
 		} else {
-			Assert::equal(unserialize(Testinium\File::load('2015-01-01-2015-04-16-transactions.srlz')), $data);
+			Assert::equal(unserialize(file_get_contents(__DIR__ . '/../data/tests/2015-01-01-2015-04-16-transactions.srlz')), $data);
 		}
 	}
 
@@ -60,9 +58,9 @@ class FioReadTest extends Test\TestCase
 		$data = $this->fioRead->movements('2011-01-01', '2011-01-02');
 
 		if (Request\Read\Files\Json::isJsonBug()) {
-			Assert::equal(unserialize(Testinium\File::load('php7.1/2011-01-01-2011-01-02-transactions.srlz')), $data);
+			Assert::equal(unserialize(file_get_contents(__DIR__ . '/../data/tests/php7.1/2011-01-01-2011-01-02-transactions.srlz')), $data);
 		} else {
-			Assert::equal(unserialize(Testinium\File::load('2011-01-01-2011-01-02-transactions.srlz')), $data);
+			Assert::equal(unserialize(file_get_contents(__DIR__ . '/../data/tests/2011-01-01-2011-01-02-transactions.srlz')), $data);
 		}
 	}
 
@@ -75,9 +73,9 @@ class FioReadTest extends Test\TestCase
 		$data = $fioRead->movementId(2, 2015);
 
 		if (Request\Read\Files\Json::isJsonBug()) {
-			Assert::equal(unserialize(Testinium\File::load('php7.1/2015-2-transactions.srlz')), $data);
+			Assert::equal(unserialize(file_get_contents(__DIR__ . '/../data/tests/php7.1/2015-2-transactions.srlz')), $data);
 		} else {
-			Assert::equal(unserialize(Testinium\File::load('2015-2-transactions.srlz')), $data);
+			Assert::equal(unserialize(file_get_contents(__DIR__ . '/../data/tests/2015-2-transactions.srlz')), $data);
 		}
 
 		Assert::equal(Fio::REST_URL . 'by-id/' . $token . '/2015/2/transactions.json', $fioRead->getRequestUrl());
@@ -88,9 +86,9 @@ class FioReadTest extends Test\TestCase
 	{
 		$data = $this->fioRead->lastDownload();
 		if (Request\Read\Files\Json::isJsonBug()) {
-			Assert::equal(unserialize(Testinium\File::load('php7.1/last-transactions.srlz')), $data);
+			Assert::equal(unserialize(file_get_contents(__DIR__ . '/../data/tests/php7.1/last-transactions.srlz')), $data);
 		} else {
-			Assert::equal(unserialize(Testinium\File::load('last-transactions.srlz')), $data);
+			Assert::equal(unserialize(file_get_contents(__DIR__ . '/../data/tests/last-transactions.srlz')), $data);
 		}
 		Assert::equal(Fio::REST_URL . 'last/' . $this->token . '/transactions.json', $this->fioRead->getRequestUrl());
 

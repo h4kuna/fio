@@ -2,9 +2,6 @@
 
 namespace h4kuna\Fio;
 
-use h4kuna\Fio\Test;
-use Salamium\Testinium;
-use Tester;
 use Tester\Assert;
 
 require __DIR__ . '/../bootstrap.php';
@@ -36,7 +33,7 @@ class FioPayTest extends Test\TestCase
 			->setDate('2016-01-12');
 		$xml = $this->fioPay->send($payment2);
 		// Testinium\File::save('payment/multi-pay.xml', $xml);
-		Assert::same(Testinium\File::load('payment/multi-pay.xml'), (string) $xml);
+		Assert::same(file_get_contents(__DIR__ . '/../data/tests/payment/multi-pay.xml'), (string) $xml);
 	}
 
 

@@ -3,7 +3,6 @@
 namespace h4kuna\Fio\Response\Pay;
 
 use h4kuna\Fio\Test;
-use Salamium\Testinium;
 use Tester\Assert;
 
 require __DIR__ . '/../../../bootstrap.php';
@@ -16,7 +15,7 @@ class XMLResponseTest extends Test\TestCase
 
 	public function testResponse(): void
 	{
-		$xml = Testinium\File::load('payment/response.xml');
+		$xml = file_get_contents(__DIR__ . '/../../../data/tests/payment/response.xml');
 		$xmlResponse = new XMLResponse($xml);
 		Assert::true($xmlResponse->isOk());
 		Assert::equal('1247458', $xmlResponse->getIdInstruction());
@@ -25,7 +24,7 @@ class XMLResponseTest extends Test\TestCase
 
 	public function testErrorResponse(): void
 	{
-		$xml = Testinium\File::load('payment/response-error.xml');
+		$xml = file_get_contents(__DIR__ . '/../../../data/tests/payment/response-error.xml');
 		$xmlResponse = new XMLResponse($xml);
 		Assert::false($xmlResponse->isOk());
 

@@ -6,7 +6,6 @@ use GuzzleHttp;
 use h4kuna\Fio\Test;
 use h4kuna\Fio\Test\ClientMock;
 use h4kuna\Fio\Test\Response;
-use Salamium\Testinium\File;
 use Tester\Assert;
 
 require __DIR__ . '/../../bootstrap.php';
@@ -62,7 +61,7 @@ class QueueTest extends Test\TestCase
 	{
 		$queue = self::createQueue();
 		$xml = $queue->download(self::TOKEN, 'http://www.example.com/');
-		Assert::same(File::load('payment/response.xml'), $xml);
+		Assert::same(file_get_contents(__DIR__ . '/../../data/tests/payment/response.xml'), $xml);
 	}
 
 

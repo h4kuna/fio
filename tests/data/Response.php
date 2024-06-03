@@ -2,6 +2,7 @@
 
 namespace h4kuna\Fio\Test;
 
+use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -32,31 +33,31 @@ class Response implements ResponseInterface
 	}
 
 
-	public function getProtocolVersion()
+	public function getProtocolVersion(): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withProtocolVersion($version)
+	public function withProtocolVersion(string $version): MessageInterface
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getHeaders()
+	public function getHeaders(): array
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function hasHeader($name)
+	public function hasHeader(string $name): bool
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getHeader($name)
+	public function getHeader(string $name): array
 	{
 		if ('Content-Type' === $name) {
 			if ($this->isOk()) {
@@ -68,43 +69,43 @@ class Response implements ResponseInterface
 	}
 
 
-	public function getHeaderLine($name)
+	public function getHeaderLine(string $name): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withHeader($name, $value)
+	public function withHeader(string $name, $value): MessageInterface
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withAddedHeader($name, $value)
+	public function withAddedHeader(string $name, $value): MessageInterface
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function withoutHeader($name)
+	public function withoutHeader(string $name): MessageInterface
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getBody()
+	public function getBody(): StreamInterface
 	{
 		return new Stream($this->isOk());
 	}
 
 
-	public function withBody(StreamInterface $body)
+	public function withBody(StreamInterface $body): MessageInterface
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getStatusCode()
+	public function getStatusCode(): int
 	{
 		if (isset($this->options[self::RESPONSE_CODE])) {
 			$code = $this->options[self::RESPONSE_CODE];
@@ -113,17 +114,17 @@ class Response implements ResponseInterface
 		} else {
 			$code = 200;
 		}
-		return $code;
+		return (int) $code;
 	}
 
 
-	public function withStatus($code, $reasonPhrase = '')
+	public function withStatus(int $code, string $reasonPhrase = ''): ResponseInterface
 	{
 		throw new \RuntimeException('Not implemented.');
 	}
 
 
-	public function getReasonPhrase()
+	public function getReasonPhrase(): string
 	{
 		throw new \RuntimeException('Not implemented.');
 	}

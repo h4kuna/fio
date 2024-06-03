@@ -4,7 +4,6 @@ namespace h4kuna\Fio\Request\Pay\Payment;
 
 use h4kuna\Fio;
 use h4kuna\Fio\Test;
-use Salamium\Testinium;
 use Tester\Assert;
 
 require __DIR__ . '/../../../../bootstrap.php';
@@ -35,8 +34,7 @@ class InternationalTest extends Test\TestCase
 		$pay = $this->fioPay->createInternational(500, 'AT611904300234573201', 'Milan', 'Street 44', 'Prague', 'jp', 'Info 1', 'ABAGATWWXXX');
 		$pay->setDate('2015-01-23');
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		Testinium\File::save('payment/international-minimum.xml', $xml);
-		Assert::equal(Testinium\File::load('payment/international-minimum.xml'), $xml);
+		Assert::equal(file_get_contents(__DIR__ . '/../../../../data/tests/payment/international-minimum.xml'), $xml);
 	}
 
 
@@ -52,7 +50,7 @@ class InternationalTest extends Test\TestCase
 			->setDate('2014-01-23')
 			->setPaymentReason(311);
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		Assert::equal(Testinium\File::load('payment/international-maximum.xml'), $xml);
+		Assert::equal(file_get_contents(__DIR__ . '/../../../../data/tests/payment/international-maximum.xml'), $xml);
 	}
 
 

@@ -21,8 +21,9 @@
     "nette/utils": "^2.0 | ^3.0"
   },
   "require-dev": {
-    "salamium/testinium": "^0.1",
-    "phpstan/phpstan": "^0.12"
+    "phpstan/phpstan": "^0.12",
+    "nette/tester": "^2.5",
+    "tracy/tracy": "^2.10"
   },
   "autoload": {
     "psr-4": {

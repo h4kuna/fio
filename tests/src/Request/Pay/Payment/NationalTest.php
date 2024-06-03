@@ -4,7 +4,6 @@ namespace h4kuna\Fio\Request\Pay\Payment;
 
 use h4kuna\Fio;
 use h4kuna\Fio\Test;
-use Salamium\Testinium;
 use Tester\Assert;
 
 require __DIR__ . '/../../../../bootstrap.php';

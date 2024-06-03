@@ -4,7 +4,6 @@ namespace h4kuna\Fio\Response\Read;
 
 use h4kuna\Fio\Request\Read\Files;
 use h4kuna\Fio\Test;
-use Salamium\Testinium;
 use Tester\Assert;
 
 require __DIR__ . '/../../../bootstrap.php';
@@ -19,12 +18,12 @@ final class JsonStatementFactoryTest extends Test\TestCase
 	{
 		$fioFactory = new Test\FioFactory(MyTransaction::class);
 		$json = $fioFactory->getReader();
-		$list = $json->create(Testinium\File::load('2015-01-01-2015-04-16-transactions.json'));
+		$list = $json->create(file_get_contents(__DIR__ . '/../../../data/tests/2015-01-01-2015-04-16-transactions.json'));
 		if (Files\Json::isJsonBug()) {
-			Assert::same(Testinium\File::load('php7.1/custom.srlz'), serialize($list));
+			Assert::same(file_get_contents(__DIR__ . '/../../../data/tests/php7.1/custom.srlz'), serialize($list));
 		} else {
 			// Testinium\File::save('custom.srlz', serialize($list));
-			Assert::same(Testinium\File::load('custom.srlz'), serialize($list));
+			Assert::same(file_get_contents(__DIR__ . '/../../../data/tests/custom.srlz'), serialize($list));
 		}
 	}
 
