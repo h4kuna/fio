@@ -3,6 +3,7 @@
 namespace h4kuna\Fio\Read;
 
 use h4kuna\Fio\Exceptions;
+use h4kuna\Fio\Utils\Fio;
 use Nette\Utils;
 use Psr\Http\Message\ResponseInterface;
 
@@ -20,12 +21,9 @@ use Psr\Http\Message\ResponseInterface;
 	}
 
 
-	/**
-	 * @throws Exceptions\ServiceUnavailable
-	 */
 	public function create(ResponseInterface $response): TransactionList
 	{
-		$content = $response->getBody()->getContents();
+		$content = Fio::getContents($response);
 
 		if ($response->getStatusCode() === 422) {
 			throw new Exceptions\LowAuthorization($content, $response->getStatusCode());

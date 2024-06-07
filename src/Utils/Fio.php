@@ -3,7 +3,9 @@
 namespace h4kuna\Fio\Utils;
 
 use h4kuna\Fio\Exceptions\InvalidState;
+use h4kuna\Fio\Exceptions\ServiceUnavailable;
 use Nette\Utils\DateTime;
+use Psr\Http\Message\ResponseInterface;
 
 if (Fio::is32bitOS()) {
 	throw new InvalidState('This library does not support 32bit OS.');
@@ -28,6 +30,19 @@ final class Fio
 		return DateTime::from($date)->format($format);
 	}
 
+	/**
+	 * @throws ServiceUnavailable
+	 */
+	public static function getContents(ResponseInterface $response): string
+	{
+		$body = $response->getBody();
+
+		try {
+			return $body->getContents();
+		} catch (\RuntimeException $e) {
+			throw new ServiceUnavailable($e->getMessage(), $e->getCode());
+		}
+	}
 
 	public static function toDate(string $value): \DateTimeImmutable
 	{

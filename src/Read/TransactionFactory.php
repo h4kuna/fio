@@ -20,7 +20,7 @@ class TransactionFactory
 		}
 
 		/** @var array<string, \ReflectionProperty> $map */
-		$map = $this->memoize($transaction::class, fn (): array => $this->createMapping($transaction::class));
+		$map = $this->memoize($transaction::class, static fn (): array => self::createMapping($transaction::class));
 
 		foreach ($map as $column => $property) {
 			$propertyName = $property->getName();
@@ -52,7 +52,7 @@ class TransactionFactory
 	 * @param class-string $transaction
 	 * @return array<string, \ReflectionProperty>
 	 */
-	private function createMapping(string $transaction): array
+	private static function createMapping(string $transaction): array
 	{
 		$class = new \ReflectionClass($transaction);
 		$properties = $class->getProperties(\ReflectionProperty::IS_PUBLIC);

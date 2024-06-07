@@ -6,8 +6,7 @@ use h4kuna\Fio\Utils\Fio;
 use stdClass;
 
 /**
- * @template T
- * @implements \IteratorAggregate<int, T>
+ * @implements \IteratorAggregate<int, Transaction>
  */
 final class TransactionList implements \Countable, \IteratorAggregate
 {
@@ -39,7 +38,7 @@ final class TransactionList implements \Countable, \IteratorAggregate
 		if ($this->transactionFactory === null) {
 			$factory = new class {
 				/**
-				 * @phpstan-type T object
+				 * @template T of object
 				 * @param T $item
 				 * @return T
 				 */

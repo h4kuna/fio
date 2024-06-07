@@ -2,6 +2,7 @@
 
 namespace h4kuna\Fio\Read;
 
+use h4kuna\Fio\Exceptions;
 use Psr\Http\Message\ResponseInterface;
 
 interface Reader
@@ -23,6 +24,8 @@ interface Reader
 
 	/**
 	 * Prepare downloaded data before append.
+	 * @throws Exceptions\ServiceUnavailable
+	 * @throws Exceptions\LowAuthorization
 	 */
 	function create(ResponseInterface $response): TransactionList;
 

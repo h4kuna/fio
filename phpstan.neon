@@ -5,7 +5,6 @@ parameters:
 		- tests/src
 	strictRules:
 		noVariableVariables: false
-	checkGenericClassInNonGenericObjectType: false
 
 includes:
 	- vendor/phpstan/phpstan-strict-rules/rules.neon

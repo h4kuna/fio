@@ -51,6 +51,9 @@ class Queue
 	}
 
 
+	/**
+	 * @throws Exceptions\ServiceUnavailable
+	 */
 	private function detectDownloadResponse(ResponseInterface $response): void
 	{
 		$contentTypeHeaders = $response->getHeader('Content-Type');
@@ -149,9 +152,12 @@ class Queue
 	}
 
 
+	/**
+	 * @throws Exceptions\ServiceUnavailable
+	 */
 	private function createXmlResponse(ResponseInterface $response): XMLResponse
 	{
-		return new XMLResponse($response->getBody()->getContents());
+		return new XMLResponse(Fio::getContents($response));
 	}
 
 }
