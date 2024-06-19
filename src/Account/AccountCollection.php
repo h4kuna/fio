@@ -5,11 +5,11 @@ namespace h4kuna\Fio\Account;
 use h4kuna\Fio\Exceptions;
 
 /**
- * @implements \IteratorAggregate<int, FioAccount>
+ * @implements \IteratorAggregate<string, FioAccount>
  */
 class AccountCollection implements \Countable, \IteratorAggregate
 {
-	/** @var array<FioAccount> */
+	/** @var array<string, FioAccount> */
 	private array $accounts = [];
 
 
@@ -61,7 +61,7 @@ class AccountCollection implements \Countable, \IteratorAggregate
 
 
 	/**
-	 * @return \ArrayIterator<int, FioAccount>
+	 * @return \ArrayIterator<string, FioAccount>
 	 */
 	public function getIterator(): \ArrayIterator
 	{
