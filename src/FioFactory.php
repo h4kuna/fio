@@ -49,7 +49,7 @@ class FioFactory
 
 	protected function createQueue(Dir $tempDir, ClientInterface $client, Utils\FioRequestFactory $fioRequestFactory): Utils\Queue
 	{
-		return new Utils\Queue($tempDir, $client, $fioRequestFactory);
+		return new Utils\Queue($tempDir->create(), $client, $fioRequestFactory);
 	}
 
 
