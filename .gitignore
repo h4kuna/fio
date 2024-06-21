@@ -4,3 +4,4 @@ composer.lock
 /tests/**/output/
 tests/src/E2E/account.ini
 coverage.html
+/tests/src/E2E/test.http

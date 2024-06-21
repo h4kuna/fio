@@ -43,14 +43,17 @@ class FioRequestFactory
 			);
 		}
 
-		return $request->withBody($this->createMultiPart($filename, $stream, $params));
+		$multipart = $this->createMultiPart($filename, $stream, $params);
+
+		return $request->withHeader('Content-Type', 'multipart/form-data; boundary=' . $multipart->getBoundary())
+			->withBody($multipart);
 	}
 
 
 	/**
 	 * @param array{token: string, type: string, lng?: string} $params
 	 */
-	protected function createMultiPart(string $filename, StreamInterface $file, array $params): StreamInterface
+	private function createMultiPart(string $filename, StreamInterface $file, array $params): MultipartStream
 	{
 		$newPost = [
 			[
