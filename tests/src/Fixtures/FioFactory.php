@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Tests\Fixtures;
 
-use h4kuna\Dir\Dir;
+use h4kuna\Fio\Contracts\RequestBlockingServiceContract;
 use h4kuna\Fio\Pay\XMLFile;
 use h4kuna\Fio\Read\Json;
 use h4kuna\Fio\Utils\FioRequestFactory;
@@ -39,7 +39,7 @@ class FioFactory extends \h4kuna\Fio\FioFactory
 	}
 
 
-	protected function createQueue(Dir $tempDir, ClientInterface $client, FioRequestFactory $fioRequestFactory): Queue
+	protected function createQueue(RequestBlockingServiceContract $requestBlockingService, ClientInterface $client, FioRequestFactory $fioRequestFactory): Queue
 	{
 		return new Queue();
 	}

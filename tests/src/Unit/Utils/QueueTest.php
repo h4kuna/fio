@@ -3,14 +3,13 @@
 namespace h4kuna\Fio\Tests\Unit\Utils;
 
 use GuzzleHttp;
-use h4kuna\Dir\TempDir;
 use h4kuna;
+use h4kuna\Dir\TempDir;
 use h4kuna\Fio\Tests\Fixtures\ClientMock;
 use h4kuna\Fio\Tests\Fixtures\RequestFactoryMock;
-use h4kuna\Fio\Tests\Fixtures\Response;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
+use h4kuna\Fio\Utils\FileRequestBlockingService;
 use h4kuna\Fio\Utils\Queue;
-use Psr\Http\Client\ClientExceptionInterface;
 use Tester\Assert;
 use function h4kuna\Fio\Tests\loadResult;
 
@@ -55,9 +54,8 @@ class QueueTest extends TestCase
 	public function testDownloadThrowQueueNoLimit(): void
 	{
 		$queue = self::createQueue();
-		$queue->setLimitLoop(0);
-		Assert::exception(fn (
-		) => $queue->download(self::TOKEN, 'http://www.example.com/?status=409'), h4kuna\Fio\Exceptions\QueueLimit::class, 'You have limit up requests to server "1". Too many requests in short time interval.');
+		$queue->setLimitLoop(1);
+		Assert::exception(fn () => $queue->download(self::TOKEN, 'http://www.example.com/?status=409'), h4kuna\Fio\Exceptions\QueueLimit::class, 'You have limit up requests to server "1". Too many requests in short time interval.');
 	}
 
 
@@ -65,8 +63,7 @@ class QueueTest extends TestCase
 	{
 		$queue = self::createQueue();
 		$queue->setLimitLoop(2);
-		Assert::exception(fn (
-		) => $queue->download(self::TOKEN, 'http://www.example.com/?status=409'), h4kuna\Fio\Exceptions\QueueLimit::class, 'You have limit up requests to server "2". Too many requests in short time interval.');
+		Assert::exception(fn () => $queue->download(self::TOKEN, 'http://www.example.com/?status=409'), h4kuna\Fio\Exceptions\QueueLimit::class, 'You have limit up requests to server "2". Too many requests in short time interval.');
 	}
 
 
@@ -87,11 +84,8 @@ class QueueTest extends TestCase
 	{
 		$tempDir = new TempDir(__DIR__ . '/../../../temp');
 
-		$q = new class ($tempDir, new ClientMock(), new RequestFactoryMock()) extends Queue {
-			protected const WAIT_TIME = 2;
-
-		};
-		$q->setLimitLoop(0);
+		$q = new Queue(new ClientMock(), new RequestFactoryMock(), new FileRequestBlockingService($tempDir, 2));
+		$q->setLimitLoop(1);
 
 		return $q;
 	}

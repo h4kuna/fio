@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\HttpFactory;
 use h4kuna\Dir\Dir;
 use h4kuna\Dir\TempDir;
 use h4kuna\Fio;
+use h4kuna\Fio\Contracts\RequestBlockingServiceContract;
 use Psr\Http\Client\ClientInterface;
 
 class FioFactory
@@ -28,7 +29,7 @@ class FioFactory
 
 		$this->accountCollection = $this->createAccountCollection($accounts);
 		$this->queue = $this->createQueue(
-			is_string($temp) ? new TempDir($temp) : $temp,
+			$this->createRequestBlockingService(is_string($temp) ? new TempDir($temp) : $temp),
 			$client ?? self::createClientInterface(),
 			$fioRequestFactory ?? self::createRequestFactory()
 		);
@@ -47,9 +48,14 @@ class FioFactory
 	}
 
 
-	protected function createQueue(Dir $tempDir, ClientInterface $client, Utils\FioRequestFactory $fioRequestFactory): Utils\Queue
+	protected function createQueue(RequestBlockingServiceContract $requestBlockingService, ClientInterface $client, Utils\FioRequestFactory $fioRequestFactory): Utils\Queue
 	{
-		return new Utils\Queue($tempDir->create(), $client, $fioRequestFactory);
+		return new Utils\Queue($client, $fioRequestFactory, $requestBlockingService);
+	}
+
+	protected function createRequestBlockingService(Dir $tempDir): RequestBlockingServiceContract
+	{
+		return new Fio\Utils\FileRequestBlockingService($tempDir->create());
 	}
 
 
