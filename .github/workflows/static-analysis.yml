@@ -17,5 +17,5 @@ jobs:
           coverage: none
 
       - run: composer install --no-progress --prefer-dist
-      - run: composer phpstan -- --no-progress
+      - run: composer stan -- --no-progress
         continue-on-error: true # is only informative

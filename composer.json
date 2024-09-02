@@ -53,7 +53,7 @@
     "sort-packages": true
   },
   "scripts": {
-    "phpstan": "vendor/bin/phpstan analyse",
+    "stan": "vendor/bin/phpstan analyse",
     "tests": "vendor/bin/tester -s --colors 1 -s -C tests/src",
     "coverage": "vendor/bin/tester --coverage coverage.html --coverage-src src/ -s --colors 1 -s -C tests/src"
   }
