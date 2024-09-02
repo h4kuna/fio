@@ -23,17 +23,23 @@ final class FileRequestBlockingService implements RequestBlockingServiceContract
 	) {
 	}
 
+
 	public function synchronize(string $token, Closure $callback): ?ResponseInterface
 	{
 		$tempFile = $this->loadFileName($token);
 		$file = self::createFileResource($tempFile);
-		$this->sleep($tempFile);
+		$sleep = $this->waitTime - (time() - ((int) fgets($file, 30)));
+		if ($sleep > 0) {
+			sleep($sleep);
+		}
 
 		try {
 			$response = $callback();
 		} finally {
+			fseek($file, 0);
+			ftruncate($file, 0);
+			fputs($file, (string) time());
 			fclose($file);
-			touch($tempFile);
 		}
 
 		return $response;
@@ -44,21 +50,15 @@ final class FileRequestBlockingService implements RequestBlockingServiceContract
 	 */
 	private static function createFileResource(string $filePath)
 	{
-		$file = fopen(self::safeProtocol($filePath), 'w');
+		if (is_file($filePath) === false) {
+			touch($filePath);
+		}
+		$file = fopen(self::safeProtocol($filePath), 'r+');
 		if ($file === false) {
 			throw new InvalidState('Open file is failed ' . $filePath);
 		}
 
 		return $file;
-	}
-
-
-	private function sleep(string $filename): void
-	{
-		$criticalTime = time() - intval(filemtime($filename));
-		if ($criticalTime < $this->waitTime) {
-			sleep($this->waitTime - $criticalTime);
-		}
 	}
 
 
