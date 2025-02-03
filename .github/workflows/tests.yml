@@ -22,7 +22,7 @@ jobs:
       - run: composer install --no-progress --prefer-dist
       - run: composer tests
       - if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: output
           path: tests/**/output
