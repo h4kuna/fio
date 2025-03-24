@@ -35,10 +35,14 @@ final class Fio
 	 */
 	public static function getContents(ResponseInterface $response): string
 	{
-		$body = $response->getBody();
+		$body = (string) $response->getBody();
+
+        if ($response->getStatusCode() === 500) {
+            throw new ServiceUnavailable($body);
+        }
 
 		try {
-			return $body->getContents();
+			return $body;
 		} catch (\RuntimeException $e) {
 			throw new ServiceUnavailable($e->getMessage(), $e->getCode());
 		}
