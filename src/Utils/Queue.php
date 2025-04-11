@@ -102,6 +102,10 @@ class Queue
 			throw new Exceptions\QueueLimit(sprintf('You have limit up requests to server "%s". Too many requests in short time interval.', $this->limitLoop));
 		}
 
+		if ($response->getStatusCode() >= 500) {
+			throw new Exceptions\ServiceUnavailable(sprintf('%d %s', $response->getStatusCode(), $response->getReasonPhrase()));
+		}
+
 		return $response;
 	}
 
