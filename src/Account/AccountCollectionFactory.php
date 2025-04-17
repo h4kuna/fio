@@ -8,7 +8,7 @@ class AccountCollectionFactory
 {
 
 	/**
-	 * @param array<string, array{token: string, account: string}> $accounts
+	 * @param array<string|int, array{token: string, account: string}> $accounts
 	 */
 	public static function create(array $accounts): AccountCollection
 	{
@@ -19,7 +19,7 @@ class AccountCollectionFactory
 			} elseif (!isset($info['account']) || $info['account'] === '') { /* @phpstan-ignore-line */
 				throw new Exceptions\InvalidArgument(sprintf('Key "account" is required for alias "%s".', $alias));
 			}
-			$accountCollection->addAccount($alias, new FioAccount($info['account'], $info['token']));
+			$accountCollection->addAccount((string) $alias, new FioAccount($info['account'], $info['token']));
 		}
 
 		return $accountCollection;
