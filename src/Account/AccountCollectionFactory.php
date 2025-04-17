@@ -8,7 +8,7 @@ class AccountCollectionFactory
 {
 
 	/**
-	 * @param array<string, array{token: string, account: string}> $accounts
+	 * @param array<string|int, array{token: string, account: string}> $accounts
 	 */
 	public static function create(array $accounts): AccountCollection
 	{

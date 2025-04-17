@@ -37,7 +37,7 @@ class AccountCollectionTest extends TestCase
 	public function testInvalidAlias(): void
 	{
 		$account1 = new FioAccount('323536', 'foo');
-		$accounts = new AccountCollection;
+		$accounts = new AccountCollection();
 		$accounts->addAccount('foo', $account1);
 		$accounts->account('bar');
 	}
@@ -47,7 +47,7 @@ class AccountCollectionTest extends TestCase
 	{
 		$account1 = new FioAccount('323536', 'foo');
 		$account2 = new FioAccount('978654', 'bar');
-		$accounts = new AccountCollection;
+		$accounts = new AccountCollection();
 		Assert::equal(0, $accounts->count());
 
 		$accounts->addAccount('foo', $account1);
@@ -60,7 +60,7 @@ class AccountCollectionTest extends TestCase
 	{
 		$account1 = new FioAccount('323536', 'foo');
 		$account2 = new FioAccount('978654', 'bar');
-		$accounts = new AccountCollection;
+		$accounts = new AccountCollection();
 		$accounts->addAccount('foo', $account1);
 		$accounts->addAccount('bar', $account2);
 
@@ -76,7 +76,7 @@ class AccountCollectionTest extends TestCase
 	 */
 	public function testEmpty(): void
 	{
-		(new AccountCollection)->account();
+		(new AccountCollection())->account();
 	}
 
 
@@ -87,7 +87,7 @@ class AccountCollectionTest extends TestCase
 	{
 		$account1 = new FioAccount('323536', 'foo');
 		$account2 = new FioAccount('978654', 'bar');
-		$accounts = new AccountCollection;
+		$accounts = new AccountCollection();
 		$accounts->addAccount('foo', $account1);
 		$accounts->addAccount('foo', $account2);
 	}
@@ -116,6 +116,23 @@ class AccountCollectionTest extends TestCase
 				],
 			]);
 		}, InvalidArgument::class, 'Key "token" is required for alias "foo".');
+	}
+
+	public function testKeysLikeNumber(): void
+	{
+		$collections = AccountCollectionFactory::create([
+			'1' => [
+				'account' => '123456/0800',
+				'token' => 'bar',
+			],
+			2 => [
+				'account' => '987564/0800',
+				'token' => 'foo',
+			],
+		]);
+
+		Assert::same('bar', $collections->account('1')->getToken());
+		Assert::same('foo', $collections->account('2')->getToken());
 	}
 
 }
