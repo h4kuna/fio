@@ -83,7 +83,7 @@ class Queue
 		$response = null;
 		try {
 			for ($i = 0; $i < $this->limitLoop && $response === null; ++$i) {
-				$response = $this->requestBlockingService->synchronize($token, function () use ($request) {
+				$response = $this->requestBlockingService->synchronize($token, function () use ($request): ?ResponseInterface {
 					$response = $this->client->sendRequest($request);
 
 					if ($response->getStatusCode() === self::HEADER_CONFLICT) {
@@ -100,9 +100,7 @@ class Queue
 
 		if ($response === null) {
 			throw new Exceptions\QueueLimit(sprintf('You have limit up requests to server "%s". Too many requests in short time interval.', $this->limitLoop));
-		}
-
-		if ($response->getStatusCode() >= 500) {
+		} elseif ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
 			throw new Exceptions\ServiceUnavailable(sprintf('%d %s', $response->getStatusCode(), $response->getReasonPhrase()));
 		}
 
