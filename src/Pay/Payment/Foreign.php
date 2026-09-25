@@ -1,14 +1,17 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Pay\Payment;
 
-use h4kuna\Fio\Account;
+use h4kuna\Fio\Account\FioAccount;
 use h4kuna\Fio\Exceptions\InvalidArgument;
+use function strlen;
+use function strtoupper;
 
 abstract class Foreign extends Property
 {
-	public const PAYMENT_STANDARD = 431008;
-	public const PAYMENT_PRIORITY = 431009;
+
+	public const PAYMENT_STANDARD = 431_008;
+	public const PAYMENT_PRIORITY = 431_009;
 
 	private const TYPES_PAYMENT = [self::PAYMENT_STANDARD, self::PAYMENT_PRIORITY];
 
@@ -31,12 +34,11 @@ abstract class Foreign extends Property
 	protected int $paymentType = 0;
 
 
-	public function __construct(Account\FioAccount $account)
+	public function __construct(FioAccount $account)
 	{
 		parent::__construct($account);
 		$this->setCurrency('EUR');
 	}
-
 
 	/**
 	 * @param string $accountTo ISO 13616
@@ -48,7 +50,6 @@ abstract class Foreign extends Property
 		return $this;
 	}
 
-
 	/**
 	 * @param string $bic ISO 9362
 	 */
@@ -59,7 +60,6 @@ abstract class Foreign extends Property
 		return $this;
 	}
 
-
 	public function setStreet(string $street): static
 	{
 		$this->benefStreet = InvalidArgument::check($street, 35);
@@ -67,14 +67,12 @@ abstract class Foreign extends Property
 		return $this;
 	}
 
-
 	public function setCity(string $city): static
 	{
 		$this->benefCity = InvalidArgument::check($city, 35);
 
 		return $this;
 	}
-
 
 	public function setCountry(string $benefCountry): static
 	{
@@ -87,14 +85,12 @@ abstract class Foreign extends Property
 		return $this;
 	}
 
-
 	public function setName(string $name): static
 	{
 		$this->benefName = InvalidArgument::check($name, 35);
 
 		return $this;
 	}
-
 
 	public function setRemittanceInfo1(string $info): static
 	{
@@ -103,7 +99,6 @@ abstract class Foreign extends Property
 		return $this;
 	}
 
-
 	public function setRemittanceInfo2(string $info): static
 	{
 		$this->remittanceInfo2 = InvalidArgument::check($info, 35);
@@ -111,14 +106,12 @@ abstract class Foreign extends Property
 		return $this;
 	}
 
-
 	public function setRemittanceInfo3(string $str): static
 	{
 		$this->remittanceInfo3 = InvalidArgument::check($str, 35);
 
 		return $this;
 	}
-
 
 	public function setPaymentType(int $type): static
 	{

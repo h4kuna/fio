@@ -1,11 +1,22 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests;
 
 use Nette\Utils\FileSystem;
 use Nette\Utils\Json;
-use Tracy;
-use Tester;
+use Tester\Environment;
+use Tracy\Debugger;
+use function assert;
+use function date_default_timezone_set;
+use function defined;
+use function file_get_contents;
+use function file_put_contents;
+use function pathinfo;
+use function serialize;
+use function str_starts_with;
+use function substr;
+use function unserialize;
+use const PATHINFO_EXTENSION;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -15,13 +26,12 @@ if (defined('__PHPSTAN_RUNNING__')) {
 
 date_default_timezone_set('Europe/Prague');
 
-Tester\Environment::setup();
+Environment::setup();
 
 /**
  * @param mixed $save
- * @return mixed
  */
-function loadResult(string $name, $save = null)
+function loadResult(string $name, $save = null): mixed
 {
 	$raw = false;
 	if (str_starts_with($name, 'raw://')) {
@@ -34,7 +44,8 @@ function loadResult(string $name, $save = null)
 	$file = FileSystem::isAbsolute($name) ? $name : __DIR__ . "/../data/$name";
 
 	if ($save !== null) {
-		file_put_contents($file,
+		file_put_contents(
+			$file,
 			match ($extension) {
 				'json' => Json::encode($save),
 				'srlz' => serialize($save),
@@ -56,4 +67,4 @@ function loadResult(string $name, $save = null)
 	};
 }
 
-Tracy\Debugger::enable(false, __DIR__ . '/../temp');
+Debugger::enable(false, __DIR__ . '/../temp');

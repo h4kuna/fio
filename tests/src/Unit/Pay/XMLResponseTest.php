@@ -1,11 +1,14 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit\Pay;
 
 use h4kuna\Fio\Pay\XMLResponse;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
 use Tester\Assert;
+use function assert;
+use function file_get_contents;
 use function h4kuna\Fio\Tests\loadResult;
+use function is_string;
 
 require __DIR__ . '/../../bootstrap.php';
 
@@ -24,7 +27,6 @@ class XMLResponseTest extends TestCase
 		Assert::equal('1247458', $xmlResponse->getIdInstruction());
 	}
 
-
 	public function testErrorResponse(): void
 	{
 		$xml = loadResult('payment/response-error.xml');
@@ -38,7 +40,7 @@ class XMLResponseTest extends TestCase
 		Assert::equal([
 			303 => 'Chybný formát zadaného IBAN.',
 			323 => 'Adresa majitele účtu není kompletní',
-			'foo',
+			324 => 'foo',
 		], $xmlResponse->errorMessages());
 
 		$xmlFile = __DIR__ . '/../../../temp/out-test-xml';

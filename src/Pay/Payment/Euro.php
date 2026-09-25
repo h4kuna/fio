@@ -1,9 +1,10 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Pay\Payment;
 
 class Euro extends Foreign
 {
+
 	use Symbols;
 
 	/** @return array<string, bool> */
@@ -31,7 +32,6 @@ class Euro extends Foreign
 			'paymentType' => false,
 		];
 	}
-
 
 	public function getStartXmlElement(): string
 	{

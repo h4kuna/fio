@@ -1,20 +1,30 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit\Pay\Payment;
 
-use h4kuna\Fio;
+use h4kuna\Fio\FioPay;
+use h4kuna\Fio\Pay\Payment\National;
+use h4kuna\Fio\Pay\XMLFile;
+use h4kuna\Fio\Tests\Fixtures\FioFactory;
+use h4kuna\Fio\Tests\Fixtures\TestCase;
 use Tester\Assert;
+use function assert;
+use function date;
+use function h4kuna\Fio\Tests\loadResult;
+use function is_string;
+use function str_replace;
 
 require __DIR__ . '/../../../bootstrap.php';
 
 /**
  * @testCase
  */
-class NationalTest extends Fio\Tests\Fixtures\TestCase
+class NationalTest extends TestCase
 {
-	private Fio\FioPay $fioPay;
 
-	private Fio\Pay\XMLFile $xmlFile;
+	private FioPay $fioPay;
+
+	private XMLFile $xmlFile;
 
 
 	public function testMinimum(): void
@@ -24,22 +34,21 @@ class NationalTest extends Fio\Tests\Fixtures\TestCase
 		$xml = $this->xmlFile->setData($pay)->getXml();
 
 		// Testinium\File::save('payment/pay-minimum.xml', $xml);
-		Assert::equal(Fio\Tests\loadResult('payment/pay-minimum.xml'), $xml);
+		Assert::equal(loadResult('payment/pay-minimum.xml'), $xml);
 
 		// same Property paymentFactory
 		$pay->setAccountTo('987654321')->setBankCode('0123');
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		Assert::equal(Fio\Tests\loadResult('payment/pay-minimum.xml'), $xml);
+		Assert::equal(loadResult('payment/pay-minimum.xml'), $xml);
 
 		// cloned paymentFactory Property
 		$pay = $this->fioPay->createNational(500, '987654321', '0123');
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		$expectedXml = Fio\Tests\loadResult('payment/pay-minimum.xml');
+		$expectedXml = loadResult('payment/pay-minimum.xml');
 		assert(is_string($expectedXml));
 		Assert::same(str_replace('2015-01-23', date('Y-m-d'), $expectedXml, $count), $xml);
 		Assert::same(1, $count);
 	}
-
 
 	public function testMaximum(): void
 	{
@@ -52,16 +61,15 @@ class NationalTest extends Fio\Tests\Fixtures\TestCase
 			->setMessage('Hello Mr. Joe')
 			->setSpecificSymbol('378')
 			->setVariableSymbol('0123456789')
-			->setPaymentType(Fio\Pay\Payment\National::PAYMENT_PRIORITY);
+			->setPaymentType(National::PAYMENT_PRIORITY);
 		$xml = $this->xmlFile->setData($pay)->getXml();
 
-		Assert::same(Fio\Tests\loadResult('payment/pay-maximum.xml'), $xml);
+		Assert::same(loadResult('payment/pay-maximum.xml'), $xml);
 	}
 
-
-	protected function setUp()
+	protected function setUp(): void
 	{
-		$fioFactory = new Fio\Tests\Fixtures\FioFactory();
+		$fioFactory = new FioFactory();
 		$this->fioPay = $fioFactory->createFioPay();
 		$this->xmlFile = $fioFactory->getXmlFile();
 	}

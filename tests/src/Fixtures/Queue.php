@@ -1,20 +1,33 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Fixtures;
 
-use h4kuna\Fio;
-use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Response as Psr7Response;
+use h4kuna\Fio\Pay\Response;
+use h4kuna\Fio\Pay\XMLResponse;
+use h4kuna\Fio\Utils\Queue as FioQueue;
 use Psr\Http\Message\ResponseInterface;
+use function assert;
+use function basename;
+use function file_get_contents;
+use function h4kuna\Fio\Tests\loadResult;
+use function is_file;
+use function is_string;
+use function ltrim;
+use function preg_match;
+use function str_replace;
 
-class Queue extends Fio\Utils\Queue
+class Queue extends FioQueue
 {
 
 	public function __construct() // @phpstan-ignore-line
 	{
 	}
 
-
-	public function download(string $token, string $url): ResponseInterface
+	public function download(
+		string $token,
+		string $url,
+	): ResponseInterface
 	{
 		$file = '';
 		switch (basename($url, 'json')) {
@@ -25,21 +38,23 @@ class Queue extends Fio\Utils\Queue
 				break;
 		}
 		if ($file !== '') {
-			$file = Fio\Tests\loadResult('raw://' . $file);
+			$file = loadResult('raw://' . $file);
 			assert(is_string($file));
 		}
 
-		return new Psr7\Response(body: $file, reason: $url);
+		return new Psr7Response(body: $file, reason: $url);
 	}
 
-
-	public function import(array $params, string $content): Fio\Pay\Response
+	public function import(
+		array $params,
+		string $content,
+	): Response
 	{
 		if (is_file($content)) {
 			$content = (string) file_get_contents($content);
 		}
 
-		return new Fio\Pay\XMLResponse($content);
+		return new XMLResponse($content);
 	}
 
 }

@@ -1,8 +1,9 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit\Account;
 
 use h4kuna\Fio\Account\Bank;
+use h4kuna\Fio\Exceptions\InvalidArgument;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
 use Tester\Assert;
 
@@ -23,7 +24,6 @@ final class BankTest extends TestCase
 		Assert::same('123-123456789/0987', $account->getAccountAndCode());
 	}
 
-
 	public function testCode(): void
 	{
 		$account = Bank::createNational('123456789/0987');
@@ -31,7 +31,6 @@ final class BankTest extends TestCase
 		Assert::same('0987', $account->getBankCode());
 		Assert::same('123456789/0987', $account->getAccountAndCode());
 	}
-
 
 	public function testPrefix(): void
 	{
@@ -41,7 +40,6 @@ final class BankTest extends TestCase
 		Assert::same('123-123456789', $account->getAccount());
 		Assert::same('123-123456789', $account->getAccountAndCode());
 	}
-
 
 	public function testMinimum(): void
 	{
@@ -53,7 +51,6 @@ final class BankTest extends TestCase
 		Assert::same('123456789', $account->getAccountAndCode());
 	}
 
-
 	public function testEuroFull(): void
 	{
 		$account = Bank::createInternational('EE123745671789355096/LAVBDD33XXX');
@@ -61,7 +58,6 @@ final class BankTest extends TestCase
 		Assert::same('LAVBDD33XXX', $account->getBankCode());
 		Assert::same('EE123745671789355096/LAVBDD33XXX', $account->getAccountAndCode());
 	}
-
 
 	public function testEuroMinimum(): void
 	{
@@ -72,23 +68,17 @@ final class BankTest extends TestCase
 		Assert::same('EE123745671789355096', $account->getAccountAndCode());
 	}
 
-
-	/**
-	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
-	 */
 	public function testEuroThrowBadAccount(): void
 	{
-		Bank::createInternational('EE1237456717-9355096');
+		Assert::exception(static fn () => Bank::createInternational('EE1237456717-9355096'), InvalidArgument::class);
 	}
-
 
 	/**
 	 * @dataProvider bad-accounts.ini
-	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
 	 */
 	public function testBadAccount(string $account): void
 	{
-		Bank::createNational($account);
+		Assert::exception(static fn () => Bank::createNational($account), InvalidArgument::class);
 	}
 
 }

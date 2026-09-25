@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit\Read;
 
 use h4kuna\Fio\Pay\XMLResponse;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
 use Tester\Assert;
+use function assert;
 use function h4kuna\Fio\Tests\loadResult;
+use function is_string;
 
 require_once __DIR__ . '/../../bootstrap.php';
 

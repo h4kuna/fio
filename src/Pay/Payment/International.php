@@ -1,14 +1,15 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Pay\Payment;
 
-use h4kuna\Fio\Exceptions;
+use h4kuna\Fio\Exceptions\InvalidArgument;
 
 class International extends Foreign
 {
-	public const CHARGES_OUR = 470501;
-	public const CHARGES_BEN = 470502;
-	public const CHARGES_SHA = 470503;
+
+	public const CHARGES_OUR = 470_501;
+	public const CHARGES_BEN = 470_502;
+	public const CHARGES_SHA = 470_503;
 
 	private const TYPES_CHARGES = [self::CHARGES_BEN, self::CHARGES_OUR, self::CHARGES_SHA];
 
@@ -16,6 +17,7 @@ class International extends Foreign
 
 	/**
 	 * Default value is goods export.
+	 *
 	 * @see Property
 	 */
 	protected int $paymentReason = 110;
@@ -25,23 +27,22 @@ class International extends Foreign
 
 	/**
 	 * Section in manual 6.3.4.
-	 * @throws Exceptions\InvalidArgument
+	 *
+	 * @throws InvalidArgument
 	 */
 	public function setDetailsOfCharges(int $type): static
 	{
-		$this->detailsOfCharges = Exceptions\InvalidArgument::checkIsInList($type, self::TYPES_CHARGES);
+		$this->detailsOfCharges = InvalidArgument::checkIsInList($type, self::TYPES_CHARGES);
 
 		return $this;
 	}
-
 
 	public function setRemittanceInfo4(string $info): static
 	{
-		$this->remittanceInfo4 = Exceptions\InvalidArgument::check($info, 35);
+		$this->remittanceInfo4 = InvalidArgument::check($info, 35);
 
 		return $this;
 	}
-
 
 	/** @return array<string, bool> */
 	public function getExpectedProperty(): array
@@ -66,7 +67,6 @@ class International extends Foreign
 			'paymentReason' => true,
 		];
 	}
-
 
 	public function getStartXmlElement(): string
 	{

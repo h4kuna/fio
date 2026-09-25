@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit\Account;
 
@@ -6,8 +6,11 @@ use h4kuna\Fio\Account\AccountCollection;
 use h4kuna\Fio\Account\AccountCollectionFactory;
 use h4kuna\Fio\Account\FioAccount;
 use h4kuna\Fio\Exceptions\InvalidArgument;
+use h4kuna\Fio\Exceptions\InvalidState;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
 use Tester\Assert;
+use function count;
+use function iterator_to_array;
 
 require __DIR__ . '/../../bootstrap.php';
 
@@ -30,18 +33,13 @@ class AccountCollectionTest extends TestCase
 		Assert::same($accounts->account('bar'), $account2);
 	}
 
-
-	/**
-	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
-	 */
 	public function testInvalidAlias(): void
 	{
 		$account1 = new FioAccount('323536', 'foo');
 		$accounts = new AccountCollection();
 		$accounts->addAccount('foo', $account1);
-		$accounts->account('bar');
+		Assert::exception(static fn () => $accounts->account('bar'), InvalidArgument::class);
 	}
-
 
 	public function testCount(): void
 	{
@@ -54,7 +52,6 @@ class AccountCollectionTest extends TestCase
 		$accounts->addAccount('bar', $account2);
 		Assert::same(count($accounts), 2);
 	}
-
 
 	public function testIteration(): void
 	{
@@ -70,32 +67,23 @@ class AccountCollectionTest extends TestCase
 		]);
 	}
 
-
-	/**
-	 * @throws \h4kuna\Fio\Exceptions\InvalidState
-	 */
 	public function testEmpty(): void
 	{
-		(new AccountCollection())->account();
+		Assert::exception(static fn () => (new AccountCollection())->account(), InvalidState::class);
 	}
 
-
-	/**
-	 * @throws \h4kuna\Fio\Exceptions\InvalidArgument
-	 */
 	public function testDuplicity(): void
 	{
 		$account1 = new FioAccount('323536', 'foo');
 		$account2 = new FioAccount('978654', 'bar');
 		$accounts = new AccountCollection();
 		$accounts->addAccount('foo', $account1);
-		$accounts->addAccount('foo', $account2);
+		Assert::exception(static fn () => $accounts->addAccount('foo', $account2), InvalidArgument::class);
 	}
-
 
 	public function testAccountCollectionFactoryThrowAccount(): void
 	{
-		Assert::throws(function () {
+		Assert::throws(static function (): void {
 			/** @phpstan-ignore-next-line */
 			AccountCollectionFactory::create([
 				'foo' => [
@@ -105,10 +93,9 @@ class AccountCollectionTest extends TestCase
 		}, InvalidArgument::class, 'Key "account" is required for alias "foo".');
 	}
 
-
 	public function testAccountCollectionFactoryThrowToken(): void
 	{
-		Assert::throws(function () {
+		Assert::throws(static function (): void {
 			/** @phpstan-ignore-next-line */
 			AccountCollectionFactory::create([
 				'foo' => [

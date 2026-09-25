@@ -1,14 +1,20 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit;
 
-use h4kuna\Fio\Read\Transaction;
-use h4kuna\Fio\Utils;
+use DateTime;
 use h4kuna\Fio\FioRead;
+use h4kuna\Fio\Read\Transaction;
 use h4kuna\Fio\Tests\Fixtures\FioFactory;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
+use h4kuna\Fio\Utils\Fio;
+use stdClass;
 use Tester\Assert;
+use function assert;
+use function count;
+use function get_object_vars;
 use function h4kuna\Fio\Tests\loadResult;
+use function serialize;
 
 require __DIR__ . '/../bootstrap.php';
 
@@ -17,6 +23,7 @@ require __DIR__ . '/../bootstrap.php';
  */
 class FioReadTest extends TestCase
 {
+
 	private FioFactory $fioFactory;
 
 	private FioRead $fioRead;
@@ -26,8 +33,8 @@ class FioReadTest extends TestCase
 
 	public function testMovements(): void
 	{
-		$data = $this->fioRead->movements(1420070400, '2015-04-16');
-		$moveId = 7139752766;
+		$data = $this->fioRead->movements(1_420_070_400, '2015-04-16');
+		$moveId = 7_139_752_766;
 		$out = [];
 		foreach ($data as $key => $transaction) {
 			assert($transaction instanceof Transaction);
@@ -46,13 +53,12 @@ class FioReadTest extends TestCase
 		}
 
 		Assert::null($moveId);
-		Assert::type(\stdClass::class, $data->getInfo());
+		Assert::type(stdClass::class, $data->getInfo());
 		Assert::same(10, count($data));
 		Assert::same(10, count($out));
 
 		Assert::equal(loadResult('2015-01-01-2015-04-16-transactions.srlz'), $out);
 	}
-
 
 	public function testMovementsEmpty(): void
 	{
@@ -60,7 +66,6 @@ class FioReadTest extends TestCase
 
 		Assert::equal(loadResult('2011-01-01-2011-01-02-transactions.srlz'), $data);
 	}
-
 
 	public function testMovementId(): void
 	{
@@ -71,7 +76,6 @@ class FioReadTest extends TestCase
 
 		Assert::equal(loadResult('raw://2015-2-transactions.srlz'), serialize($data));
 	}
-
 
 	public function testLastDownload(): void
 	{
@@ -84,23 +88,20 @@ class FioReadTest extends TestCase
 		Assert::same(4, $data->count());
 	}
 
-
 	public function testSetLastId(): void
 	{
-		$response = $this->fioRead->setLastId(7155451447);
-		Assert::equal(Utils\Fio::REST_URL . 'set-last-id/' . $this->token . "/7155451447/", $response->getReasonPhrase());
+		$response = $this->fioRead->setLastId(7_155_451_447);
+		Assert::equal(Fio::REST_URL . 'set-last-id/' . $this->token . '/7155451447/', $response->getReasonPhrase());
 	}
-
 
 	public function testSetLastDate(): void
 	{
-		$dt = new \DateTime('-1 week');
+		$dt = new DateTime('-1 week');
 		$response = $this->fioRead->setLastDate('-1 week');
-		Assert::equal(Utils\Fio::REST_URL . 'set-last-date/' . $this->token . '/' . $dt->format('Y-m-d') . '/', $response->getReasonPhrase());
+		Assert::equal(Fio::REST_URL . 'set-last-date/' . $this->token . '/' . $dt->format('Y-m-d') . '/', $response->getReasonPhrase());
 	}
 
-
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->fioFactory = new FioFactory();
 		$this->fioRead = $this->fioFactory->createFioRead();
@@ -109,4 +110,4 @@ class FioReadTest extends TestCase
 
 }
 
-(new FioReadTest)->run();
+(new FioReadTest())->run();

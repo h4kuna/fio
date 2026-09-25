@@ -1,16 +1,17 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Pay\Payment;
 
-use h4kuna\Fio\Exceptions;
+use h4kuna\Fio\Exceptions\InvalidArgument;
 
 class National extends Property
 {
+
 	use Symbols;
 
-	public const PAYMENT_STANDARD = 431001;
-	public const PAYMENT_PRIORITY = 431005;
-	public const PAYMENT_COLLECTION = 431022;
+	public const PAYMENT_STANDARD = 431_001;
+	public const PAYMENT_PRIORITY = 431_005;
+	public const PAYMENT_COLLECTION = 431_022;
 
 	private const TYPES_PAYMENT = [self::PAYMENT_STANDARD, self::PAYMENT_PRIORITY, self::PAYMENT_COLLECTION];
 
@@ -23,19 +24,17 @@ class National extends Property
 
 	public function setPaymentType(int $type): static
 	{
-		$this->paymentType = Exceptions\InvalidArgument::checkIsInList($type, self::TYPES_PAYMENT);;
+		$this->paymentType = InvalidArgument::checkIsInList($type, self::TYPES_PAYMENT);
 
 		return $this;
 	}
-
 
 	public function setMessage(string $message): static
 	{
-		$this->messageForRecipient = Exceptions\InvalidArgument::check($message, 140);
+		$this->messageForRecipient = InvalidArgument::check($message, 140);
 
 		return $this;
 	}
-
 
 	public function setAccountTo(string $accountTo): static
 	{
@@ -44,14 +43,12 @@ class National extends Property
 		return $this;
 	}
 
-
 	public function setBankCode(string $bankCode): static
 	{
 		$this->bankCode = $bankCode;
 
 		return $this;
 	}
-
 
 	/** @return array<string, bool> */
 	public function getExpectedProperty(): array
@@ -73,7 +70,6 @@ class National extends Property
 			'paymentType' => false,
 		];
 	}
-
 
 	public function getStartXmlElement(): string
 	{

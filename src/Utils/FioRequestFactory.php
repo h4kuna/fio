@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Utils;
 
@@ -8,28 +8,35 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
+use function basename;
+use function fseek;
+use function fwrite;
+use function is_file;
 
 class FioRequestFactory
 {
+
 	public function __construct(
 		private RequestFactoryInterface $requestFactory,
-		private StreamFactoryInterface $streamFactory
+		private StreamFactoryInterface $streamFactory,
 	)
 	{
 	}
-
 
 	public function get(string $uri): RequestInterface
 	{
 		return $this->requestFactory->createRequest('GET', $uri);
 	}
 
-
 	/**
 	 * @param array{token: string, type: string, lng?: string} $params
 	 * @param string $content string is filepath or content
 	 */
-	public function post(string $uri, array $params, string $content): RequestInterface
+	public function post(
+		string $uri,
+		array $params,
+		string $content,
+	): RequestInterface
 	{
 		$request = $this->requestFactory->createRequest('POST', $uri);
 
@@ -39,7 +46,7 @@ class FioRequestFactory
 		} else {
 			$filename = 'h4kuna.memory.xml';
 			$stream = $this->streamFactory->createStreamFromResource(
-				$this->createTempFile($content)
+				$this->createTempFile($content),
 			);
 		}
 
@@ -49,11 +56,14 @@ class FioRequestFactory
 			->withBody($multipart);
 	}
 
-
 	/**
 	 * @param array{token: string, type: string, lng?: string} $params
 	 */
-	private function createMultiPart(string $filename, StreamInterface $file, array $params): MultipartStream
+	private function createMultiPart(
+		string $filename,
+		StreamInterface $file,
+		array $params,
+	): MultipartStream
 	{
 		$newPost = [
 			[
@@ -68,7 +78,6 @@ class FioRequestFactory
 
 		return new MultipartStream($newPost);
 	}
-
 
 	/**
 	 * @return resource

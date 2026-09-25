@@ -1,47 +1,47 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Account;
 
 use h4kuna\Fio\Exceptions\InvalidArgument;
 use Nette\Utils\Strings;
+use function strlen;
+use function substr;
 
 class Bank
 {
 
-	private function __construct(private string $account, private string $bankCode, private string $prefix)
+	private function __construct(
+		private string $account,
+		private string $bankCode,
+		private string $prefix,
+	)
 	{
 	}
-
 
 	public function getAccount(): string
 	{
 		return $this->prefix() . $this->account;
 	}
 
-
 	public function getBankCode(): string
 	{
 		return $this->bankCode;
 	}
-
 
 	public function getPrefix(): string
 	{
 		return $this->prefix;
 	}
 
-
 	public function getAccountAndCode(): string
 	{
 		return $this->getAccount() . $this->bankCode();
 	}
 
-
-	public function __toString()
+	public function __toString(): string
 	{
 		return $this->getAccount();
 	}
-
 
 	private function bankCode(): string
 	{
@@ -52,7 +52,6 @@ class Bank
 		return $this->bankCode;
 	}
 
-
 	private function prefix(): string
 	{
 		if ($this->prefix !== '') {
@@ -61,7 +60,6 @@ class Bank
 
 		return $this->prefix;
 	}
-
 
 	public static function createInternational(string $account): self
 	{
@@ -78,7 +76,6 @@ class Bank
 
 		return new self($find['account'], $bankCode, '');
 	}
-
 
 	public static function createNational(string $account): self
 	{

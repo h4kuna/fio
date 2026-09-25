@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit\Utils;
 
-use GuzzleHttp;
-use h4kuna;
+use GuzzleHttp\Exception\TransferException;
 use h4kuna\Dir\TempDir;
+use h4kuna\Fio\Exceptions\QueueLimit;
+use h4kuna\Fio\Exceptions\ServiceUnavailable;
 use h4kuna\Fio\Tests\Fixtures\ClientMock;
 use h4kuna\Fio\Tests\Fixtures\RequestFactoryMock;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
@@ -20,28 +21,27 @@ require __DIR__ . '/../../bootstrap.php';
  */
 class QueueTest extends TestCase
 {
+
 	private const TOKEN = 'test_test_test_test_test_test_test';
 
 
-	/**
-	 * @throws \h4kuna\Fio\Exceptions\ServiceUnavailable
-	 */
 	public function testDownloadThrowServiceUnavailable(): void
 	{
 		$queue = self::createQueue();
-		$queue->download(self::TOKEN, 'http://www.example.com/?file=server-exception.xml&status=500');
+		Assert::exception(
+			static fn () => $queue->download(self::TOKEN, 'http://www.example.com/?file=server-exception.xml&status=500'),
+			ServiceUnavailable::class,
+		);
 	}
 
-
-	/**
-	 * @throws h4kuna\Fio\Exceptions\ServiceUnavailable
-	 */
 	public function testDownloadThrowClientException(): void
 	{
 		$queue = self::createQueue();
-		$queue->download(self::TOKEN, 'http://www.example.com/?exception=' . GuzzleHttp\Exception\TransferException::class);
+		Assert::exception(
+			static fn () => $queue->download(self::TOKEN, 'http://www.example.com/?exception=' . TransferException::class),
+			ServiceUnavailable::class,
+		);
 	}
-
 
 	public function testDownloadOk(): void
 	{
@@ -50,22 +50,19 @@ class QueueTest extends TestCase
 		Assert::same(loadResult('raw://2015-2-transactions.json'), $json->getBody()->getContents());
 	}
 
-
 	public function testDownloadThrowQueueNoLimit(): void
 	{
 		$queue = self::createQueue();
 		$queue->setLimitLoop(1);
-		Assert::exception(fn () => $queue->download(self::TOKEN, 'http://www.example.com/?status=409'), h4kuna\Fio\Exceptions\QueueLimit::class, 'You have limit up requests to server "1". Too many requests in short time interval.');
+		Assert::exception(static fn () => $queue->download(self::TOKEN, 'http://www.example.com/?status=409'), QueueLimit::class, 'You have limit up requests to server "1". Too many requests in short time interval.');
 	}
-
 
 	public function testDownloadThrowQueueLimit(): void
 	{
 		$queue = self::createQueue();
 		$queue->setLimitLoop(2);
-		Assert::exception(fn () => $queue->download(self::TOKEN, 'http://www.example.com/?status=409'), h4kuna\Fio\Exceptions\QueueLimit::class, 'You have limit up requests to server "2". Too many requests in short time interval.');
+		Assert::exception(static fn () => $queue->download(self::TOKEN, 'http://www.example.com/?status=409'), QueueLimit::class, 'You have limit up requests to server "2". Too many requests in short time interval.');
 	}
-
 
 	public function testUpload(): void
 	{
@@ -78,7 +75,6 @@ class QueueTest extends TestCase
 
 		Assert::true($xml->isOk());
 	}
-
 
 	private static function createQueue(): Queue
 	{

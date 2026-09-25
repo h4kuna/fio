@@ -1,14 +1,25 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio;
 
 use h4kuna\Fio\Account\Bank;
+use h4kuna\Fio\Account\FioAccount;
 use h4kuna\Fio\Exceptions\InvalidArgument;
-use h4kuna\Fio\Pay;
-use h4kuna\Fio\Utils;
+use h4kuna\Fio\Pay\Payment\Euro;
+use h4kuna\Fio\Pay\Payment\International;
+use h4kuna\Fio\Pay\Payment\National;
+use h4kuna\Fio\Pay\Payment\Property;
+use h4kuna\Fio\Pay\Response;
+use h4kuna\Fio\Pay\XMLFile;
+use h4kuna\Fio\Utils\Queue;
+use function pathinfo;
+use function str_starts_with;
+use function strtolower;
+use const PATHINFO_EXTENSION;
 
 class FioPay
 {
+
 	private const LANGUAGES = ['en', 'cs', 'sk'];
 
 	private const XML = 'xml';
@@ -17,25 +28,29 @@ class FioPay
 	private string $language = 'cs';
 
 	/**
-	 * @var array<Pay\Payment\Property>
+	 * @var array<Property>
 	 */
 	private array $payments = [];
 
 
 	public function __construct(
-		private Utils\Queue $queue,
-		private Account\FioAccount $account,
-		private Pay\XMLFile $xmlFile,
+		private Queue $queue,
+		private FioAccount $account,
+		private XMLFile $xmlFile,
 	)
 	{
 	}
 
-
-	public function createEuro(float $amount, string $accountTo, string $name, string $bic = ''): Pay\Payment\Euro
+	public function createEuro(
+		float $amount,
+		string $accountTo,
+		string $name,
+		string $bic = '',
+	): Euro
 	{
 		$account = Bank::createInternational($accountTo);
 
-		$euro = (new Pay\Payment\Euro($this->account))
+		$euro = (new Euro($this->account))
 			->setName($name)
 			->setAccountTo($account->getAccount())
 			->setAmount($amount);
@@ -48,15 +63,18 @@ class FioPay
 		return $euro;
 	}
 
-
-	public function createNational(float $amount, string $accountTo, string $bankCode = ''): Pay\Payment\National
+	public function createNational(
+		float $amount,
+		string $accountTo,
+		string $bankCode = '',
+	): National
 	{
 		$account = Bank::createNational($accountTo);
 		if ($bankCode === '') {
 			$bankCode = $account->getBankCode();
 		}
 
-		$payment = (new Pay\Payment\National($this->account))
+		$payment = (new National($this->account))
 			->setAccountTo($account->getAccount())
 			->setBankCode($bankCode)
 			->setAmount($amount);
@@ -64,7 +82,6 @@ class FioPay
 
 		return $payment;
 	}
-
 
 	public function createInternational(
 		float $amount,
@@ -75,11 +92,11 @@ class FioPay
 		string $country,
 		string $info,
 		string $bic,
-	): Pay\Payment\International
+	): International
 	{
 		$account = Bank::createInternational($accountTo);
 
-		$payment = (new Pay\Payment\International($this->account))
+		$payment = (new International($this->account))
 			->setBic($bic)
 			->setName($name)
 			->setCountry($country)
@@ -93,7 +110,6 @@ class FioPay
 		return $payment;
 	}
 
-
 	public function getXml(): string
 	{
 		foreach ($this->payments as $property) {
@@ -104,19 +120,17 @@ class FioPay
 		return $this->xmlFile->getXml();
 	}
 
-
-	public function addPayment(Pay\Payment\Property $property): static
+	public function addPayment(Property $property): static
 	{
 		$this->payments[] = $property;
 
 		return $this;
 	}
 
-
 	/**
 	 * @param ?string $filename string is filepath or xml content
 	 */
-	public function send(?string $filename = null): Pay\Response
+	public function send(?string $filename = null): Response
 	{
 		if ($filename === null && $this->payments !== []) {
 			$content = $this->getXml();
@@ -138,7 +152,6 @@ class FioPay
 		return $this->queue->import($post, $content);
 	}
 
-
 	/**
 	 * Response language.
 	 */
@@ -149,8 +162,7 @@ class FioPay
 		return $this;
 	}
 
-
-	public function getAccount(): Account\FioAccount
+	public function getAccount(): FioAccount
 	{
 		return $this->account;
 	}

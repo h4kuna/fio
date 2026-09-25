@@ -1,15 +1,25 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Fixtures;
 
-use GuzzleHttp\Psr7;
+use Exception;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Throwable;
+use function assert;
 use function h4kuna\Fio\Tests\loadResult;
+use function intval;
+use function is_string;
+use function is_subclass_of;
+use function parse_str;
+use function pathinfo;
+use const PATHINFO_EXTENSION;
 
 class ClientMock implements ClientInterface
 {
+
 	public function sendRequest(RequestInterface $request): ResponseInterface
 	{
 		$uri = $request->getUri();
@@ -23,7 +33,7 @@ class ClientMock implements ClientInterface
 		$content = '';
 
 		if ($exception !== '') {
-			assert(is_subclass_of($exception, \Throwable::class));
+			assert(is_subclass_of($exception, Throwable::class));
 			throw new $exception();
 		}
 
@@ -35,11 +45,11 @@ class ClientMock implements ClientInterface
 			$headers['Content-Type'] = match ($extension) {
 				'xml' => 'text/xml;charset=UTF-8',
 				'json' => 'application/json',
-				default => throw new \Exception('header not defined.'),
+				default => throw new Exception('header not defined.'),
 			};
 		}
 
-		return new Psr7\Response($status, $headers, $content);
+		return new Response($status, $headers, $content);
 	}
 
 }

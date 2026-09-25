@@ -1,25 +1,21 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Pay;
 
 interface Response
 {
 
-	function isOk(): bool;
+	public function isOk(): bool;
 
+	public function status(): string;
 
-	function status(): string;
-
-
-	function code(): int;
-
+	public function code(): int;
 
 	/**
 	 * @return array<int, string>
 	 */
-	function errorMessages(): array;
+	public function errorMessages(): array;
 
-
-	function __toString();
+	public function __toString(): string;
 
 }

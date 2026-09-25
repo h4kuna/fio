@@ -1,19 +1,24 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit\Pay\Payment;
 
-use h4kuna\Fio;
+use h4kuna\Fio\FioPay;
+use h4kuna\Fio\Pay\Payment\Euro;
 use h4kuna\Fio\Pay\XMLFile;
-use Tester;
+use h4kuna\Fio\Tests\Fixtures\FioFactory;
+use h4kuna\Fio\Tests\Fixtures\TestCase;
+use Tester\Assert;
+use function h4kuna\Fio\Tests\loadResult;
 
 require __DIR__ . '/../../../bootstrap.php';
 
 /**
  * @testCase
  */
-class EuroTest extends Fio\Tests\Fixtures\TestCase
+class EuroTest extends TestCase
 {
-	private Fio\FioPay $fioPay;
+
+	private FioPay $fioPay;
 
 	private XMLFile $xmlFile;
 
@@ -23,9 +28,8 @@ class EuroTest extends Fio\Tests\Fixtures\TestCase
 		$pay = $this->fioPay->createEuro(500, 'AT611904300234573201', 'Milan', 'LAVBDD33XXX');
 		$pay->setDate('2015-01-23');
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		Tester\Assert::equal(Fio\Tests\loadResult('payment/euro-minimum.xml'), $xml);
+		Assert::equal(loadResult('payment/euro-minimum.xml'), $xml);
 	}
-
 
 	public function testMaximum(): void
 	{
@@ -43,15 +47,14 @@ class EuroTest extends Fio\Tests\Fixtures\TestCase
 			->setPaymentReason(110)
 			->setSpecificSymbol('0378')
 			->setVariableSymbol('0123456789')
-			->setPaymentType(Fio\Pay\Payment\Euro::PAYMENT_PRIORITY);
+			->setPaymentType(Euro::PAYMENT_PRIORITY);
 		$xml = $this->xmlFile->setData($pay)->getXml();
-		Tester\Assert::equal(Fio\Tests\loadResult('payment/euro-maximum.xml'), $xml);
+		Assert::equal(loadResult('payment/euro-maximum.xml'), $xml);
 	}
-
 
 	protected function setUp(): void
 	{
-		$fioFactory = new Fio\Tests\Fixtures\FioFactory();
+		$fioFactory = new FioFactory();
 		$this->fioPay = $fioFactory->createFioPay();
 		$this->xmlFile = $fioFactory->getXmlFile();
 	}

@@ -1,11 +1,22 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Exceptions;
 
-final class InvalidArgument extends \InvalidArgumentException
+use InvalidArgumentException;
+use function implode;
+use function in_array;
+use function intval;
+use function mb_strlen;
+use function sprintf;
+use function strlen;
+
+final class InvalidArgument extends InvalidArgumentException
 {
 
-	public static function check(string $text, int $size): string
+	public static function check(
+		string $text,
+		int $size,
+	): string
 	{
 		if (mb_strlen($text) > $size) {
 			throw new self(sprintf('Value "%s" is longer then allowed limit (%s).', $text, $size));
@@ -14,8 +25,10 @@ final class InvalidArgument extends \InvalidArgumentException
 		return $text;
 	}
 
-
-	public static function checkRange(int|string $number, int $limit): void
+	public static function checkRange(
+		int|string $number,
+		int $limit,
+	): void
 	{
 		$check = intval($number);
 		if ($check < 0 || $check > $limit) {
@@ -23,14 +36,17 @@ final class InvalidArgument extends \InvalidArgumentException
 		}
 	}
 
-
 	/**
-	 * @template T of string|int
 	 * @param T $value
 	 * @param array<T> $list
 	 * @return T
+	 *
+	 * @template T of string|int
 	 */
-	public static function checkIsInList(string|int $value, array $list): string|int
+	public static function checkIsInList(
+		string|int $value,
+		array $list,
+	): string|int
 	{
 		if (!in_array($value, $list, true)) {
 			throw new InvalidArgument(sprintf('Value "%s" is not contained in list: [%s].', $value, implode(', ', $list)));
@@ -39,8 +55,10 @@ final class InvalidArgument extends \InvalidArgumentException
 		return $value;
 	}
 
-
-	public static function checkLength(string $text, int $limit): string
+	public static function checkLength(
+		string $text,
+		int $limit,
+	): string
 	{
 		if (strlen($text) !== $limit) {
 			throw new self(sprintf('Value has not exact length "%s" this is "%s" with length "%s".', $limit, $text, strlen($text)));

@@ -1,13 +1,15 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit\Utils;
 
 use Closure;
 use GuzzleHttp\Psr7\Response;
-use h4kuna;
+use h4kuna\Dir\Dir;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
 use h4kuna\Fio\Utils\FileRequestBlockingService;
 use Tester\Assert;
+use function time;
+use function unlink;
 
 require __DIR__ . '/../../bootstrap.php';
 
@@ -16,18 +18,18 @@ require __DIR__ . '/../../bootstrap.php';
  */
 final class FileRequestBlockingServiceTest extends TestCase
 {
+
 	/**
 	 * @return array<string|int, array{0: Closure(static):void}>
 	 */
 	public static function data(): array
 	{
 		return [
-			[static function (self $self) {
+			[static function (self $self): void {
 				$self->assert();
 			}],
 		];
 	}
-
 
 	/**
 	 * @param Closure(static):void $assert
@@ -44,13 +46,14 @@ final class FileRequestBlockingServiceTest extends TestCase
 		@unlink(__DIR__ . '/../../../temp/blocking/d41d8cd98f00b204e9800998ecf8427e');
 		$waitTime = 2;
 		$start = time();
-		$fileRequest = new FileRequestBlockingService((new h4kuna\Dir\Dir(__DIR__ . '/../../../temp/blocking'))->create(), $waitTime);
-		$fileRequest->synchronize('0123456789abcd', fn () => new Response());
-		$fileRequest->synchronize('0123456789abcd', fn () => new Response(201));
+		$fileRequest = new FileRequestBlockingService((new Dir(__DIR__ . '/../../../temp/blocking'))->create(), $waitTime);
+		$fileRequest->synchronize('0123456789abcd', static fn () => new Response());
+		$fileRequest->synchronize('0123456789abcd', static fn () => new Response(201));
 		$end = time();
 
 		Assert::same($waitTime, $end - $start);
 	}
+
 }
 
 

@@ -1,9 +1,10 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Utils;
 
 use h4kuna\Fio\Contracts\RequestBlockingServiceContract;
-use h4kuna\Fio\Exceptions;
+use h4kuna\Fio\Exceptions\QueueLimit;
+use h4kuna\Fio\Exceptions\ServiceUnavailable;
 use h4kuna\Fio\Pay\Response;
 use h4kuna\Fio\Pay\XMLResponse;
 use Nette\Utils\Strings;
@@ -11,9 +12,14 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use function array_shift;
+use function sprintf;
+use function str_contains;
+use function str_replace;
 
 class Queue
 {
+
 	private const HEADER_CONFLICT = 409;
 	private int $limitLoop = 3;
 
@@ -21,10 +27,10 @@ class Queue
 	public function __construct(
 		private ClientInterface $client,
 		private FioRequestFactory $requestFactory,
-		private RequestBlockingServiceContract $requestBlockingService
-	) {
+		private RequestBlockingServiceContract $requestBlockingService,
+	)
+	{
 	}
-
 
 	/**
 	 * @param positive-int $limitLoop
@@ -34,11 +40,13 @@ class Queue
 		$this->limitLoop = $limitLoop;
 	}
 
-
 	/**
-	 * @throws Exceptions\ServiceUnavailable
+	 * @throws ServiceUnavailable
 	 */
-	public function download(string $token, string $url): ResponseInterface
+	public function download(
+		string $token,
+		string $url,
+	): ResponseInterface
 	{
 		$response = $this->request($token, $this->requestFactory->get($url));
 		$this->detectDownloadResponse($response);
@@ -46,9 +54,8 @@ class Queue
 		return $response;
 	}
 
-
 	/**
-	 * @throws Exceptions\ServiceUnavailable
+	 * @throws ServiceUnavailable
 	 */
 	private function detectDownloadResponse(ResponseInterface $response): void
 	{
@@ -57,16 +64,18 @@ class Queue
 		if ($contentType !== null && str_contains($contentType, 'text/xml')) {
 			$xmlResponse = $this->createXmlResponse($response);
 
-			throw new Exceptions\ServiceUnavailable($xmlResponse->status(), $xmlResponse->code());
+			throw new ServiceUnavailable($xmlResponse->status(), $xmlResponse->code());
 		}
 	}
-
 
 	/**
 	 * @param array{token: string, type: string, lng?: string} $params
 	 * @param string $content string is filepath or content
 	 */
-	public function import(array $params, string $content): Response
+	public function import(
+		array $params,
+		string $content,
+	): Response
 	{
 		$response = $this->request(
 			$params['token'],
@@ -76,8 +85,10 @@ class Queue
 		return $this->createXmlResponse($response);
 	}
 
-
-	private function request(string $token, RequestInterface $request): ResponseInterface
+	private function request(
+		string $token,
+		RequestInterface $request,
+	): ResponseInterface
 	{
 		$request = $request->withHeader('X-Powered-By', 'h4kuna/fio');
 		$response = null;
@@ -95,23 +106,22 @@ class Queue
 			}
 		} catch (ClientExceptionInterface $e) {
 			$message = str_replace($token, Strings::truncate($token, 10), $e->getMessage());
-			throw new Exceptions\ServiceUnavailable($message, $e->getCode()); // in url is token, don't need keep previous exception
+			throw new ServiceUnavailable($message, $e->getCode()); // in url is token, don't need keep previous exception
 		}
 
 		if ($response === null) {
-			throw new Exceptions\QueueLimit(sprintf('You have limit up requests to server "%s". Too many requests in short time interval.', $this->limitLoop));
+			throw new QueueLimit(sprintf('You have limit up requests to server "%s". Too many requests in short time interval.', $this->limitLoop));
 		}
 
 		if ($response->getStatusCode() >= 500) {
-			throw new Exceptions\ServiceUnavailable(sprintf('%d %s', $response->getStatusCode(), $response->getReasonPhrase()));
+			throw new ServiceUnavailable(sprintf('%d %s', $response->getStatusCode(), $response->getReasonPhrase()));
 		}
 
 		return $response;
 	}
 
-
 	/**
-	 * @throws Exceptions\ServiceUnavailable
+	 * @throws ServiceUnavailable
 	 */
 	private function createXmlResponse(ResponseInterface $response): XMLResponse
 	{

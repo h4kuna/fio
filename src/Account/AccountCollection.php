@@ -1,15 +1,24 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Account;
 
-use h4kuna\Fio\Exceptions;
+use ArrayIterator;
+use Countable;
+use h4kuna\Fio\Exceptions\InvalidArgument;
+use h4kuna\Fio\Exceptions\InvalidState;
+use IteratorAggregate;
+use function count;
+use function reset;
 
 /**
- * @implements \IteratorAggregate<string, FioAccount>
+ * @implements IteratorAggregate<string, FioAccount>
  */
-class AccountCollection implements \Countable, \IteratorAggregate
+class AccountCollection implements Countable, IteratorAggregate
 {
-	/** @var array<string, FioAccount> */
+
+	/**
+	 * @var array<string, FioAccount>
+	 */
 	private array $accounts = [];
 
 
@@ -22,30 +31,30 @@ class AccountCollection implements \Countable, \IteratorAggregate
 		return $this->get($alias);
 	}
 
-
 	private function get(string $alias): FioAccount
 	{
 		if (isset($this->accounts[$alias])) {
 			return $this->accounts[$alias];
 		}
-		throw new Exceptions\InvalidArgument('This account alias does not exists: ' . $alias);
+		throw new InvalidArgument('This account alias does not exists: ' . $alias);
 	}
-
 
 	private function getDefault(): FioAccount
 	{
 		if ($this->accounts === []) {
-			throw new Exceptions\InvalidState('Missing account, let\'s fill in configuration.');
+			throw new InvalidState('Missing account, let\'s fill in configuration.');
 		}
 
 		return reset($this->accounts);
 	}
 
-
-	public function addAccount(string $alias, FioAccount $account): AccountCollection
+	public function addAccount(
+		string $alias,
+		FioAccount $account,
+	): AccountCollection
 	{
 		if (isset($this->accounts[$alias])) {
-			throw new Exceptions\InvalidArgument('This alias already exists: ' . $alias);
+			throw new InvalidArgument('This alias already exists: ' . $alias);
 		}
 
 		$this->accounts[$alias] = $account;
@@ -53,19 +62,17 @@ class AccountCollection implements \Countable, \IteratorAggregate
 		return $this;
 	}
 
-
 	public function count(): int
 	{
 		return count($this->accounts);
 	}
 
-
 	/**
-	 * @return \ArrayIterator<string, FioAccount>
+	 * @return ArrayIterator<string, FioAccount>
 	 */
-	public function getIterator(): \ArrayIterator
+	public function getIterator(): ArrayIterator
 	{
-		return new \ArrayIterator($this->accounts);
+		return new ArrayIterator($this->accounts);
 	}
 
 }

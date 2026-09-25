@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit\Read;
 
@@ -9,7 +9,10 @@ use h4kuna\Fio\Tests\Fixtures\FioFactory;
 use h4kuna\Fio\Tests\Fixtures\MyTransaction;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
 use Tester\Assert;
+use function assert;
+use function count;
 use function h4kuna\Fio\Tests\loadResult;
+use function is_string;
 
 require __DIR__ . '/../../bootstrap.php';
 
@@ -22,9 +25,11 @@ final class JsonStatementFactoryTest extends TestCase
 	public function testCustomTransactionClass(): void
 	{
 		$fioFactory = (new class extends FioFactory {
+
 			protected function createReader(): Json
 			{
 				return new Json((new class extends TransactionFactory {
+
 					protected function createTransaction(): object
 					{
 						return new MyTransaction();
@@ -45,8 +50,8 @@ final class JsonStatementFactoryTest extends TestCase
 			assert($item instanceof MyTransaction);
 			Assert::type(MyTransaction::class, $item);
 			if ($item->amount === 0.25) {
-				Assert::same('0000', $item->bank_code);
-				Assert::same('', $item->to_account);
+				Assert::same('0000', $item->bankCode);
+				Assert::same('', $item->toAccount);
 				$match = true;
 			}
 		}

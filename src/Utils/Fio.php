@@ -1,11 +1,16 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Utils;
 
+use DateTimeImmutable;
+use DateTimeInterface;
 use h4kuna\Fio\Exceptions\InvalidState;
 use h4kuna\Fio\Exceptions\ServiceUnavailable;
 use Nette\Utils\DateTime;
 use Psr\Http\Message\ResponseInterface;
+use RuntimeException;
+use function assert;
+use const PHP_INT_SIZE;
 
 if (Fio::is32bitOS()) {
 	throw new InvalidState('This library does not support 32bit OS.');
@@ -17,6 +22,7 @@ if (Fio::is32bitOS()) {
  */
 final class Fio
 {
+
 	/** @var string url Fio REST API */
 	public const REST_URL = 'https://fioapi.fio.cz/v1/rest/';
 
@@ -24,8 +30,10 @@ final class Fio
 	{
 	}
 
-
-	public static function date(int|string|\DateTimeInterface $date, string $format = 'Y-m-d'): string
+	public static function date(
+		int|string|DateTimeInterface $date,
+		string $format = 'Y-m-d',
+	): string
 	{
 		return DateTime::from($date)->format($format);
 	}
@@ -39,19 +47,18 @@ final class Fio
 
 		try {
 			return $body->getContents();
-		} catch (\RuntimeException $e) {
+		} catch (RuntimeException $e) {
 			throw new ServiceUnavailable($e->getMessage(), $e->getCode());
 		}
 	}
 
-	public static function toDate(string $value): \DateTimeImmutable
+	public static function toDate(string $value): DateTimeImmutable
 	{
-		$date = \DateTimeImmutable::createFromFormat('!Y-m-dO', $value);
-		assert($date instanceof \DateTimeImmutable);
+		$date = DateTimeImmutable::createFromFormat('!Y-m-dO', $value);
+		assert($date instanceof DateTimeImmutable);
 
 		return $date;
 	}
-
 
 	public static function is32bitOS(): bool
 	{

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Pay;
 
@@ -6,6 +6,7 @@ use SimpleXMLElement;
 
 class XMLResponse implements Response
 {
+
 	private SimpleXMLElement $xml;
 
 
@@ -14,41 +15,34 @@ class XMLResponse implements Response
 		$this->xml = new SimpleXMLElement($xml);
 	}
 
-
 	public function isOk(): bool
 	{
 		return $this->status() === 'ok' && $this->code() === 0;
 	}
 
-
 	/**
 	 * READ XML ****************************************************************
 	 * *************************************************************************
 	 */
-
 	public function getXml(): SimpleXMLElement
 	{
 		return $this->xml;
 	}
-
 
 	public function code(): int
 	{
 		return (int) $this->getValue('result/errorCode');
 	}
 
-
 	public function getIdInstruction(): string
 	{
 		return $this->getValue('result/idInstruction');
 	}
 
-
 	public function status(): string
 	{
 		return $this->getValue('result/status');
 	}
-
 
 	/**
 	 * @return array<int, string>
@@ -71,7 +65,6 @@ class XMLResponse implements Response
 		return $errorMessages;
 	}
 
-
 	private function getValue(string $path): string
 	{
 		$val = $this->getXml()->xpath($path . '/text()');
@@ -82,14 +75,12 @@ class XMLResponse implements Response
 		return (string) $val[0];
 	}
 
-
 	public function saveXML(string $fileName): void
 	{
 		$this->getXml()->saveXML($fileName);
 	}
 
-
-	public function __toString()
+	public function __toString(): string
 	{
 		return (string) $this->xml->asXML();
 	}

@@ -1,17 +1,21 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Pay;
 
 use h4kuna\Fio\Exceptions\InvalidState;
+use h4kuna\Fio\Pay\Payment\Property;
 use Stringable;
 use XMLWriter;
+use function assert;
+use function is_scalar;
 
 class XMLFile
 {
+
 	private ?XMLWriter $xml = null;
 
 
-	public function setData(Payment\Property $data): self
+	public function setData(Property $data): self
 	{
 		if ($this->isReady() === false) {
 			$this->createEmptyXml();
@@ -19,7 +23,6 @@ class XMLFile
 
 		return $this->setBody($data);
 	}
-
 
 	public function getXml(): string
 	{
@@ -30,16 +33,14 @@ class XMLFile
 		return $this->endDocument();
 	}
 
-
 	private function isReady(): bool
 	{
 		return $this->xml !== null;
 	}
 
-
 	private function createEmptyXml(): void
 	{
-		$this->xml = new XMLWriter;
+		$this->xml = new XMLWriter();
 		$this->xml->openMemory();
 		$this->xml->startDocument('1.0', 'UTF-8');
 		$this->xml->startElement('Import');
@@ -48,8 +49,7 @@ class XMLFile
 		$this->xml->startElement('Orders');
 	}
 
-
-	private function setBody(Payment\Property $data): self
+	private function setBody(Property $data): self
 	{
 		if ($this->xml === null) {
 			throw self::exceptionFirstCallSetData();
@@ -74,7 +74,6 @@ class XMLFile
 		return $this;
 	}
 
-
 	private function endDocument(): string
 	{
 		if ($this->xml === null) {
@@ -86,7 +85,6 @@ class XMLFile
 
 		return $xml;
 	}
-
 
 	private static function exceptionFirstCallSetData(): InvalidState
 	{

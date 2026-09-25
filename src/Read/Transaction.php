@@ -1,14 +1,18 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Read;
+
+use DateTimeImmutable;
 
 class Transaction
 {
 
 	#[Column(id: 0)]
-	public \DateTimeImmutable $moveDate;
+	public DateTimeImmutable $moveDate;
 
-	/** @deprecated use amount */
+	/**
+	 * @deprecated use amount
+	 */
 	#[Column(id: 1)]
 	public float $volume;
 

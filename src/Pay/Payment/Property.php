@@ -1,19 +1,28 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Pay\Payment;
 
-use h4kuna\Fio\Account;
+use DateTimeInterface;
+use h4kuna\Fio\Account\FioAccount;
 use h4kuna\Fio\Exceptions\InvalidArgument;
 use h4kuna\Fio\Utils\Fio;
 use Iterator;
 use Nette\Utils\Strings;
+use function array_key_exists;
+use function key;
+use function method_exists;
+use function next;
+use function reset;
+use function strtoupper;
+use function ucfirst;
 
 /**
  * @implements Iterator<string, mixed>
  */
 abstract class Property implements Iterator
 {
-	protected Account\FioAccount $accountFrom;
+
+	protected FioAccount $accountFrom;
 
 	protected string $currency = 'CZK';
 
@@ -30,16 +39,17 @@ abstract class Property implements Iterator
 	 */
 	protected int $paymentReason = 0;
 
-	/** @var array<string, array<string, bool>> */
+	/**
+	 * @var array<string, array<string, bool>>
+	 */
 	private static array $iterator = [];
 
 
-	public function __construct(Account\FioAccount $account)
+	public function __construct(FioAccount $account)
 	{
 		$this->accountFrom = $account;
 		$this->setDate('now');
 	}
-
 
 	public function setAmount(float $amount): static
 	{
@@ -51,12 +61,10 @@ abstract class Property implements Iterator
 		return $this;
 	}
 
-
 	/**
 	 * @return static
 	 */
-	abstract public function setAccountTo(string $accountTo);
-
+	abstract public function setAccountTo(string $accountTo): static;
 
 	/**
 	 * Currency code ISO 4217.
@@ -72,7 +80,6 @@ abstract class Property implements Iterator
 		return $this;
 	}
 
-
 	public function setMyComment(string $comment): static
 	{
 		$this->comment = InvalidArgument::check($comment, 255);
@@ -80,14 +87,12 @@ abstract class Property implements Iterator
 		return $this;
 	}
 
-
-	public function setDate(int|string|\DateTimeInterface $date): static
+	public function setDate(int|string|DateTimeInterface $date): static
 	{
 		$this->date = Fio::date($date);
 
 		return $this;
 	}
-
 
 	public function setPaymentReason(int $code): static
 	{
@@ -97,16 +102,14 @@ abstract class Property implements Iterator
 		return $this;
 	}
 
-
 	/**
 	 * Order is important.
+	 *
 	 * @return array<string, bool>
 	 */
 	abstract public function getExpectedProperty(): array;
 
-
 	abstract public function getStartXmlElement(): string;
-
 
 	/**
 	 * @return array<string, bool>
@@ -121,12 +124,10 @@ abstract class Property implements Iterator
 		return self::$iterator[$key] = $this->getExpectedProperty();
 	}
 
-
 	/**
 	 * ITERATOR INTERFACE ******************************************************
 	 * *************************************************************************
 	 */
-
 	public function current(): mixed
 	{
 		$property = $this->key();
@@ -138,25 +139,21 @@ abstract class Property implements Iterator
 		return $this->$property;
 	}
 
-
 	public function key(): string
 	{
 		return (string) key(self::$iterator[$this::class]);
 	}
-
 
 	public function next(): void
 	{
 		next(self::$iterator[$this::class]);
 	}
 
-
 	public function rewind(): void
 	{
 		$this->getProperties();
 		reset(self::$iterator[$this::class]);
 	}
-
 
 	public function valid(): bool
 	{

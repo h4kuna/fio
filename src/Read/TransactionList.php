@@ -1,24 +1,39 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Read;
 
+use Countable;
+use Generator;
 use h4kuna\Fio\Utils\Fio;
+use IteratorAggregate;
 use stdClass;
+use function assert;
+use function count;
+use function is_array;
+use function is_int;
+use function is_object;
+use function is_scalar;
 
 /**
- * @implements \IteratorAggregate<int, Transaction>
+ * @implements IteratorAggregate<int, Transaction>
  */
-final class TransactionList implements \Countable, \IteratorAggregate
+final class TransactionList implements Countable, IteratorAggregate
 {
+
 	private stdClass $info;
 
-	/** @var array<int|string, mixed> */
+	/**
+	 * @var array<int|string, mixed>
+	 */
 	private array $transactions;
 
 	private ?TransactionFactory $transactionFactory;
 
 
-	public function __construct(stdClass $response, ?TransactionFactory $transactionFactory = null)
+	public function __construct(
+		stdClass $response,
+		?TransactionFactory $transactionFactory = null,
+	)
 	{
 		$this->info = self::extractInfo($response);
 		$this->transactions = self::extractTransactions($response);
@@ -35,14 +50,12 @@ final class TransactionList implements \Countable, \IteratorAggregate
 		$this->transactionFactory = $transactionFactory;
 	}
 
-
 	public function getInfo(): stdClass
 	{
 		return $this->info;
 	}
 
-
-	public function getIterator(): \Generator
+	public function getIterator(): Generator
 	{
 		foreach ($this->transactions as $k => $item) {
 			if ($this->transactionFactory === null) {
@@ -55,12 +68,10 @@ final class TransactionList implements \Countable, \IteratorAggregate
 		}
 	}
 
-
 	public function count(): int
 	{
 		return count($this->transactions);
 	}
-
 
 	/**
 	 * @return array<string, mixed>
@@ -82,7 +93,6 @@ final class TransactionList implements \Countable, \IteratorAggregate
 		];
 	}
 
-
 	/**
 	 * @param array<string, mixed> $data
 	 */
@@ -97,14 +107,12 @@ final class TransactionList implements \Countable, \IteratorAggregate
 		$this->transactionFactory = null;
 	}
 
-
 	private static function extractInfo(stdClass $response): stdClass
 	{
 		$info = $response->info ?? null;
 
 		return $info instanceof stdClass ? $info : new stdClass();
 	}
-
 
 	/**
 	 * @return array<int|string, mixed>

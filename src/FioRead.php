@@ -1,10 +1,16 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio;
 
+use DateTimeInterface;
+use h4kuna\Fio\Account\FioAccount;
+use h4kuna\Fio\Read\Reader;
 use h4kuna\Fio\Read\TransactionList;
-use h4kuna\Fio\Utils;
+use h4kuna\Fio\Utils\Fio;
+use h4kuna\Fio\Utils\Queue;
 use Psr\Http\Message\ResponseInterface;
+use function date;
+use function vsprintf;
 
 /**
  * Read from information Fio account
@@ -13,33 +19,35 @@ class FioRead
 {
 
 	public function __construct(
-		private Utils\Queue $queue,
-		private Account\FioAccount $account,
-		private Read\Reader $reader,
+		private Queue $queue,
+		private FioAccount $account,
+		private Reader $reader,
 	)
 	{
 	}
-
 
 	/**
 	 * Movements in date range.
 	 */
 	public function movements(
-		int|string|\DateTimeInterface $from = '-1 week',
-		int|string|\DateTimeInterface $to = 'now',
+		int|string|DateTimeInterface $from = '-1 week',
+		int|string|DateTimeInterface $to = 'now',
 	): TransactionList
 	{
-		$data = $this->download('periods/%s/%s/%s/transactions.%s', Utils\Fio::date($from), Utils\Fio::date($to), $this->reader->getExtension());
+		$data = $this->download('periods/%s/%s/%s/transactions.%s', Fio::date($from), Fio::date($to), $this->reader->getExtension());
 
 		return $this->reader->create($data);
 	}
 
-
 	/**
 	 * List of movements.
+	 *
 	 * @param int $year format YYYY, empty string is current
 	 */
-	public function movementId(int $moveId, int $year = 0): TransactionList
+	public function movementId(
+		int $moveId,
+		int $year = 0,
+	): TransactionList
 	{
 		if ($year === 0) {
 			$year = (int) date('Y');
@@ -48,7 +56,6 @@ class FioRead
 
 		return $this->reader->create($data);
 	}
-
 
 	/**
 	 * Last movements from last breakpoint.
@@ -60,7 +67,6 @@ class FioRead
 		return $this->reader->create($data);
 	}
 
-
 	/**
 	 * Set break point to id.
 	 */
@@ -69,26 +75,26 @@ class FioRead
 		return $this->download('set-last-id/%s/%s/', (string) $moveId);
 	}
 
-
 	/**
 	 * Set breakpoint to date.
 	 */
-	public function setLastDate(int|string|\DateTimeInterface $date): ResponseInterface
+	public function setLastDate(int|string|DateTimeInterface $date): ResponseInterface
 	{
-		return $this->download('set-last-date/%s/%s/', Utils\Fio::date($date));
+		return $this->download('set-last-date/%s/%s/', Fio::date($date));
 	}
 
-
-	public function getAccount(): Account\FioAccount
+	public function getAccount(): FioAccount
 	{
 		return $this->account;
 	}
 
-
-	private function download(string $apiUrl, string ...$args): ResponseInterface
+	private function download(
+		string $apiUrl,
+		string ...$args,
+	): ResponseInterface
 	{
 		$token = $this->account->getToken();
-		$requestUrl = Utils\Fio::REST_URL . sprintf($apiUrl, $token, ...$args);
+		$requestUrl = Fio::REST_URL . vsprintf($apiUrl, [$token, ...$args]);
 
 		return $this->queue->download($token, $requestUrl);
 	}

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio;
 
@@ -6,15 +6,24 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\HttpFactory;
 use h4kuna\Dir\Dir;
 use h4kuna\Dir\TempDir;
-use h4kuna\Fio;
+use h4kuna\Fio\Account\AccountCollection;
+use h4kuna\Fio\Account\AccountCollectionFactory;
 use h4kuna\Fio\Contracts\RequestBlockingServiceContract;
+use h4kuna\Fio\Exceptions\MissingDependency;
+use h4kuna\Fio\Pay\XMLFile;
+use h4kuna\Fio\Read\Json;
+use h4kuna\Fio\Utils\FileRequestBlockingService;
+use h4kuna\Fio\Utils\FioRequestFactory;
+use h4kuna\Fio\Utils\Queue;
 use Psr\Http\Client\ClientInterface;
+use function is_string;
 
 class FioFactory
 {
-	protected Account\AccountCollection $accountCollection;
 
-	protected Utils\Queue $queue;
+	protected AccountCollection $accountCollection;
+
+	protected Queue $queue;
 
 
 	/**
@@ -24,80 +33,76 @@ class FioFactory
 		array $accounts,
 		string|Dir $temp = 'fio',
 		?ClientInterface $client = null,
-		?Utils\FioRequestFactory $fioRequestFactory = null,
-	) {
-
+		?FioRequestFactory $fioRequestFactory = null,
+	)
+	{
 		$this->accountCollection = $this->createAccountCollection($accounts);
 		$this->queue = $this->createQueue(
 			$this->createRequestBlockingService(is_string($temp) ? new TempDir($temp) : $temp),
 			$client ?? self::createClientInterface(),
-			$fioRequestFactory ?? self::createRequestFactory()
+			$fioRequestFactory ?? self::createRequestFactory(),
 		);
 	}
 
-
-	public function createFioRead(string $name = ''): Fio\FioRead
+	public function createFioRead(string $name = ''): FioRead
 	{
-		return new Fio\FioRead($this->queue, $this->accountCollection->account($name), $this->createReader());
+		return new FioRead($this->queue, $this->accountCollection->account($name), $this->createReader());
 	}
 
-
-	public function createFioPay(string $name = ''): Fio\FioPay
+	public function createFioPay(string $name = ''): FioPay
 	{
-		return new Fio\FioPay($this->queue, $this->accountCollection->account($name), $this->createXmlFile());
+		return new FioPay($this->queue, $this->accountCollection->account($name), $this->createXmlFile());
 	}
 
-
-	protected function createQueue(RequestBlockingServiceContract $requestBlockingService, ClientInterface $client, Utils\FioRequestFactory $fioRequestFactory): Utils\Queue
+	protected function createQueue(
+		RequestBlockingServiceContract $requestBlockingService,
+		ClientInterface $client,
+		FioRequestFactory $fioRequestFactory,
+	): Queue
 	{
-		return new Utils\Queue($client, $fioRequestFactory, $requestBlockingService);
+		return new Queue($client, $fioRequestFactory, $requestBlockingService);
 	}
 
 	protected function createRequestBlockingService(Dir $tempDir): RequestBlockingServiceContract
 	{
-		return new Fio\Utils\FileRequestBlockingService($tempDir->create());
+		return new FileRequestBlockingService($tempDir->create());
 	}
-
 
 	/**
 	 * @param array<array{token: string, account: string}> $accounts
 	 */
-	protected function createAccountCollection(array $accounts): Account\AccountCollection
+	protected function createAccountCollection(array $accounts): AccountCollection
 	{
-		return Account\AccountCollectionFactory::create($accounts);
+		return AccountCollectionFactory::create($accounts);
 	}
 
-
-	protected function createReader(): Fio\Read\Json
+	protected function createReader(): Json
 	{
-		return new Fio\Read\Json();
+		return new Json();
 	}
-
 
 	/**
 	 * PAY *********************************************************************
 	 * *************************************************************************
 	 */
-	protected function createXmlFile(): Pay\XMLFile
+	protected function createXmlFile(): XMLFile
 	{
-		return new Pay\XMLFile();
+		return new XMLFile();
 	}
-
 
 	private static function createClientInterface(): ClientInterface
 	{
-		Fio\Exceptions\MissingDependency::checkGuzzlehttp();
+		MissingDependency::checkGuzzlehttp();
 
 		return new Client();
 	}
 
-
-	private static function createRequestFactory(): Utils\FioRequestFactory
+	private static function createRequestFactory(): FioRequestFactory
 	{
-		Fio\Exceptions\MissingDependency::checkGuzzlehttp();
+		MissingDependency::checkGuzzlehttp();
 
 		$httpFactory = new HttpFactory();
-		return new Utils\FioRequestFactory($httpFactory, $httpFactory);
+		return new FioRequestFactory($httpFactory, $httpFactory);
 	}
 
 }

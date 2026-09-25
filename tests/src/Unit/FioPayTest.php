@@ -1,8 +1,8 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Tests\Unit;
 
-use h4kuna;
+use h4kuna\Fio\Exceptions\InvalidArgument;
 use h4kuna\Fio\FioPay;
 use h4kuna\Fio\Tests\Fixtures\FioFactory;
 use h4kuna\Fio\Tests\Fixtures\TestCase;
@@ -16,6 +16,7 @@ require __DIR__ . '/../bootstrap.php';
  */
 class FioPayTest extends TestCase
 {
+
 	private FioPay $fioPay;
 
 
@@ -31,28 +32,19 @@ class FioPayTest extends TestCase
 		Assert::same(loadResult('payment/multi-pay.xml'), (string) $xml);
 	}
 
-
-	/**
-	 * @throws h4kuna\Fio\Exceptions\InvalidArgument
-	 */
 	public function testNoPayments(): void
 	{
-		$this->fioPay->send();
+		Assert::exception(fn () => $this->fioPay->send(), InvalidArgument::class);
 	}
 
-
-	/**
-	 * @throws h4kuna\Fio\Exceptions\InvalidArgument
-	 */
 	public function testNoContent(): void
 	{
 		$this->fioPay->createNational(200, '9865/0123')
 			->setDate('2016-01-12');
 		$this->fioPay->setLanguage('cs');
 		$this->fioPay->getXml();
-		$this->fioPay->send();
+		Assert::exception(fn () => $this->fioPay->send(), InvalidArgument::class);
 	}
-
 
 	public function testContent(): void
 	{
@@ -63,8 +55,7 @@ class FioPayTest extends TestCase
 		Assert::same(loadResult('payment/xml-pay.xml'), (string) $response);
 	}
 
-
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->fioPay = (new FioFactory())->createFioPay();
 	}

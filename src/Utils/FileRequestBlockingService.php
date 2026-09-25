@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace h4kuna\Fio\Utils;
 
@@ -8,10 +8,25 @@ use h4kuna\Fio\Contracts\RequestBlockingServiceContract;
 use h4kuna\Fio\Exceptions\InvalidState;
 use Nette\SafeStream\Wrapper;
 use Psr\Http\Message\ResponseInterface;
+use function fclose;
+use function fgets;
+use function fopen;
+use function fputs;
+use function fseek;
+use function ftruncate;
+use function is_file;
+use function md5;
+use function sleep;
+use function substr;
+use function time;
+use function touch;
 
 final class FileRequestBlockingService implements RequestBlockingServiceContract
 {
-	/** @var array<string, string> */
+
+	/**
+	 * @var array<string, string>
+	 */
 	private static array $tokens = [];
 
 	/**
@@ -20,11 +35,14 @@ final class FileRequestBlockingService implements RequestBlockingServiceContract
 	public function __construct(
 		private Dir $tempDir,
 		private int $waitTime = 31,
-	) {
+	)
+	{
 	}
 
-
-	public function synchronize(string $token, Closure $callback): ?ResponseInterface
+	public function synchronize(
+		string $token,
+		Closure $callback,
+	): ?ResponseInterface
 	{
 		$tempFile = $this->loadFileName($token);
 		$file = self::createFileResource($tempFile);
@@ -61,7 +79,6 @@ final class FileRequestBlockingService implements RequestBlockingServiceContract
 		return $file;
 	}
 
-
 	private function loadFileName(string $token): string
 	{
 		$key = substr($token, 10, -10);
@@ -72,9 +89,9 @@ final class FileRequestBlockingService implements RequestBlockingServiceContract
 		return self::$tokens[$key];
 	}
 
-
 	private static function safeProtocol(string $filename): string
 	{
 		return Wrapper::Protocol . "://$filename";
 	}
+
 }
