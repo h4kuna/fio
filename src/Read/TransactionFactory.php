@@ -4,11 +4,12 @@ namespace h4kuna\Fio\Read;
 
 use h4kuna\Fio\Exceptions\InvalidArgument;
 use h4kuna\Fio\Utils\Fio;
-use h4kuna\Memoize\Memoize;
 
 class TransactionFactory
 {
-	use Memoize;
+	/** @var array<class-string, array<string, \ReflectionProperty>> */
+	private array $mapping = [];
+
 
 	public function create(\stdClass $source): object
 	{
@@ -19,8 +20,7 @@ class TransactionFactory
 			$transaction->original = $source;
 		}
 
-		/** @var array<string, \ReflectionProperty> $map */
-		$map = $this->memoize($transaction::class, static fn (): array => self::createMapping($transaction::class));
+		$map = $this->mapping[$transaction::class] ??= self::createMapping($transaction::class);
 
 		foreach ($map as $column => $property) {
 			$propertyName = $property->getName();
