@@ -8,4 +8,4 @@ parameters:
 
 includes:
 	- vendor/phpstan/phpstan-strict-rules/rules.neon
-	- phpstan-baseline.neon
+	- vendor/phpstan/phpstan-deprecation-rules/rules.neon

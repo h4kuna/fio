@@ -10,57 +10,55 @@ use stdClass;
  */
 final class TransactionList implements \Countable, \IteratorAggregate
 {
+	private stdClass $info;
 
-	public function __construct(private stdClass $response, private ?TransactionFactory $transactionFactory = null)
+	/** @var array<int|string, mixed> */
+	private array $transactions;
+
+	private ?TransactionFactory $transactionFactory;
+
+
+	public function __construct(stdClass $response, ?TransactionFactory $transactionFactory = null)
 	{
-		$this->prepareDefault();
-		if (isset($this->response->info->dateEnd)) {
-			$this->response->info->dateEnd = Fio::toDate(strval($this->response->info->dateEnd));
+		$this->info = self::extractInfo($response);
+		$this->transactions = self::extractTransactions($response);
+
+		foreach (['dateEnd', 'dateStart'] as $key) {
+			if (isset($this->info->$key) && is_scalar($this->info->$key)) {
+				$this->info->$key = Fio::toDate((string) $this->info->$key);
+			}
 		}
 
-		if (isset($this->response->info->dateStart)) {
-			$this->response->info->dateStart = Fio::toDate(strval($this->response->info->dateStart));
+		if ($transactionFactory === null && $this->transactions !== []) {
+			$transactionFactory = new TransactionFactory();
 		}
-		if ($this->transactionFactory === null && $this->response->transactionList->transaction !== []) {
-			$this->transactionFactory = new TransactionFactory();
-		}
+		$this->transactionFactory = $transactionFactory;
 	}
 
 
 	public function getInfo(): stdClass
 	{
-		return $this->response->info;
+		return $this->info;
 	}
 
 
 	public function getIterator(): \Generator
 	{
-		if ($this->transactionFactory === null) {
-			$factory = new class {
-				/**
-				 * @template T of object
-				 * @param T $item
-				 * @return T
-				 */
-				public function create($item)
-				{
-					return $item;
-				}
+		foreach ($this->transactions as $k => $item) {
+			if ($this->transactionFactory === null) {
+				yield $k => $item;
+				continue;
+			}
 
-			};
-		} else {
-			$factory = $this->transactionFactory;
-		}
-
-		foreach ($this->response->transactionList->transaction as $k => $item) {
-			yield $k => $factory->create($item);
+			assert($item instanceof stdClass);
+			yield $k => $this->transactionFactory->create($item);
 		}
 	}
 
 
 	public function count(): int
 	{
-		return count($this->response->transactionList->transaction);
+		return count($this->transactions);
 	}
 
 
@@ -71,7 +69,7 @@ final class TransactionList implements \Countable, \IteratorAggregate
 	{
 		$transactions = [];
 		foreach ($this as $k => $transaction) {
-			assert(is_object($transaction));
+			assert(is_int($k) && is_object($transaction));
 			if (isset($transaction->original)) {
 				$transaction->original = null;
 			}
@@ -79,7 +77,7 @@ final class TransactionList implements \Countable, \IteratorAggregate
 		}
 
 		return [
-			'info' => $this->response->info,
+			'info' => $this->info,
 			'transactions' => $transactions,
 		];
 	}
@@ -90,25 +88,37 @@ final class TransactionList implements \Countable, \IteratorAggregate
 	 */
 	public function __unserialize(array $data): void
 	{
-		$this->response = new \stdClass();
-		$this->response->info = $data['info'];
-		$this->prepareDefault();
-		$this->response->transactionList->transaction = $data['transactions'];
+		$info = $data['info'] ?? null;
+		$transactions = $data['transactions'] ?? [];
+		assert($info instanceof stdClass && is_array($transactions));
+
+		$this->info = $info;
+		$this->transactions = $transactions;
 		$this->transactionFactory = null;
 	}
 
 
-	private function prepareDefault(): void
+	private static function extractInfo(stdClass $response): stdClass
 	{
-		if (!isset($this->response->info)) {
-			$this->response->info = new stdClass();
+		$info = $response->info ?? null;
+
+		return $info instanceof stdClass ? $info : new stdClass();
+	}
+
+
+	/**
+	 * @return array<int|string, mixed>
+	 */
+	private static function extractTransactions(stdClass $response): array
+	{
+		$transactionList = $response->transactionList ?? null;
+		if (!$transactionList instanceof stdClass) {
+			return [];
 		}
-		if (!isset($this->response->transactionList)) {
-			$this->response->transactionList = new stdClass();
-		}
-		if (!isset($this->response->transactionList->transaction)) {
-			$this->response->transactionList->transaction = [];
-		}
+
+		$transactions = $transactionList->transaction ?? [];
+
+		return is_array($transactions) ? $transactions : [];
 	}
 
 }

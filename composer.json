@@ -29,6 +29,7 @@
     "guzzlehttp/guzzle": "^7.5",
     "nette/tester": "^2.4",
     "phpstan/phpstan": "^2.0",
+    "phpstan/phpstan-deprecation-rules": "^2.0",
     "phpstan/phpstan-strict-rules": "^2.0",
     "symfony/http-client": "^6.0 | ^7.0",
     "tracy/tracy": "^2.9"

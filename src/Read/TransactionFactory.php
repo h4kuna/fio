@@ -27,7 +27,7 @@ class TransactionFactory
 			$type = $property->getType();
 			assert($type instanceof \ReflectionNamedType);
 
-			$value = $source->$column->value ?? null;
+			$value = self::columnValue($source, $column);
 			$method = 'set' . ucfirst($propertyName);
 			if (method_exists($transaction, $method)) {
 				$transaction->$method($value);
@@ -62,11 +62,30 @@ class TransactionFactory
 			if ($attribute === []) {
 				continue;
 			}
-			$id = $attribute[0]->getArguments()['id'];
-			$map["column$id"] = $property;
+			$column = $attribute[0]->newInstance();
+			$map["column$column->id"] = $property;
 		}
 
 		return $map;
+	}
+
+
+	/**
+	 * @return scalar|null
+	 */
+	private static function columnValue(\stdClass $source, string $column): mixed
+	{
+		$data = $source->$column ?? null;
+		if (!$data instanceof \stdClass || !isset($data->value)) {
+			return null;
+		}
+
+		$value = $data->value;
+		if (!is_scalar($value)) {
+			throw new InvalidArgument(sprintf('Column "%s" has unsupported value type "%s".', $column, get_debug_type($value)));
+		}
+
+		return $value;
 	}
 
 
@@ -110,7 +129,7 @@ class TransactionFactory
 	protected function backCompatibility(object $transaction): object
 	{
 		if ($transaction instanceof Transaction) {
-			$transaction->volume = $transaction->amount;
+			$transaction->volume = $transaction->amount; // @phpstan-ignore property.deprecated (kept for backward compatibility)
 		}
 
 		return $transaction;

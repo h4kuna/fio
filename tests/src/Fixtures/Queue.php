@@ -19,8 +19,9 @@ class Queue extends Fio\Utils\Queue
 		$file = '';
 		switch (basename($url, 'json')) {
 			case 'transactions.':
-				preg_match('~((?:/[^/]+){3})$~U', $url, $find);
-				$file = str_replace(['/', '-' . $token], ['-', ''], ltrim($find[1], '/'));
+				if (preg_match('~((?:/[^/]+){3})$~U', $url, $find) === 1) {
+					$file = str_replace(['/', '-' . $token], ['-', ''], ltrim($find[1], '/'));
+				}
 				break;
 		}
 		if ($file !== '') {
