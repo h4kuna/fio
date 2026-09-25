@@ -109,8 +109,9 @@ class TransactionFactory
 	 */
 	protected function backCompatibility(object $transaction): object
 	{
-		assert($transaction instanceof Transaction);
-		$transaction->volume = $transaction->amount;
+		if ($transaction instanceof Transaction) {
+			$transaction->volume = $transaction->amount;
+		}
 
 		return $transaction;
 	}
