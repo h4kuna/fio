@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<ruleset
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd"
+>
+	<arg name="basepath" value="."/>
+	<arg name="cache" value="var/phpcs.cache"/>
+
+	<file>src/</file>
+	<file>tests/</file>
+
+	<config name="installed_paths" value="vendor/slevomat/coding-standard,vendor/shipmonk/coding-standard"/>
+	<rule ref="ShipMonkCodingStandard">
+		<!-- tabs instead of spaces -->
+		<exclude name="Generic.WhiteSpace.DisallowTabIndent"/>
+		<!-- allow PHPUnit annotations -->
+		<exclude name="SlevomatCodingStandard.Commenting.ForbiddenAnnotations"/>
+	</rule>
+
+	<!-- ForbiddenAnnotations without PHPUnit annotations -->
+	<rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
+		<properties>
+			<property name="forbiddenAnnotations" type="array">
+				<element value="@author"/>
+				<element value="@copyright"/>
+				<element value="@internal-allowed-path"/>
+				<element value="@internal-allowed-scope"/>
+				<element value="@license"/>
+				<element value="@link"/>
+				<element value="@package"/>
+				<element value="@phpstan-extends"/>
+				<element value="@phpstan-implements"/>
+				<element value="@phpstan-param"/>
+				<element value="@phpstan-return"/>
+				<element value="@phpstan-template"/>
+				<element value="@phpstan-var"/>
+				<element value="@psalm-param"/>
+				<element value="@psalm-return"/>
+				<element value="@psalm-template"/>
+				<element value="@psalm-type"/>
+				<element value="@psalm-var"/>
+				<element value="@since"/>
+				<element value="@version"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- helper function for tests -->
+	<rule ref="Squiz.Functions.GlobalFunction">
+		<exclude-pattern>tests/src/bootstrap.php</exclude-pattern>
+	</rule>
+
+	<!-- tabs instead of spaces -->
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="tabIndent" value="true"/>
+		</properties>
+	</rule>
+</ruleset>
