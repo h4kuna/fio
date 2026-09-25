@@ -6,6 +6,8 @@
 [![Total Downloads](https://poser.pugx.org/h4kuna/fio/downloads?format=flat)](https://packagist.org/packages/h4kuna/fio)
 [![License](https://poser.pugx.org/h4kuna/fio/license?format=flat)](https://packagist.org/packages/h4kuna/fio)
 
+Part of the [h4kuna PHP libraries](https://github.com/h4kuna/library), see the overview of all packages.
+
 Support [Fio API](http://www.fio.sk/docs/cz/API_Bankovnictvi.pdf). Read is provided via json file.
 
 ### Versions
