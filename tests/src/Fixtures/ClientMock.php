@@ -34,7 +34,7 @@ class ClientMock implements ClientInterface
 
 		if ($exception !== '') {
 			assert(is_subclass_of($exception, Throwable::class));
-			throw new $exception();
+			throw new $exception('Mocked transfer error.', $request);
 		}
 
 		if ($file !== '') {

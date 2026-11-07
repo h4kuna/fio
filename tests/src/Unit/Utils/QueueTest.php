@@ -2,7 +2,7 @@
 
 namespace h4kuna\Fio\Tests\Unit\Utils;
 
-use GuzzleHttp\Exception\TransferException;
+use GuzzleHttp\Exception\ConnectException;
 use h4kuna\Dir\TempDir;
 use h4kuna\Fio\Exceptions\QueueLimit;
 use h4kuna\Fio\Exceptions\ServiceUnavailable;
@@ -38,7 +38,7 @@ class QueueTest extends TestCase
 	{
 		$queue = self::createQueue();
 		Assert::exception(
-			static fn () => $queue->download(self::TOKEN, 'http://www.example.com/?exception=' . TransferException::class),
+			static fn () => $queue->download(self::TOKEN, 'http://www.example.com/?exception=' . ConnectException::class),
 			ServiceUnavailable::class,
 		);
 	}
